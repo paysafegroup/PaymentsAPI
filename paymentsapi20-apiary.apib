@@ -12,14 +12,10 @@ Developer Center navigation, as these are used strictly for the other APIs on th
 <a name="paymentsoverview" title="Payments API Overview"></a>
 # Overview
 
-The Paysafe Payments API helps you to process payments of your users. The Payments API facilitates a variety of payment methods and enables you to:
-* Authorize
-* Capture
-* Refund payments
+You can easily and securely process payments from your customers using one single API – The **Payments API**.
 
-
-You can use the Payments API in test mode, which does not affect your live data or interact with the banking networks. The API key you use to authenticate the request determines whether the request is the live mode or test mode.
-
+The Paysafe Payments API helps you to process payments of your customers using a variety of payment methods and a single API Endpoint.
+ Or
 The Paysafe Payments API allows you to accept payments via multiple payment methods while using a single endpoint integration.
 
 Paysafe also enables you to access your transaction analytics and manage accounts with our all-in-one [Business Portal](https://merchant.paysafe.com/portal). 
@@ -27,7 +23,7 @@ Paysafe also enables you to access your transaction analytics and manage account
 
 ## Payment Methods
 
-Payment Methods represent your user's payment instruments. They are used to collect payments or store instrument details for future payments.
+Payment Methods represent your customer's payment instruments. They are used to collect payments or store instrument details for future payments.
 The Payments API currently supports the following payment methods: 
 
 - Card
@@ -37,124 +33,9 @@ The Payments API currently supports the following payment methods:
 - Play+ (Sightline)
 - Skrill
 - Instant ACH (iACH)
- 
-
-# Before you begin
-## API Keys
-<a name="apikeys" title="Get your API Keys"></a>
-The Payments API uses two distinct API keys:<br/>
-* The Secret Key – used for all server-to-server API requests.</li>
-* The Public Key – used as the value for the apiKey parameter when using the Paysafe Checkout SDK option.</li>
-
-You can retrieve your Secret and Public keys for both the Test & Live accounts via the [Business Portal](https://merchant.paysafe.com):
-* [Live](https://merchant.paysafe.com)
-* [Test](https://test.merchant.paysafe.com/)
-
-Your API keys will look something like this:
-* Key Username – MerchantXYZKey 
-* Password – B-tst1-0-51ed39e4-312d02345d3f123120881dff9bb4020a89e8ac44cdfdcecd702151182fdc952272661d290ab2e5849e31bb03deede7e
-> **Note:** This is not the same as your login credentials to the [Business Portal](https://merchant.paysafe.com). 
-
-The case-sensitive API key is sent using HTTP Basic Authentication. 
-To use HTTP Basic Authentication, you must send the API key credentials using the Authorization header with every request.
-
-Construct the Authorization header as follows:
-1. Combine the Key Username and Key Password into a string separated by a colon, for example, “Key Username:Key Password”.
-2. The resulting string literal is then encoded using Base64.
-3. Put the authorization method and a space (i.e., “Basic”) before the encoded string. 
-For example, using the Key Username and Password examples above, the header is formed as follows:
-
-```Authorization: Basic TWVyY2hhbnRYWVo6Qi10c3QxLTAtNTFlZDM5ZTQtMzEyZDAyMzQ1ZDNmMTIzMTIwODgxZGZmOWJiNDAyMGE4OWU4YWM0NGNkZmRjZWNkNzAyMTUxMTgyZmRjOTU yMjcyNjYxZDI5MGFiMmU1ODQ5ZTMxYmIwM2RlZWRlN2U=```
-For additional details, please refer [here](http://en.wikipedia.org/wiki/Basic_access_authentication).
-
-#### Getting Your Public API Key
-You use the Public API key if you are using the [Payments Checkout SDK](#paymentscheckout) to process payment requests. 
-
- > **Note:** You must Base64 Encode your Public API key before using it in the Payments Checkout SDK.
-
-To retrieve your Public API key from the Business Portal:
- 1. Go to **Integrate>API Keys**. 
-![](https://github.com/paysafegroup/paysafe_api_paymenthub_v1/raw/master/images/API_Key.png)
- 2. For *Public Key*, click on the icon in the **Copy** column to copy the API key to your clipboard.  
-
-The default Test account can be used for processing Card, PaysafeCash, and Paysafecard payments with the processing currency (*currencyCode*) set to USD. 
-
-<a name="secretapikey" title="Secret API Key"></a>
-#### Getting Your Secret API Key
-You use the Secret API key in all your server-to-server Payments API requests. 
-
- > **Note:** You must Base64 Encode your Secret API key before using it in your API requests.
-
-To retrieve your Secret API key from the Business Portal: 
- 1. Go to **Integrate>API Keys**.
- 2. Under **Secret Key**, click on **Authenticate Now**.
- ![](https://github.com/paysafegroup/paysafe_api_paymenthub_v1/raw/master/images/Secret_Key1.png)
- 3. Enter your Business Portal password and click **Authenticate**.
- 4. You can now access your Secret API key. 
- ![](https://github.com/paysafegroup/paysafe_api_paymenthub_v1/raw/master/images/Secret_Key2.png)
- 
- > **Note:** All your payment methods will be set up to use the same API key.
-
-
-## Testing
-
-The Paysafe Test environment can be used to test websites or applications without performing transactions through the Production (live) processing platform. 
-Payment transactions processed in the Test environment are executed on a simulator. Depending on the information provided with the transaction request, the simulator returns either a successful (approved) or failed (declined) response.
-
-With the Payments API, you can:
-
-* Verify support for all the operation types that you require.
-* Review all common errors as well as errors that may occur for each operation.
-* Verify the lengths and format for all attributes you send.
-
-For access to Test accounts and credentials, please contact your business relationship manager or reach out to <integrations@paysafe.com>. 
-Your Test account will provide you with access to a Test version of the Paysafe [Business Portal](https://merchant.test.paysafe.com/portal#/login), where you can view the status of your Test transactions. 
-
-###  Test URL
-In order to test your integration with Paysafe, use the following Test URL:
-
-`https://api.test.paysafe.com/paymenthub/v1/`
-
-For example:
-
-`https://api.test.paysafe.com/paymenthub/v1/payments/{payment_id}`
-
-
-## Going Live
-Test accounts enable you to process API transactions that mirror the functionality in the Production environment. 
-Once you are satisfied with your integration to the Test environment, you must repeat the configuration changes made to your Test account on your Production account.
-
-Authentication credentials: Paysafe will provide you with the credentials in the Business Portal.
-
-> **Note:** You cannot use your Test credentials to process transaction requests in the Production environment.
-
-### Production URL
-In order to process live requests with Paysafe, use the following Production URL:
-
-`https://api.paysafe.com/paymenthub/v1/`
-
-For example:
-
-`https://api.paysafe.com/paymenthub/v1/payments/{payment_id}`
-
-# API
-The Payments API allows merchants to process payment-related requests across a wide variety of payment methods with a simple integration a single API using the REST protocol. The protocol uses JSON for all requests and responses.
-The API is constructed around REST and has:
-* Definite resource-oriented URLs
-* Receives form-encoded request bodies
-* Returns JSON-encoded responses 
-* Communicates using standard HTTP response codes, authentication, and verbs.
-
-* **Message body**: This must contain valid Paysafe JSON objects as required for the type of request. Not all API calls require a message-body; for example, GET requests do not require a body.
-* **Resource ID**: Identifies the unique ID of a resource.
-![Structure of a Typical Payments API Request](http://mweb1-paysafeio-foreign.fra.skrill.net/fileadmin/user_upload/authentication_example_payments.png)
-* **Payment Simulator**: While testing your integration, you can choose whether you want to simulate the actual end customer experience (or) you want to use a page which lets you simulate all payment handle statuses.
-The behavior is controlled by using an HTTP header named “**Simulator**” in your request, which has the following possible values:
-   * **"INTERNAL" (default)** – which redirects you to the **status** simulator page.
-   * **"EXTERNAL"** – which redirects/connects you to the downstream payment method website (Eg: Skrill authentication page)
 
 ## Transaction Types Supported
-The following request types are supported for the following Payment Methods:
+Payments API supports  the following transaction types:
 
 ![Feature Grid](https://prlocal-developer-paysafe-com.eu.paysafecorp.com/fileadmin/flarecontent/devcentre/Content/Resources/Images/Checkout/feature_grid.png)
 
@@ -172,6 +53,124 @@ The following request types are supported for the following Payment Methods:
   * [Customer Payment Handles](#createcustomerpaymenthandlerequest)
   * [Customer Single-Use Tokens](#createcustomersut)
   
+
+# Before you begin
+## Get your Secret API Key
+<a name="apikeys" title="Get your API Keys"></a>
+The Payments API uses a distinct API key:<br/>
+* The Secret Key – used for all server-to-server API requests.
+
+You can retrieve your Secret key for both the Test & Live accounts via the [Business Portal](https://merchant.paysafe.com):
+* [Live](https://merchant.paysafe.com)
+* [Test](https://test.merchant.paysafe.com/)
+
+<a name="secretapikey" title="Secret API Key"></a>
+#### Getting Your Secret API Key
+You use the Secret API key in all your server-to-server Payments API requests. 
+
+ > **Note:** You must Base64 Encode your Secret API key before using it in your API requests.
+
+To retrieve your Secret API key from the Business Portal: 
+ 1. Go to **Integrate>API Keys**.
+ 2. Under **Secret Key**, click on **Authenticate Now**.
+ ![](https://github.com/paysafegroup/paysafe_api_paymenthub_v1/raw/master/images/Secret_Key1.png)
+ 3. Enter your Business Portal password and click **Authenticate**.
+ 4. You can now access your Secret API key. 
+ ![](https://github.com/paysafegroup/paysafe_api_paymenthub_v1/raw/master/images/Secret_Key2.png)
+ 
+ > **Note:** All your payment methods will use the same API key.
+
+Your API key will have the following format:
+* Key Username – MerchantXYZKey 
+* Password – B-tst1-0-51ed39e4-312d02345d3f123120881dff9bb4020a89e8ac44cdfdcecd702151182fdc952272661d290ab2e5849e31bb03deede7e
+
+The API key is case-sensitive and sent using HTTP Basic Authentication.
+To use HTTP Basic Authentication, you must send the API key credentials using the Authorization header with every request. 
+
+You must construct the Authorization header as follows:
+1. Combine the Key Username and Key Password into a string separated by a colon, e.g., “Key Username:Key Password”.
+2. The resulting string literal is then encoded using Base64.
+3. The authorization method and space (i.e., “Basic”) are then put before the encoded string.
+
+For example, using the Key Username and Password examples above, the header is formed as follows:
+
+```Authorization: Basic TWVyY2hhbnRYWVo6Qi10c3QxLTAtNTFlZDM5ZTQtMzEyZDAyMzQ1ZDNmMTIzMTIwODgxZGZmOWJiNDAyMGE4OWU4YWM0NGNkZmRjZWNkNzAyMTUxMTgyZmRjOTU yMjcyNjYxZDI5MGFiMmU1ODQ5ZTMxYmIwM2RlZWRlN2U=```
+For additional details, please refer [here](https://developer.paysafe.com/en/rest-apis/reference-information/important-integration-concepts/authentication/).
+
+## Testing
+
+Test accounts enable you to process API transactions that mirror the functionality of the Production environment. 
+OR
+You can use the Paysafe Test environment to test websites or applications without performing real-time transactions. 
+
+PaymentPayment transactions processed in the Test environment are executed on a simulator. Depending on the information provided with the transaction request, the simulator returns either a successful (approved) or failed (declined) response.
+
+With the Payments API, you can:
+
+* Verify support for all the operation types that you require.
+* Review all common errors as well as errors that may occur for each operation.
+* Verify the lengths and format for all attributes you send.
+
+For access to Test accounts and credentials, please contact your account manager or reach out to <integrations@paysafe.com>. 
+Your Test account has access to the Test version of the Paysafe [Business Portal](https://merchant.test.paysafe.com/portal#/login), where you can view the status of your Test transactions. 
+
+###  Test URL
+To test your integration with Paysafe, use the following Test URL:
+
+`https://api.test.paysafe.com/paymenthub/v1/`
+
+For example:
+
+`https://api.test.paysafe.com/paymenthub/v1/payments/{payment_id}`
+
+Follow the below links to get detailed testing information of the Payment Methods:
+* [Card]()
+* [Paysafe Cash]()
+* [Paysafe Card]()
+* [Skrill]()
+* [Instant ACH]()
+* [Play+ (Sightline)]()
+* [VIP Preferred]()
+* [ACH]()
+* [EFT]()
+
+
+## Going Live
+ 
+Once you are satisfied with your integration to the Test environment, you must repeat the configuration changes made to your Test account on your Production account.
+
+> **Note:** You cannot use your Test credentials to process transaction requests in the Production environment.
+
+### Go Live Checklist
+1. You must have a production account and access to Business Portal.
+2. You must have a Secret API Key for the production environment.
+3. You must have Webhooks configured for all the events.
+4. You must use the Production URL for your API calls.
+
+### Production URL
+To process live requests with Paysafe, use the following Production URL:
+
+`https://api.paysafe.com/paymenthub/v1/`
+
+For example:
+
+`https://api.paysafe.com/paymenthub/v1/payments/{payment_id}`
+
+# API
+The Payments API processes payment-related requests across a wide variety of payment methods.
+The API is constructed around REST and has:
+* Definite resource-oriented URLs
+* Receives form-encoded request bodies
+* Returns JSON-encoded responses 
+* Communicates using standard HTTP response codes, authentication, and verbs.
+
+* **Message body**: This must contain valid Paysafe JSON objects as required for the type of request. Not all API calls require a message-body; for example, GET requests do not require a body.
+* **Resource ID**: Identifies the unique ID of a resource.
+![Structure of a Typical Payments API Request](http://mweb1-paysafeio-foreign.fra.skrill.net/fileadmin/user_upload/authentication_example_payments.png)
+* **Payment Simulator**: While testing your integration, you can choose whether you want to simulate the actual end customer experience (or) you want to use a page, which lets you simulate all payment handle statuses.
+You must use "**Simulator**" in the HTTP header of your request, which has the following possible values:
+   * **"INTERNAL" (default)** – which redirects you to the **status** simulator page.
+   * ** "EXTERNAL"** – which redirects/connects you to the downstream payment method website (Eg: Skrill authentication page)
 
 <a name="apiendpoints" title="API Endpoints"></a>
 ## API Endpoints
@@ -220,27 +219,29 @@ The following request types are supported for the following Payment Methods:
 <a name="paymentswebhooks" title="Payments Webhooks"></a>
 # Webhooks
 
-A webhook allows you to define an HTTP callback to which a request will be posted when an event occurs that you want to be notified about. 
+A Webhook is an HTTP callback that is triggered when an event takes place. 
 To configure webhooks, you need to [open a service request](#support) with Paysafe in the Business Portal.
 
-For more information of Webhooks please refer, [here](https://prlocal-developer-paysafe-com.eu.paysafecorp.com/en/rest-apis/igaming/paysafe-checkout/webhooks/).
 
-> **Note:** In order to receive webhooks from Paysafe, you must create a callback URL to receive the webhook that is triggered. 
+For more information on Webhooks, please refer, [here](https://prlocal-developer-paysafe-com.eu.paysafecorp.com/en/rest-apis/igaming/paysafe-checkout/webhooks/).
+
+> **Note:** To receive webhooks from Paysafe, you must create a callback URL to receive the webhook that is triggered. 
 You are responsible for ensuring its continued availability.
 
 ## Some Notes on Webhooks
 
 + When the status of one of your transaction request changes, Paysafe immediately sends a callback to your webhook's endpoint URL to inform you of the status change. 
-+ To acknowledge the receipt of a webhook, Paysafe expects to get an HTTP status of 200 OK or 202 ACCEPTED from your endpoint. In case we receive any other HTTP status code, we assume that you have not received the webhook and we attempt to resend it.
-+ If the callback for the transaction request status change event fails (i.e., Paysafe does not get an acknowledgement of receipt with an HTTP Status Code of 200 or 202), Paysafe makes a maximum of 2 additional attempts (total 3 attempts) to send a callback to that URL.
++ To acknowledge the receipt of the webhook, Paysafe expects an HTTP status of 200 OK or 202 ACCEPTED from your endpoint. In case we receive any other HTTP status code, we assume that you have not received the webhook, and we attempt to resend it.
++ If Paysafe does not get an acknowledgment of receipt with an HTTP Status Code of 200 or 202, it makes a maximum of 2 additional attempts (total 3 attempts) to send a callback to that URL.
 + As Paysafe does not have a notification method to alert you when callbacks are not reaching your endpoint URL, you should make sure that there is continued availability of your endpoint.
 + All endpoint URLs should use HTTPS/SSL to ensure security. Please note that only the default **HTTPS port 443** is supported.
-+ In case you have received the same notification multiple times for an already processed event, we request you to kindly ignore the duplicate notification. It is recommended to make the notification URL endpoints idempotent.
++ In case you have received the same notification multiple times for an already processed event, we request you to ignore the duplicate notification. It is recommended to make the notification URL endpoints idempotent.
+
 
 <a name="pagination" title="Pagination"></a>
 # Pagination
 
-In the case where an API GET request returns multiple results, Paysafe returns the first 10 records by default and uses HATEOAS links to provide page navigation. In addition to the default behavior, it is also possible to control the number of results and starting point by passing in query parameters as follows:
+In the case where an API GET request returns multiple results, Paysafe returns the first 10 records by default and uses HATEOAS links to provide page navigation. In addition to the default behavior, it is also possible to control the number of results and starting point by passing the following parameters in the query:
 
 |    Name       | Description   |
 |---            |---            |
@@ -252,7 +253,7 @@ In the case where an API GET request returns multiple results, Paysafe returns t
 <a name="globalinvalidcharacters" title="Global Invalid Characters"></a>
 # Global Invalid Characters
 
-You must not include any of the characters in the following table as values in any of your request parameters. If you do, your request will result in an error.
+You must not include the following characters in your request parameters. If you do, your request will result in an error.
 
 |    Character    |    HEX    |    Description                     |
 |-----------------|-----------|------------------------------------|
@@ -734,7 +735,7 @@ You must not include any of the characters in the following table as values in a
 |accountType        |enum                       |Read Only|This is the bank account type. Possible values are:<ul><li>SAVINGS</li><li>CHECKING</li><li>LOAN</li></ul>|
 |accountNumber      |string<br/>`length=4-17`   |Mandatory|This is the bank account number.|
 |routingNumber      |string<br/>`length=9`      |Mandatory|For USD accounts, this is the 9-digit routing number of the bank.|
-|lastDigits         |string<br/>`length=2`      |Read Only|This is returned in response. It contains only last 2 digits of bank account.|
+|lastDigits         |string<br/>`length=2`      |Read Only|This is returned in response. It contains the last 2 digits of bank account.|
 
 ```apib
             {
@@ -760,7 +761,7 @@ You must not include any of the characters in the following table as values in a
 |country            |string<br/>`length=2`      |Mandatory|This is the country where the address is located. See [Country Codes](#countrycodes).|
 |state              |string<br/>`length<=40`    |Optional|This is the state/province/region in which the customer lives.<br/>For Canada see [Province Codes](#provincecodes). For the United States see [State Codes](#statecodes). Other countries have no restrictions. |
 |zip                |string<br/>`length<=10`    |Mandatory|This is the zip, postal, or post code of the customer's address.|
-|phone              |string<br/>`length<=40`    |Optional|This is the phone number to contact the recipient at this address, if it is different from the phone number in the customer.|
+|phone              |string<br/>`length<=40`    |Optional|This is the phone number to contact the recipient at this address.|
 |status             |enum                       |Read Only|This is the status of the address. Possible values are:<ul><li>ACTIVE</li><LI>INITIAL</li></ul>|
 |defaultShippingAddressIndicator|boolean        |Conditional|Flag to mark this address as the default shipping address.|
 
@@ -784,15 +785,15 @@ You must not include any of the characters in the following table as values in a
 |Element                |Type                           |Required|Description|
 |---                    |---                            |---|---       |
 |id                     |string<br/>`length<=36`        |Read Only|This is the ID returned in the response. |
-|eci                    |number                         |Read Only|This is the E-Commerce Indicator (ECI). This value will be returned only on payer authentication transactions, or for enrollments where the issuer is non-participating and the card scheme supports it. This value must be appended to the authorization request, where it enables the interchange benefits granted to merchants processing payer Authentication transactions.<br/>**Visa**<br/><ul><li>5 &ndash; Identifies a successfully authenticated transaction.</li><li>6 &ndash; Identifies an attempts authenticated transaction.</li><li>7 &ndash; Identifies a non-authenticated transaction.</li></ul><br/>**Mastercard**<br/><br/><ul><li>1 &ndash; Identifies a non-authenticated transaction.</li><li>2 &ndash; Identifies a successfully authenticated transaction.</li></ul>|
-|cavv                   |string<br/>`length<=80`        |Read Only|This is the Cardholder Authentication Verification Value, indicating that the transaction has been authenticated. This value should be appended to the authorization request signifying that the transaction has been successfully authenticated.|
+|eci                    |number                         |Read Only|This is the E-Commerce Indicator (ECI). This value is returned only on payer authentication transactions or for enrollments where the issuer is non-participating, and the card scheme supports it. You must append this value to the authorization request, where it enables the interchange benefits granted to merchants who are processing payer Authentication transactions.<br/>**Visa**<br/><ul><li>5 &ndash; Identifies a successfully authenticated transaction. </li><li>6 &ndash; Identifies an attempt to authenticate the transaction.</li><li>7 &ndash; Identifies a non-authenticated transaction.</li></ul><br/>**Mastercard**<br/><br/><ul><li>1 &ndash; Identifies a non-authenticated transaction.</li><li>2 &ndash; Identifies a successfully authenticated transaction.</li></ul>|
+|cavv                   |string<br/>`length<=80`        |Read Only|This is the Cardholder Authentication Verification Value, indicating that the transaction is authenticated. You should append this value to the authorization request signifying that the transaction is successfully authenticated.|
 |xid                    |string<br/>`length<=40`        |Read Only|This is the transaction identifier returned by the card issuer.|
-|status                 |enum                           |Read Only|This is the status of the Enrollment Lookup request. Possible values are:<br/><ul><li>COMPLETED - The transaction has been completed.</li><li>FAILED - The authentication request failed. Check the error code for details.</li></ul>|
+|status                 |enum                           |Read Only|This is the status of the Enrollment Lookup request. Possible values are:<br/><ul><li>COMPLETED - The transaction is completed.</li><li>FAILED - The authentication request failed. Check the error code for details.</li></ul>|
 |merchantRefNum         |string<br/>`length<=255`       |Read Only|This is the merchant reference number created by the merchant and submitted as part of the request. It must be unique for each request.|
 |threeDEnrollment       |enum                           |Read Only|This indicates whether or not the cardholder is enrolled in 3D Secure. Possible values are:<br/><ul><li>Y &ndash; Cardholder authentication available</li><li>N &ndash; Cardholder not enrolled in authentication</li><li>U &ndash; Cardholder authentication unavailable</li></ul>|
 |threeDResult           |enum                           |Read Only|This indicates the outcome of the Authentication.<br/><ul><li>Y &ndash; The cardholder successfully authenticated with their card issuer.</li><li>A &ndash; The cardholder authentication was attempted.</li><li>N &ndash; The cardholder failed to successfully authenticate with their card issuer.</li><li>U &ndash; Authentication with the card issuer was unavailable.</li><li>E &ndash; An error occurred during authentication.</li></ul>|
-|signatureStatus        |enum                           |Read Only|This is the 3D Secure signature verification result value.<br/><ul><li>Y &ndash; All transaction and signature checks satisfied.</li><li>N &ndash; At least one transaction or signature check failed.</li></ul>|
-|error                  |[complex](#errorobject)        |Read Only|This is the error details of authentication. |
+|signatureStatus        |enum                           |Read Only|This is the 3D Secure signature verification result value.<br/><ul><li>Y &ndash; All transactions and signature checks satisfied.</li><li>N &ndash; At least one transaction or signature check failed.</li></ul>|
+|error                  |[complex](#errorobject)        |Read Only|This is the error details of the authentication. |
 
 ```apib
   {
@@ -818,8 +819,8 @@ You must not include any of the characters in the following table as values in a
 |street             |string<br/>`length<=50`    |Mandatory|This is the first line of the customer's street address.|
 |street2            |string<br/>`length<=50`    |Optional|This is the second line of the customer's street address, if required (e.g., apartment number).|
 |city               |string<br/>`length<=40`    |Mandatory|This is the city where the address is located.|
-|state              |string<br/>`length<=40`    |Optional|This is the state/province/region in which the customer lives.<br/>For Canada see [Province Codes](#provincecodes). For the United States see [State Codes](#statecodes). Other countries have no restrictions.|
-|zip                |string<br/>`length<=10`    |Mandatory|This is the zip, postal, or post code of the customer's address.|
+|state              |string<br/>`length<=40`    |Optional|This is the state/province/region in which the customer lives. For Canada, see [Province Codes](#provincecodes). For the United States, see [State Codes](#statecodes). Other countries have no restrictions.|
+|zip                |string<br/>`length<=10`    |Mandatory|This is the zip, postal, or postcode of the customer's address.|
 |country            |string<br/>`length=2`      |Mandatory|This is the country where the address is located. See [Country Codes](#countrycodes).|
 
 ```apib
@@ -886,16 +887,16 @@ You must not include any of the characters in the following table as values in a
 |Element            |Type                               |Required|Description    |
 |---                |---                                |---|---            |
 |id                 |string <br/>`length<=36`           |Read Only|This is the ID returned in the response.|
-|status             |enum                               |Read Only|This is the status of the customer. Possible values are:<br/><ul><li>INITIAL</li><li>ACTIVE</li></ul><br/>By default the system automatically sets the customer status to an ACTIVE state. If you want to prevent the customer from being used for payments, you can set the status to an INITIAL state (e.g., in cases where you first want to validate the customer).|
-|merchantCustomerId |string <br/>`length<=100`          |Mandatory|This is a customer ID that the merchant provides with the request for their own internal customer identification. This value must be unique for each customer belonging to a merchant.|
+|status             |enum                               |Read Only|This is the status of the customer. Possible values are:<br/><ul><li>INITIAL</li><li>ACTIVE</li></ul><br/>By default, the system automatically sets the customer status to an ACTIVE state. If you want to prevent the customer from being used for payments, you can set the status to an INITIAL state (e.g., in cases where you first want to validate the customer).|
+|merchantCustomerId |string <br/>`length<=100`          |Mandatory|This is a customer ID that the merchant provides with the request for their internal customer identification. This value must be unique for each customer belonging to a merchant.|
 |locale             |enum                               |Mandatory|This indicates the language of the customer. Possible values are:<ul><li>en_US</li><li>fr_CA</li><li>en_GB</li></ul>
-|firstName          |string <br/>`length<=80`           |Optional|This is the customer’s first name. |
-|middleName         |string <br/>`length<=80`           |Optional|This is the customer’s middle name. |
-|lastName           |string <br/>`length<=80`           |Optional|This is the customer’s last name. |
+|firstName          |string <br/>`length<=80`           |Optional|This is the customer's first name. |
+|middleName         |string <br/>`length<=80`           |Optional|This is the customer's middle name. |
+|lastName           |string <br/>`length<=80`           |Optional|This is the customer's last name. |
 |dateOfBirth        |[dateOfBirth](#dateofbirthobject)  |Optional|This is the customer's date of birth.|
-|ip                 |string<br/>`length<=46`            |Optional|This is the customer’s IP address.|
-|gender             |enum                               |Optional|This is the customer’s gender. Possible values are:<ul><li>M (male)</li><li>F (female)</li></ul>
-|nationality        |string<br/>`length<=30`            |Optional|This is the customer’s nationality.|
+|ip                 |string<br/>`length<=46`            |Optional|This is the customer's IP address.|
+|gender             |enum                               |Optional|This is the customer's gender. Possible values are:<ul><li>M (male)</li><li>F (female)</li></ul>
+|nationality        |string<br/>`length<=30`            |Optional|This is the customer's nationality.|
 |email              |string<br/>`length<=255`           |Optional|This is the customer's email address.|
 |phone              |string<br/>`length<=40`            |Optional|This is the customer's phone number.|
 |cellPhone          |string<br/>`length<=40`            |Optional|This is the customer's cell phone number.|
@@ -934,11 +935,11 @@ You must not include any of the characters in the following table as values in a
 ## eft
 |Element            |Type                       |Required|Description                        |
 |---                |---                        |---|---       |
-|accountHolderName  |string <br/>`length<=30`   |Mandatory|This is the name of the customer or company. |
+|accountHolderName  |string <br/>`length<=30`   |Mandatory|This is the name of the customer or company.|
 |accountNumber      |string<br/>`length=4-12`   |Mandatory|This is the bank account number.|
 |transitNumber      |string<br/>`length=5`      |Mandatory|This is the 5-digit transit number of the customer's bank branch.|
-|institutionId      |string<br/>`length=3`      |Optional|This is the 3-digit institution ID of the customer’s bank branch. |
-|lastDigits         |string<br/>`length=2`      |Read Only|This is returned in response. It contains only last 2 digits of bank account.|
+|institutionId      |string<br/>`length=3`      |Optional|This is the 3-digit institution ID of the customer's bank branch. |
+|lastDigits         |string<br/>`length=2`      |Read Only|This is returned in the response. It contains the last 2 digits of the bank account.|
 
 ```apib
             {
@@ -985,7 +986,7 @@ You must not include any of the characters in the following table as values in a
 | Element            | Type   |Required| Description                 |
 |--------------------|--------|--------|-----------------------------|
 |field             |string  |Read Only|Identifies the JSON request field.|
-|error            |string  |Read Only|The problem associated with field.|
+|error            |string  |Read Only|The problem associated with the field.|
 
 ```apib
         {
@@ -1001,11 +1002,11 @@ This is a read-only raw response returned by an acquirer.
 
 | Element            | Type   |Required| Description                                                                                         |
 |--------------------|--------|---------|-----------------------------------------------------------------------------------------------------|
-| code               | string |Read Only| This is acquirer identification code, such as DJN, CRX, etc.                                        |
+| code               | string |Read Only| This is the acquirer identification code, such as DJN, CRX, etc.                                    |
 | responseCode       | string |Read Only| This is the raw response returned by the acquirer.                                                  |
 | avsResponse        | enum   |Read Only| This is the AVS response returned from the card issuer. Possible values are:<ul><li>MATCH</li><li>MATCH_ADDRESS_ONLY</li><li>MATCH_ZIP_ONLY</li><li>NO_MATCH</li><li>NOT_PROCESSED</li><li>UNKNOWN</li></ul> |
 | avsCode            | string |Read Only| This is the raw AVS code returned by the acquirer.                                                  |
-| balanceResponse    | string |Read Only| This is the balance remaining on a gift card, if a gift card was used for the original transaction. |
+| balanceResponse    | string |Read Only| This is the remaining balance on a gift card when a gift card is used for the original transaction. |
 | mid                | string |Read Only| This is the acquirer MID that was sent to the clearing house.                                       |
 | terminalId         | string |Read Only| This is the merchant's terminal ID.                                                                 |
 | batchNumber        | string |Read Only| This is the batch number.                                                                           |
@@ -1024,22 +1025,22 @@ This is a read-only raw response returned by an acquirer.
 | responseReasonCode | string |Read Only| This is the raw response reason code returned by Credorax.                                          |
 | cvvVerification    | enum   |Read Only| This is the response to the cvv submitted with the transaction request. Possible values are:<ul><li>MATCH</li><li>NO_MATCH</li><li>NO_MATCH</li><li>NOT_PROCESSED</li><li>UNKNOWN</li></ul> |
 | cvv2Result         | string |Read Only| This is the raw cvv2 result code.                                                                   |
-| orderId            | string |Read Only| Unique NETELLER reference for the order. `ie: ORD_7915d463-ccc8-4305-9d33-9e5c9310f12e, SUB_c46645ea-b7b0-4a91-87f7-88c00ec0dea1`|
+| orderId            | string |Read Only| Unique reference for the order. `ie: ORD_7915d463-ccc8-4305-9d33-9e5c9310f12e, SUB_c46645ea-b7b0-4a91-87f7-88c00ec0dea1`|
 
 <a name="instantachobject" title="Instant ACH Object"></a>
 ## instantach
 
 |Element                 |Type                   |Required|Description|
 |---                     |---                    |---|---|
-|consumerId              |string<br>`length<=50` |Mandatory|This is the email address of the customer who is making the payment.If provided by merchant, this will be populated in redirected screen for customer to see. |
-|paymentId               |string<br>`length<=36` |Mandatory|This is the ID returned in the response to a prior Payment that the customer made using Instant ACH. Required for withdrawal checkout.|
+|consumerId              |string<br>`length<=50` |Mandatory|This is the email address of the customer who is making the payment. If provided by the merchant, this will be populated in a redirected screen for the customer. |
+|paymentId               |string<br>`length<=36` |Mandatory|This is the ID returned in response to a prior Payment that the customer made using Instant ACH. It is required for withdrawal checkout.|
 |emailSubject            |string<br>`length<=30` |Mandatory|This is the Subject line to use in the customer email. |
 |emailMessage            |string<br>`length<=50` |Mandatory|This is the message to use in the customer email. |
-|recipientDescription    |string<br>`length<=30` |Optional|This is a description to be shown on the instantach payment page in the logo area if there is no *logo\_url* parameter. If no value is submitted and there is no logo, the *pay\_to\_email* value is shown as the recipient of the payment.|
+|recipientDescription    |string<br>`length<=30` |Optional|This is a description displayed on the Instant ACH payment page in the logo area when there is no *logo\_url* parameter. If no value is submitted and there is no logo, the *pay\_to\_email* value is displayed as the recipient of the payment.|
 |language                |string<br>`length=2`   |Optional|This is the 2-character preferred language code for the consumer (e.g., EN, FR).|
-|logoUrl                 |string                 |Optional|This is the URL of the logo that you would like to appear in the top right of the instantach page. The logo must be accessible via HTTPS or it will not be shown. The logo will be resized to fit. To avoid scaling distortion, the minimum size should be as follows:<br>If the logo width > height - at least 107px wide.<br>If logo width > height - at least 65px high<br>Avoid large images (much greater than 256 by 256px) to minimize the page loading time.|
+|logoUrl                 |string                 |Optional|This is the URL of the logo that will appear in the top right of the Instant ACH page. The logo must be accessible via HTTPS or it will not be dispayed. The logo will be resized to fit. To avoid scaling distortion, the minimum size should be as follows:<br>If the logo width > height - at least 107px wide.<br>If logo width > height - at least 65px high<br>Avoid large images (much greater than 256 by 256px) to minimize the page loading time.|
 |detail1Description      |string                 |Optional|You can show additional details about the product in the More information section in the header of Quick Checkout.|
-|detail1Text             |string                 |Optional|The detail1Text is shown next to the detail1Description in the More Information section in the header of the payment form with the other payment details. The detail1Description combined with the detail1Text is shown in the more information field of the merchant account history CSV file.|
+|detail1Text             |string                 |Optional|The detail1Text is displayed next to the detail1Description in the More Information section in the header of the payment form with the other payment details. The detail1Description combined with the detail1Text is shown in the more information field of the merchant account history CSV file.|
 |descriptor              |string<br>`length<=30` |Optional|This is the merchant descriptor that will be displayed on the consumer's bank statement.|
 
 ```
@@ -1330,7 +1331,7 @@ This is an authorization that is approved for an amount lower than the requested
 |id                 |string <br/>`length<=36`               |Read Only|This is the ID returned in the response. This ID can be used for future associated requests.|
 |merchantRefNum     |string <br/>`length<=255`              |Mandatory|This is the merchant reference number created by the merchant and submitted as part of the request. It must be unique for each request.|
 |amount             |number<br/>`max=99999999999`           |Mandatory|This is the amount of the request, in minor units. For example, to process US $10.99, this value should be 1099. <br/>**Note:** The *amount* specified in the Payment request must match the *amount* specified in the Payment Handle request from which the *paymentHandleToken* is taken.|
-|dupCheck           |boolean                                |Optional|This validates that this request is not a duplicate. A request is considered a duplicate if the *merchantRefNum* has already been used in a previous request within the past 90 days.<br/>**Note:** This value defaults to *true*.|
+|dupCheck           |boolean                                |Optional|This validates that this request is not a duplicate. A duplicate request is when the *merchantRefNum* has already been used in a previous request within the past 90 days.<br/>**Note:** This value defaults to *true*.|
 |settleWithAuth     |boolean                                |Optional|This indicates whether the request is an Authorization only (no Settlement), or a Purchase (Authorization and Settlement).<br/><ul><li>false &ndash; The request is not settled</li><li>true &ndash; The request is settled</li></ul><br/>**Note:** Defaults to *true*.|
 |preAuth            |boolean                                |Optional|This indicates whether the Authorization request should be sent as a Pre-Authorization.<br/>**Note:** You should use the *preAuth* element in cases where you are not sure that you can fully settle the Authorization within 4 days. Contact your account manager for more information.|
 |partialAuth        |[partialAuth](#partialauthobject)      |Optional|This is an authorization that is approved for an amount lower than the requested amount. The remainder of the amount could be paid by other means.|
@@ -1346,7 +1347,7 @@ This is an authorization that is approved for an amount lower than the requested
 |gatewayResponse    |[gatewayResponse](#gatewayresponseobject) |Read Only| This is the read-only raw response returned by an acquirer. It is returned only if your account is configured accordingly.|
 |accordD            |[accordD](#accorddobject)              |Optional|These are parameters for financing plans supported for certain merchant configurations.<br/>Include this element **only when** instructed to do so by your account manager.|
 |recipient          |[recipient](#recipientobject)          |Optional|In certain cases, this allows additional data to be included with a Payment request. |
-|riskReasonCode     |array                                  |Read Only|An array of integers is returned, displaying the detailed Risk reason codes if your transaction was declined. It is returned only if your account is configured accordingly.|
+|riskReasonCode     |array                                  |Read Only|An array of integers is returned, displaying the detailed risk reason codes when your transaction was declined. It is returned only when your account is configured accordingly.
 |splitpay           |[splitpay](#splitpayobject)            |Optional|This enables you to use the Split Payouts functionality when authorizing with a Settlement.|
 |storedCredentialDetails |[storedCredentialDetails](#storedcredentialobject) || This object is used to identify requests that use stored credentials that the merchant has on file for the consumer, in order to improve authorization rates and reduce fraud. |
 |settlements        |array                                  |Read Only|This is a read-only list of all Settlements. This will be returned only if *settleWithAuth* = *true* in the request. |
@@ -1472,13 +1473,13 @@ If you [look up an authorization request](#getauth)  that used the *visaAddition
 |id                 |string <br/>`length<=36`               |Read Only|This is the ID returned in the response. This ID can be used for future associated requests.|
 |merchantRefNum     |string <br/>`length<=255`              |Mandatory|This is the merchant reference number created by the merchant and submitted as part of the request. It must be unique for each request.|
 |amount             |number<br>`max=99999999999`            |Optional|This is the amount of the request, in minor units. For example, to process US $10.99, this value should be 1099.|
-|dupCheck           |boolean                                |Optional|This validates that this request is not a duplicate. A request is considered a duplicate if the *merchantRefNum* has already been used in a previous request within the past 90 days.<br/>**Note:** This value defaults to *true*.|
+|dupCheck           |boolean                                |Optional|This validates that this request is not a duplicate. A duplicate request is when the *merchantRefNum* has already been used in a previous request within the past 90 days.<br/>**Note:** This value defaults to *true*.|
 |childAccountNum    |string<br/>`length<=10`                |Optional|This is the child merchant account number. It is returned only if the transaction was processed via a master account.|
 |txnTime            |UTC formatted date                     |Read Only|This is the date and time the request was processed. For example:<br/>2014-01-26T10:32:28Z|
 |status             |enum                                   |Read Only|This is the status of the transaction request. Possible values are:<ul><li>RECEIVED &ndash; Our system has received the request and is waiting for the downstream processor’s response.</li><li>COMPLETED &ndash; The transaction has been completed.</li><li>PENDING &ndash; Our system has received the request but it has not yet been batched.</li><li>FAILED &ndash; The transaction failed, due to either an error or being declined.</li><li>CANCELLED &ndash; The request has been fully voided (reversed).</li></ul>|
 |error              |[error](#errorobject)                  |Read Only|Details of the error.  |
 |splitpay           |[splitpay](#splitpayobject)            |Optional|This enables you to use the Split Payouts functionality when processing a Refund.|
-|riskReasonCode     |array                                  |Read Only|An array of integers is returned, displaying the detailed Risk reason codes if your transaction was declined. It is returned only if your account is configured accordingly.|
+|riskReasonCode     |array                                  |Read Only|An array of integers is returned, displaying the detailed risk reason codes when your transaction was declined. It is returned only when your account is configured accordingly.
 |gatewayResponse    |[gatewayResponse](#gatewayresponseobject) |Read Only| This is the read-only raw response returned by an acquirer. It is returned only if your account is configured accordingly.|
 
 ```apib
@@ -1520,14 +1521,14 @@ If you [look up an authorization request](#getauth)  that used the *visaAddition
 |id                 |string <br/>`length<=36`               |Read Only|This is the ID returned in the response. This ID can be used for future associated requests.|
 |merchantRefNum     |string <br/>`length<=255`              |Mandatory|This is the merchant reference number created by the merchant and submitted as part of the request. It must be unique for each request.|
 |amount             |number<br/>`max=99999999999`           |Optional|This is the amount of the request, in minor units.For example, to process US $10.99, this value should be 1099. |
-|dupCheck           |boolean                                |Optional|This validates that this request is not a duplicate. A request is considered a duplicate if the *merchantRefNum* has already been used in a previous request within the past 90 days.<br/>**Note:** This value defaults to *true*.|
+|dupCheck           |boolean                                |Optional|This validates that this request is not a duplicate. A duplicate request is when the *merchantRefNum* has already been used in a previous request within the past 90 days.<br/>**Note:** This value defaults to *true*.|
 |availableToRefund  |number<br/>`max=99999999999`           |Read Only|This is the amount of this Settlement that is available to Refund, in minor units. For example, US $10.99 would be 1099.|
 |childAccountNum    |string<br/>`length<=10`                |Read Only|This is the child merchant account number. It is returned only if the transaction was processed via a master account.|
 |txnTime            |UTC formatted date                     |Read Only|This is the date and time the request was processed. For example:<br/>2014-01-26T10:32:28Z|
 |status             |enum                                   |Read Only|This is the status of the transaction request. Possible values are:<ul><li>RECEIVED &ndash; Our system has received the request and is waiting for the downstream processor’s response.</li><li>PENDING &ndash; Our system has received the request but it has not yet been batched.</li><li>PROCESSING &ndash; The Settlement batch has started.</li><li>COMPLETED &ndash; The transaction has been completed.</li><li>FAILED &ndash; The transaction failed, due to either an error or being declined.</li><li>CANCELLED &ndash; The transaction request has been cancelled.</li></ul>|
 |error              |[error](#errorobject)                  |Read Only|Details of the error.   |
 |splitpay           |[splitpay](#splitpayobject)            |Optional|This enables you to use the Split Payouts functionality when settleing an Authorization.|
-|riskReasonCode     |array                                  |Read Only|An array of integers is returned, displaying the detailed Risk reason codes if your transaction was declined. It is returned only if your account is configured accordingly.|
+|riskReasonCode     |array                                  |Read Only|An array of integers is returned, displaying the detailed risk reason codes when your transaction was declined. It is returned only when your account is configured accordingly.
 |gatewayResponse    |[gatewayResponse](#gatewayresponseobject) |Read Only| This is the read-only raw response returned by an acquirer. It is returned only if your account is configured accordingly.|
 
 
@@ -6106,7 +6107,7 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
     _Mandatory, Max =99999999999_
 + `currencyCode`:`CAD` (string) - This is the [currency of the merchant account](#currencycodes), e.g., USD or CAD. **Note:** The *currencyCode* specified in the Credit request must match the *currencyCode* specified in the Payment Handle request from which the *paymentHandleToken* is taken.
     _Mandatory, max=3_
-+ `dupCheck`:`true` (boolean) - This validates that this request is not a duplicate. A request is considered a duplicate if the merchantRefNum has already been used in a previous request within the past 90 days.
++ `dupCheck`:`true` (boolean) - This validates that this request is not a duplicate. A duplicate request is when the *merchantRefNum* has already been used in a previous request within the past 90 days.
     + Default: true
 + `txnTime`:`2018-12-11T16:33:49Z` (string) - This is the date and time the transaction was processed.
     _Read Only_
@@ -6630,7 +6631,7 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
     _Mandatory, length<=255_
 + `amount`:`1000` (number) - This is the amount of the request, in minor units. **Note:** The *amount* specified in the Payment request must match the *amount* specified in the Payment Handle request from which the *paymentHandleToken* is taken.
     _Mandatory, max=99999999999_
-+ `dupCheck`:`false` (boolean) - This validates that this request is not a duplicate. A request is considered a duplicate if the *merchantRefNum* has already been used in a previous request within the past 90 days.Default: true
++ `dupCheck`:`false` (boolean) - This validates that this request is not a duplicate. A duplicate request is when the *merchantRefNum* has already been used in a previous request within the past 90 days.
     _Optional_
 + `settleWithAuth`:`true` (boolean) - This indicates whether the request is an Authorization only (no Settlement) or a Purchase (Authorization and Settlement). Default: true
     _Optional_
@@ -6674,7 +6675,7 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
 + Include Gateway Response
 + Include accordD
 + Include Recipient
-+ `riskReasonCode`:`1001` (array) - An array of integers is returned, displaying the detailed risk reason codes if your transaction was declined. It is returned only if your account is configured accordingly.
++ `riskReasonCode`:`1001` (array) - An array of integers is returned, displaying the detailed risk reason codes when your transaction was declined. It is returned only when your account is configured accordingly.
 + Include Splitpay
 + Include Stored Credential
 + settlements (array) - This is the list of all Settlements. This will be returned only if *settleWithAuth* = *true* in the request.
@@ -6687,7 +6688,7 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
 ## Profile
 
 + `profile` (object) 
-    + `firstName`:`Jane` (string) - This is the customer’s first name.
+    + `firstName`:`Jane` (string) - This is the customer's first name.
         _length<=80_
     + `lastname`:`Smyth` (string) - This is the customer's last name.
         _length<=80_
@@ -6703,10 +6704,10 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
         _length<=40_
     + `mobile`:`4446666` (string) - This is the customer's mobile phone number. 
         _length<=40_
-    + `gender`: (enum) - This is the customer’s gender.
+    + `gender`: (enum) - This is the customer's gender.
         - F
         - M
-    + `nationality`:`Indian` (string) - This is the customer’s nationality.
+    + `nationality`:`Indian` (string) - This is the customer's nationality.
         _length<=30_
 
 ## paymenthandles
@@ -6719,7 +6720,7 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
 
 
 ## Recipient (object)
-+ `recipient` (object) - The recipient is deemed to be the person or party who has the contractual relationship with the merchant/financial institution.
++ `recipient` (object) - The recipient is the person or party who has a contractual relationship with the merchant/financial institution
     + `dateOfBirth` (object) - This is the date of birth of the recipient.
         + `day`:`24` (number) - This is the day of birth.
         + `month`:`12` (number) - This is the month of birth.
@@ -6737,13 +6738,13 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
 
 
 ## Refunds
-+ `id`:`25f6dadf-176a-415f-95c9-6ff39ff697ba` (string) - This is the ID returned in the response. This ID can be used for future associated requests, e,g., Refunds.
++ `id`:`25f6dadf-176a-415f-95c9-6ff39ff697ba` (string) - This is the ID returned in the response. You can use this ID for future associated requests.
     _Read Only, length<=36_
 + `merchantRefNum`:`P1234` (string) - This is the merchant reference number created by the merchant and submitted as part of the request.
     _Mandatory, length<=255_
 + `amount`:`100` (number) - This is the amount of the request, in minor units. If this value is not provided, the full remaining amount on the Settlement will be refunded. 
     _Optional, max=99999999999_
-+ `dupCheck`:`true` (boolean) - This validates that this request is not a duplicate. A request is considered a duplicate if the merchantRefNum has already been used in a previous request within the past 90 days.
++ `dupCheck`:`true` (boolean) - This validates that this request is not a duplicate. A duplicate request is when the *merchantRefNum* has already been used in a previous request within the past 90 days.
     _Optional_
     + Default: true
 + `childAccountNum`:`1234567898` (string) - This is the child merchant account number. It is returned only when the transaction is processed via a master account.
@@ -6762,7 +6763,7 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
         + COMPLETED - The request was completed.
 + Include Error Attributes
 + Include Splitpay
-+ `riskReasonCode`:`1001` (array) - An array of integers is returned, displaying the detailed risk reason codes if your transaction was declined. It is returned only if your account is configured accordingly.        
++ `riskReasonCode`:`1001` (array) - An array of integers is returned, displaying the detailed risk reason codes when your transaction was declined. It is returned only when your account is configured accordingly.
     _Read Only_
 + Include Gateway Response
 + Include Metadata Object
@@ -6772,32 +6773,32 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
 + `settlements`: (array) - An array of Settlements.
 
 ## Settlements
-+ `id`: `25f6dadf-176a-415f-95c9-6ff39ff697ba` (string) - This is the ID returned in the response. This ID can be used for future associated requests, e,g., Refunds.
++ `id`: `25f6dadf-176a-415f-95c9-6ff39ff697ba` (string) - This is the ID returned in the response. You can use this ID for future associated requests.
     _Read Only, length<=36_
 + `merchantRefNum`: `P1234` (string) - This is the merchant reference number created by the merchant and submitted as part of the request.
     _Mandatory, length<=255_
-+ `amount`: `100` (number) - This is the amount of the request, in minor units. If this value is not provided, the full remaining amount on the Authorization will be settled. 
++ `amount`: `100` (number) - This is the amount of the request, in minor units. If this value is not provided, the full remaining amount will be settled. 
     _Optional, max=99999999999_
-+ `dupCheck`: `true` (boolean) - This validates that this request is not a duplicate. A request is considered a duplicate if the merchantRefNum has already been used in a previous request within the past 90 days.
++ `dupCheck`: `true` (boolean) - This validates that this request is not a duplicate. A duplicate request is when the *merchantRefNum* has already been used in a previous request within the past 90 days.
     _Optional_
     + Default: true
-+ `availableToRefund`:`25` (number) - This is the amount of the Authorization remaining to refund, in minor units.
++ `availableToRefund`:`25` (number) - This is the remaining amount of the refund, in minor units.
     _Read Only, max=99999999999_
 + `childAccountNum` : `1234567898` (string) - This is the child merchant account number. It is returned only when the transaction is processed via a master account.
     _Optional, length<=10_
 + `status`:`PENDING` (enum) - This is the status of the transaction request.
     _Read Only_
     + Members
-        + RECEIVED - Our system has received the request and is waiting for the downstream processor’s response. 
+       + RECEIVED - Our system has received the request and is waiting for the downstream processor's response. 
         + INITIATED - The transaction was initiated with the downstream provider.
-        + PENDING - The transaction awaiting payment service provider's response.
-        + FAILED - The transaction failed, due to either an error or being declined. 
-        + CANCELLED - The request has been cancelled.
+        + PENDING - The transaction is awaiting the payment service provider's response.
+        + FAILED - The transaction failed due to an error or got declined. 
+        + CANCELLED - The authorization request is reversed.
         + EXPIRED - The request expired. 
         + COMPLETED - The request was completed.
 + Include Error Attributes
 + Include Splitpay
-+ `riskReasonCode`: `1001` (array) - An array of integers is returned, displaying the detailed risk reason codes if your transaction was declined. It is returned only if your account is configured accordingly.        
++ `riskReasonCode`: `1001` (array) - An array of integers is returned, displaying the detailed risk reason codes when your transaction was declined. It is returned only when your account is configured accordingly.
 + Include Gateway Response
 + Include Metadata Object
 
@@ -6819,64 +6820,64 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
 + RECEIVED - Our system has received the request and is waiting for the downstream processor’s response.
 + INITIATED - The transaction was initiated with the downstream provider.
 + PAYABLE - The merchant can proceed with the Payment request.
-+ PROCESSING - The Payment Handle was authorized by customer, awaiting PSP response.
-+ FAILED - The transaction failed, due to either an error or being declined. 
-+ CANCELLED - The authorization request has been fully reversed.
-+ EXPIRED - The Payment Handle expired due to merchant not proceeding with Payment request.
++ PROCESSING - The Payment Handle was authorized by the customer, awaiting the PSP response.
++ FAILED - The transaction failed due to an error or got declined. 
++ CANCELLED - The authorization request is reversed.
++ EXPIRED - The Payment Handle expired as the merchant did not proceed with the Payment request.
 + COMPLETED - The Payment request was initiated successfully using the Payment Handle.
 
 ## `Stored Credential`
-+ storedCredential (object) - This object is used to identify authorization requests that use stored credentials for a consumer's authorization request, in order to improve authorization rates and reduce fraud. Stored credentials can be used in two cases: using a payment token from the Customer Vault for an authorization, and using a card number stored by the merchant for an authorization.
++ storedCredential (object) - You can use this object to identify authorization requests that use stored credentials for a consumer's authorization request, to improve authorization rates and reduce fraud. You can use Stored credentials in two cases: using a payment token from the Customer Vault for authorization, and using a card number stored by the merchant for an authorization.
 
     + Properties
         + type:`ADHOC` (enum) - This specifies the type of request being made. 
             + ADHOC – Ad hoc consumer-initiated request.
-            + TOPUP – Unscheduled merchant iniitated request when a consumer balance is below a set limit.
-            + RECURRING –  Scheduled merchant initiated recurring request.
+            + TOPUP – Unscheduled merchant initiated request when a consumer balance is below a set limit.
+            + RECURRING –  Scheduled merchant initiated recurring requests.
             
             + Default: ADHOC
-        + occurrence:`RECURRING` (enum) - This specifies whether the stored credential request is initial or recurring. 
+        + occurrence:`RECURRING` (enum) - This specifies whether the stored credential request is initial or recurring.
             + INITIAL – Used when this is the first time the consumer uses this credit card.
-            + SUBSEQUENT – Used when the consumer uses this credit card for subsquent requests.
+            + SUBSEQUENT – Used when the consumer uses this credit card for subsequent requests.
             
             + Default: INITIAL
 
 ## VerificationResponse (object)
-+ `id`:`25f6dadf-176a-415f-95c9-6ff39ff697ba` (string) - This is the ID returned in the response. This ID can be used for future associated requests, e,g., looking up the Verification.
++ `id`:`25f6dadf-176a-415f-95c9-6ff39ff697ba` (string) - TThis is the ID returned in the response. You can use this ID for future associated requests.
     _Read Only, length<=36_
-+ `paymentHandleToken`:`842778a0-03a2-11e9-8eb2-f2801f1b9fd1` (string) - This is the payment token generated by Paysafe that will be used for the Verification request.
++ `paymentHandleToken`:`842778a0-03a2-11e9-8eb2-f2801f1b9fd1` (string) - This is the payment token generated by Paysafe that will be used for the verification request.
     _Mandatory, length<=36_
 + `merchantRefNum`:`P1234` (string) - This is the merchant reference number created by the merchant and submitted as part of the request.
     _Mandatory, length<=255_
 + `customerIp`:`111.111.111.111` (string) - This is the customer's IP address.
     _Optional, length<=39_
-+ `dupCheck`:`true` (boolean) - This validates that this request is not a duplicate. A request is considered a duplicate if the merchantRefNum has already been used in a previous request within the past 90 days.
++ `dupCheck`:`true` (boolean) - This validates that this request is not a duplicate. A duplicate request is when the *merchantRefNum* has already been used in a previous request within the past 90 days.
     _Optional_
     + Default: true
-+ `description`:`Consumer Card Verification` (string) - This is a description of the transaction, provided by the merchant.
++ `description`:`Consumer Card Verification` (string) - This is a description of the transaction provided by the merchant.
     _Optional, length<=255_
 + `txnTime`:`2018-12-11T16:33:49Z` (string) - This is the date and time the transaction was processed.
     _Read Only_
-+ `paymentType`: (enum) - This is the payment type associated with the Payment Handle used for this request.
++ `paymentType`: `CARD` (enum) - This is the payment type associated with the Payment Handle used for this request.
     _Read Only_
     + Members
         + CARD
 + `status` (enum) - This is the status of the transaction request.
     _Read Only_
     + Members
-        + RECEIVED - Our system has received the request and is waiting for the downstream processor’s response. 
+        + RECEIVED - Our system has received the request and is waiting for the downstream processor's response. 
         + INITIATED - The transaction was initiated with the downstream provider.
-        + PENDING - The transaction awaiting payment service provider's response.
-        + FAILED - The transaction failed, due to either an error or being declined. 
-        + CANCELLED - The authorization request has been fully reversed.
+        + PENDING - The transaction is awaiting the payment service provider's response.
+        + FAILED - The transaction failed due to an error or got declined. 
+        + CANCELLED - The authorization request is reversed.
         + EXPIRED - The request expired. 
         + COMPLETED - The request was completed.
-+ `currencyCode`:`CAD` (string) - This is the [currency of the merchant account](#currencycodes), e.g., USD or CAD, returned in the request response.
++ `currencyCode`:`CAD` (string) - This is the [currency of the merchant account](#currencycodes), e.g., USD or CAD, returned in the request-response.
     _Read Only, max=3_
 + Include Gateway Response
 + Include Error Attributes
 + Include Metadata Object
-+ `riskReasonCode`:`1001` (array) - An array of integers is returned, displaying the detailed risk reason codes if your transaction was declined. It is returned only if your account is configured accordingly.
++ `riskReasonCode`:`1001` (array) - An array of integers is returned, displaying the detailed risk reason codes when your transaction was declined. It is returned only when your account is configured accordingly.
     _Optional_
 
 ## verifications
@@ -6888,7 +6889,7 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
 + `voidAuths`: (array) - An array of Void Authorizations.
 
 ## voidAuthResponse (object)
-+ `id`:`25f6dadf-176a-415f-95c9-6ff39ff697ba` (string) This is the ID returned in the response. This ID can be used for future associated requests, e,g., lookups.
++ `id`:`25f6dadf-176a-415f-95c9-6ff39ff697ba` (string) This is the ID returned in the response. This ID can be used for future associated requests.
     _Read Only, length<=36_
 + `merchantRefNum`:`P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
     _length<=255_
@@ -6899,11 +6900,11 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
 + `status` (enum) - This is the status of the transaction request.
     _Read Only_
     + Members
-        + RECEIVED - Our system has received the request and is waiting for the downstream processor’s response. 
+        + RECEIVED - Our system has received the request and is waiting for the downstream processor's response.
         + INITIATED - The transaction was initiated with the downstream provider.
-        + PENDING - The transaction awaiting payment service provider's response.
-        + FAILED - The transaction failed, due to either an error or being declined. 
-        + CANCELLED - The request has been cancelled.
-        + EXPIRED - The request expired. 
-        + COMPLETED - The request was completed.
+        + PENDING - The transaction is awaiting the payment service provider's response.
+        + FAILED - The transaction failed due to an error or got declined. 
+        + CANCELLED - The request is cancelled.
+        + EXPIRED - The request expired.  
+        + COMPLETED - The request is completed.
 + Include Metadata Object
