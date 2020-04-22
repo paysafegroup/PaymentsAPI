@@ -17,12 +17,6 @@ The Paysafe Payments API helps you to process payments of your users. The Paymen
 * Capture
 * Refund payments
 
-The API is constructed around REST. 
-Our API has:
-* Definite resource-oriented URLs
-* Receives form-encoded request bodies
-* Returns JSON-encoded responses 
-* Communicates using standard HTTP response codes, authentication, and verbs.
 
 You can use the Payments API in test mode, which does not affect your live data or interact with the banking networks. The API key you use to authenticate the request determines whether the request is the live mode or test mode.
 
@@ -45,7 +39,7 @@ The Payments API currently supports the following payment methods:
 - Instant ACH (iACH)
  
 
-# Authentication
+# Before you begin
 ## API Keys
 <a name="apikeys" title="Get your API Keys"></a>
 The Payments API uses two distinct API keys:<br/>
@@ -145,6 +139,11 @@ For example:
 
 # API
 The Payments API allows merchants to process payment-related requests across a wide variety of payment methods with a simple integration a single API using the REST protocol. The protocol uses JSON for all requests and responses.
+The API is constructed around REST and has:
+* Definite resource-oriented URLs
+* Receives form-encoded request bodies
+* Returns JSON-encoded responses 
+* Communicates using standard HTTP response codes, authentication, and verbs.
 
 * **Message body**: This must contain valid Paysafe JSON objects as required for the type of request. Not all API calls require a message-body; for example, GET requests do not require a body.
 * **Resource ID**: Identifies the unique ID of a resource.
@@ -154,8 +153,10 @@ The behavior is controlled by using an HTTP header named “**Simulator**” in 
    * **"INTERNAL" (default)** – which redirects you to the **status** simulator page.
    * **"EXTERNAL"** – which redirects/connects you to the downstream payment method website (Eg: Skrill authentication page)
 
-## Request Types Supported
-The following request types are supported:
+## Transaction Types Supported
+The following request types are supported for the following Payment Methods:
+
+![Feature Grid](https://prlocal-developer-paysafe-com.eu.paysafecorp.com/fileadmin/flarecontent/devcentre/Content/Resources/Images/Checkout/feature_grid.png)
 
   * [Payment Methods](#getpaymentmethods)
   * [Payment Handles](#paymenthandlerequest)
@@ -174,8 +175,6 @@ The following request types are supported:
 
 <a name="apiendpoints" title="API Endpoints"></a>
 ## API Endpoints
-
-`https://api.paysafe.com/paymenthub/v1/payments/{payment_id}`
 
 ### Resource Patterns
 
@@ -216,6 +215,27 @@ The following request types are supported:
 |/customers/{customer_id}/paymenthandles/{paymenthandle_id} |Delete a Customer Payment Handle    |DELETE |
 |/customers/{customer_id}/singleusetokens       |Create a Single-Use Customer Token     |POST   |
 |/singleusecustomertokens/[singleusecustomertoken_id}   |Look Up a Single-Use Customer Token    |GET    |
+
+
+<a name="paymentswebhooks" title="Payments Webhooks"></a>
+# Webhooks
+
+A webhook allows you to define an HTTP callback to which a request will be posted when an event occurs that you want to be notified about. 
+To configure webhooks, you need to [open a service request](#support) with Paysafe in the Business Portal.
+
+For more information of Webhooks please refer, [here](https://prlocal-developer-paysafe-com.eu.paysafecorp.com/en/rest-apis/igaming/paysafe-checkout/webhooks/).
+
+> **Note:** In order to receive webhooks from Paysafe, you must create a callback URL to receive the webhook that is triggered. 
+You are responsible for ensuring its continued availability.
+
+## Some Notes on Webhooks
+
++ When the status of one of your transaction request changes, Paysafe immediately sends a callback to your webhook's endpoint URL to inform you of the status change. 
++ To acknowledge the receipt of a webhook, Paysafe expects to get an HTTP status of 200 OK or 202 ACCEPTED from your endpoint. In case we receive any other HTTP status code, we assume that you have not received the webhook and we attempt to resend it.
++ If the callback for the transaction request status change event fails (i.e., Paysafe does not get an acknowledgement of receipt with an HTTP Status Code of 200 or 202), Paysafe makes a maximum of 2 additional attempts (total 3 attempts) to send a callback to that URL.
++ As Paysafe does not have a notification method to alert you when callbacks are not reaching your endpoint URL, you should make sure that there is continued availability of your endpoint.
++ All endpoint URLs should use HTTPS/SSL to ensure security. Please note that only the default **HTTPS port 443** is supported.
++ In case you have received the same notification multiple times for an already processed event, we request you to kindly ignore the duplicate notification. It is recommended to make the notification URL endpoints idempotent.
 
 <a name="pagination" title="Pagination"></a>
 # Pagination
