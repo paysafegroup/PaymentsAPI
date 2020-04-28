@@ -3245,7 +3245,7 @@ Click on **Create a Payment Handle** above to see six examples of how to create 
 ### Get Payment Handle [GET /v1/paymenthandles/{paymenthandle_id}]
 <a name="getpaymenthandle" title="Look Up a Payment Handle"></a>
 
-Click on **Get Payment Handle** above to look up a Payment Handle using the ID returned in the response to the original request.
+    Click **Get Payment Handle** above to look up a Payment Handle using the ID returned in the response of the original request.
 
 + Parameters
 
@@ -3309,7 +3309,7 @@ Click on **Get Payment Handle** above to look up a Payment Handle using the ID r
 ### Get Payment Handle Using Merchant Reference Number [GET /v1/paymenthandles?merchantRefNum={merchant_ref_num}]
 <a name="getpaymenthandlemerchantrefnum" title="Look Up a Payment Handle Using a Merchant Reference Number"></a>
 
-Click on **Get Payment Handle Using Merchant Reference Number** above to see how to look up a Payment Handle using the merchant reference number used in the original request.
+Click **Get Payment Handle Using Merchant Reference Number** above to look up a Payment Handle using the ID returned in the response of the original request.
 
 + Parameter
 
@@ -3398,7 +3398,7 @@ Verification allows merchants to validate a credit card without charging any amo
 ### Verification [POST]
 <a name="verificationrequest" title="Verify a Credit Card"></a>
 
-Click on **Verification** above to see how to submit a Verification request using Payment Handle Token.
+Click **Verification** above to submit a Verification request using Payment Handle Token.
 
 + Attributes (VerificationResponse)
 
@@ -3443,11 +3443,11 @@ Click on **Verification** above to see how to submit a Verification request usin
 ### Get Verification [GET /v1/verifications/{verification_id}]
 <a name="getverification" title="Look Up a Verification"></a>
 
-Click on **Get Verification** above to see how to look up a Verification request using the ID returned in the response to the original request.
+Click **Get Verification** above to look up a Verification request using the ID returned in the response of the original request.
 
 + Parameter
 
-   + verification_id : `0c62a67c-e12e-4876-aa1a-20f9ec1f0352` - This is the ID returned in the response to the Verification request.
+   + verification_id : `0c62a67c-e12e-4876-aa1a-20f9ec1f0352` - This is the ID returned in the response of the Verification request.
 
 
 + Response 200 (application/json)
@@ -3474,7 +3474,7 @@ Click on **Get Verification** above to see how to look up a Verification request
 ### Get Verification Using Merchant Reference Number [GET /v1/verifications?merchantRefNum={merchant_ref_num}]
 <a name="getverificationmerchantrefnum" title="Look Up a Verification Using a Merchant Reference Number"></a>
 
-Click on **Get Verification Using Merchant Reference Number** above to see how to look up a Verification request using the merchant reference number used in the original request.
+Click **Get Verification Using Merchant Reference Number** above to look up a Verification request using the merchant reference number used in the original request.
 
 + Parameter
 
@@ -3524,14 +3524,14 @@ Click on **Get Verification Using Merchant Reference Number** above to see how t
 
 ## Payments [/v1/payments]
 
-Payment requests allow you to process a payment using the *paymentHandleToken* that you have [previously created for the payment instrument you want to use](#paymenthandlerequest). The examples below include a *paymentHandleToken* created for a credit card.
+Payment requests allow you to process a payment using the *paymentHandleToken*.  The examples below include a *paymentHandleToken* created for a credit card.
 
 ### Process Payment [POST]
 <a name="paymentrequest" title="Post Payment Using Payment Handle Token"></a>
 
-Click on **Process Payment** above to see two examples of how to create a Payment request using a Payment Handle token:
+Click **Process Payment** above to create a Payment request using a Payment Handle token for:
 
-* A Payment request that will have to be settled later
+* A Payment request that will be settled later
 * A Payment request that authorizes and settles the Payment in a single request by setting the *settleWithAuth* parameter to *true*
 
 
@@ -3631,11 +3631,11 @@ Click on **Process Payment** above to see two examples of how to create a Paymen
 ### Get Payments [GET /v1/payments/{payment_id}]
 <a name="getpayment" title="Look Up a Payment"></a>
 
-Click on **Get Payments** above to see how to look up a Payment using the ID returned in the response to the original request.
+Click **Get Payments** above to look up a Payment using the ID returned in the response of the original request.
 
 + Parameter
 
-   + payment_id : `3aeb9c63-6386-46a3-9f8e-f452e722228a` - This is the ID returned in the response to the Payments request.
+   + payment_id : `3aeb9c63-6386-46a3-9f8e-f452e722228a` - This is the ID returned in the response of the Payments request.
 
 + Request Look Up Payment (application/json)
 
@@ -3672,7 +3672,7 @@ Click on **Get Payments** above to see how to look up a Payment using the ID ret
 ### Get Payments Using Merchant Reference number [GET /v1/payments?merchantRefNum={merchant_ref_num}]
 <a name="getpaymentmerchantrefnum" title="Look Up a Payment Using a Merchant Reference Number"></a>
 
-Click on **Get Payment Using Merchant Reference Number** above to see how to look up a Payment using the merchant reference number used in the original request.
+Click **Get Payment Using Merchant Reference Number** above to look up a Payment using the merchant reference number used in the original request.
 
 + Parameter
 
@@ -3730,19 +3730,20 @@ Click on **Get Payment Using Merchant Reference Number** above to see how to loo
             
 # Group Void Authorizations 
 
-A Void Authorization request allows you to void (or cancel) an authorization request, provided the authorization has not yet been settled. An authorization is part of a [payment request](#paymentrequest). If *settleWithAuth* is set to *true* in the payment request, then 
-the authorization and settlement are completed in the same request, in which case you would not be able to process a Void Authorization.
+A Void Authorization request allows you to void (or cancel) an authorization request, provided the authorization is not yet settled. An authorization is part of a [payment request](#paymentrequest). 
+This is only applicable when *settleWithAuth* is set to *false* in the payment request.
+If *settleWithAuth* is set to *true* in the payment request, then the authorization and settlement are completed in the same request; in that case, you would not be able to process a Void Authorization.
 
 ## Void Authorizations [/v1/voidauths]
 
 ### Void Authorization [POST /v1/payments/{payment_id}/voidauths]
 <a name="voidauthrequest" title="Void Authorization"></a>
 
-Click on **Void Authorization** above to see how to submit a Void Authorization request. You can void an Authorization **only if** it has not yet been settled.
+Click **Void Authorization** above to submit a Void Authorization request. You can void an Authorization **only if** it is not yet settled.
 
 + Parameter
 
-    + payment_id : `86dcb68d-cbd0-4878-8da7-ffc0e6554513` - This is the ID returned in the response to the Payment request.
+    + payment_id : `86dcb68d-cbd0-4878-8da7-ffc0e6554513` - This is the ID returned in the response of the Payment request.
     
 + Attributes (voidAuthResponse)
 
@@ -3775,11 +3776,11 @@ Click on **Void Authorization** above to see how to submit a Void Authorization 
 ### Get Void Authorization [GET /v1/voidauths/{void_auth_id}]
 <a name="getvoidauth" title="Look Up a Void Authorization"></a>
 
-Click on **Get Void Authorization** above to see how to look up a Void Authorization using the ID returned in the response to the original request.
+Click **Get Void Authorization** above to look up a Void Authorization using the ID returned in the response of the original request.
 
 + Parameter
 
-   + void_auth_id : `86dcb68d-cbd0-4878-8da7-ffc0e6554513` - This is the ID returned in the response to the Void Authorization request.
+   + void_auth_id : `86dcb68d-cbd0-4878-8da7-ffc0e6554513` - This is the ID returned in the response of the Void Authorization request.
 
 
 + Request Look Up Void Authorization (application/json)
@@ -3804,7 +3805,7 @@ Click on **Get Void Authorization** above to see how to look up a Void Authoriza
 ### Get Void Authorization Using Merchant Reference Number [GET /v1/voidauths?merchantRefNum={merchant_ref_num}]
 <a name="getvoidauthmerchantrefnum" title="Look Up a Void Authorization Using a Merchant Reference Number"></a>
 
-Click on **Get Void Authorization Using Merchant Reference Number** above to see how to look up a Void Authorization using the merchant reference number used in the original request.
+Click **Get Void Authorization Using Merchant Reference Number** above to look up a Void Authorization using the merchant reference number used in the original request.
 
 + Parameter
 
@@ -3860,15 +3861,15 @@ A Settlement request allows you to settle a previous authorization that was not 
 
 + Parameter
 
-    + payment_id : `c64ecbf2-a942-4f7c-b412-70217a0eb16e` - This is the ID returned in the response to the Payments request.
+    + payment_id : `c64ecbf2-a942-4f7c-b412-70217a0eb16e` - This is the ID returned in the response of the Payments request.
 
 ### Process Settlement [POST]
 <a name="settlementrequest" title="Process Settlement"></a>
 
-Click on **Process Settlement** above to see two examples of how to process a Settlement request:
+Click **Process Settlement** above to process a Settlement request for:
 
-* A regular Settlement, where the initial request was an Authorization that now has to be settled
-* A Settlement that is split into multiple merchant accounts, for merchant accounts that are configured to do so
+* A regular Settlement, where the initial request was an Authorization that is to be settled
+* A Settlement that is split into multiple merchant accounts. This is applicable for those merchants whose accounts are configured to do so
 
 + Attributes
     + Include Settlements
@@ -3941,7 +3942,7 @@ Click on **Process Settlement** above to see two examples of how to process a Se
 ### Cancel Settlement [PUT /v1/settlements/{settlement_id}]
 <a name="cancelsettlement" title="Cancel a Settlement"></a>
 
-Click on **Cancel Settlement** above to see how to cancel a Settlement. You must include the *status* parameter set to *CANCELLED*.
+Click **Cancel Settlement** above to cancel a Settlement. You must include the *status* parameter set to *CANCELLED*.
 
 > **Note:** You can cancel a Settlement only if the payment type is CARD and the status is PENDING.
 
@@ -3976,11 +3977,11 @@ Click on **Cancel Settlement** above to see how to cancel a Settlement. You must
 ### Get Settlements [GET /v1/settlements/{settlement_id}]
 <a name="getsettlement" title="Look Up a Settlement"></a>
 
-Click on **Get Settlements** above to see how to look up a Settlement using the ID returned in the response to the original request.
+Click **Get Settlements** above to look up a Settlement using the ID returned in the response of the original request.
 
 + Parameter
 
-   + settlement_id : `ea49ab6c-cf9b-4efd-bde8-2fa3bb5ccd85` - This is the ID returned in the response to the Settlement request.
+   + settlement_id : `ea49ab6c-cf9b-4efd-bde8-2fa3bb5ccd85` - This is the ID returned in the response of the Settlement request.
 
 + Request Look Up Settlement (application/json)
 
@@ -4005,7 +4006,7 @@ Click on **Get Settlements** above to see how to look up a Settlement using the 
 ### Get Settlements Using Merchant Reference Number [GET /v1/settlements?merchantRefNum={merchant_ref_num}]
 <a name="getsettlementmerchantrefnum" title="Look Up a Settlement Using a Merchant Reference Number"></a>
 
-Click on **Get Settlements Using Merchant Reference Number** above to see how to look up a Settlement using the merchant reference number used in the original request.
+Click **Get Settlements Using Merchant Reference Number** above to look up a Settlement using the merchant reference number used in the original request.
 
 + Parameter
 
@@ -4066,7 +4067,7 @@ Click on **Get Settlements Using Merchant Reference Number** above to see how to
 Click on **Process Refund** above to see two examples of how to process a Refund request:
 
 * A regular Refund
-* A Refund that is split into multiple merchant accounts, for merchant accounts that are configured to do so
+* A Refund that is split into multiple merchant accounts. This is applicable for those merchants whose accounts are configured to do so
 
 + Attributes
     + Include Refunds
@@ -4136,7 +4137,7 @@ Click on **Process Refund** above to see two examples of how to process a Refund
 ### Cancel Refund [PUT /v1/refunds/{refund_id}]
 <a name="cancelrefund" title="Cancel a Refund"></a>
 
-Click on **Cancel Refund** above to see how to cancel a Refund. You must include the *status* parameter set to *CANCELLED*.
+Click **Cancel Refund** above to ancel a Refund. You must include the *status* parameter set to *CANCELLED*.
 
 > **Note:** You can cancel a Refund only if the payment type is CARD and the status is PENDING. 
 
@@ -4170,7 +4171,7 @@ Click on **Cancel Refund** above to see how to cancel a Refund. You must include
 ### Get Refund [GET /v1/refunds/{refund_id}]
 <a name="getrefund" title="Look Up a Refund"></a>
 
-Click on **Get Refund** above to see how to look up a Refund using the ID returned in the response to the original request.
+Click **Get Refund** above to look up a Refund using the ID returned in the response of the original request.
 
 + Parameter
 
@@ -4198,7 +4199,7 @@ Click on **Get Refund** above to see how to look up a Refund using the ID return
 ### Get Refunds Using Merchant Reference Number [GET /v1/refunds?merchantRefNum={merchant_ref_num}]
 <a name="getrefundmerchantrefnum" title="Look Up a Refund Using a Merchant Reference Number"></a>
 
-Click on **Get Refunds Using Merchant Reference Number** above to see how to look up a Refund using the merchant reference number used in the original request.
+Click **Get Refunds Using Merchant Reference Number** above to look up a Refund using the merchant reference number used in the original request.
 
 + Parameter
 
@@ -4248,7 +4249,7 @@ Click on **Get Refunds Using Merchant Reference Number** above to see how to loo
 
 Standalone Credits allow merchants to issue credits to cardholders without requiring a previous Payment/Settlement.
 
-**Note:** If your merchant category code (MCC) is listed as able to [process Original Credits](#originalcreditrequest), you must not use Standalone Credits.
+**Note:** If your merchant category code (MCC) is listed to [process Original Credits](#originalcreditrequest), you must not use Standalone Credits.
 
 
 ### Process Standalone Credit [POST]
@@ -4295,7 +4296,7 @@ Click on **Process Standalone Credit** above to see how to process a Standalone 
 ### Cancel Standalone Credit [PUT /v1/standalonecredits/{standalone_credit_id}]
 <a name="cancelstandalonecredit" title="Cancel a Standalone Credit"></a>
 
-Click on **Cancel Standalone Credit** above to see how to cancel a Standalone Credit. You must include the *status* parameter set to *CANCELLED*.
+Click **Cancel Standalone Credit** above to cancel a Standalone Credit. You must include the *status* parameter set to *CANCELLED*.
 
 > **Note:** You can cancel a Standalone Credit only if the payment type is CARD and the status is PENDING.
 
@@ -4331,7 +4332,7 @@ Click on **Cancel Standalone Credit** above to see how to cancel a Standalone Cr
 ### Get Standalone Credit [GET /v1/standalonecredits/{standalone_credit_id}]
 <a name="getstandalonecredit" title="Look Up a Standalone Credit"></a>
 
-Click on **Get Standalone Credit** above to see how to look up a Standalone Credit using the ID returned in the response to the original request.
+Click **Get Standalone Credit** above to look up a Standalone Credit using the ID returned in the response of the original request.
 
 + Parameter
 
@@ -4363,7 +4364,7 @@ Click on **Get Standalone Credit** above to see how to look up a Standalone Cred
 ### Get Standalone Credit Using Merchant Reference Number  [GET /v1/standalonecredits?merchantRefNum={merchant_ref_num}]
 <a name="getstandalonecreditmerchantrefnum" title="Look Up a Standalone Credit Using a Merchant Reference Number"></a>
 
-Click on **Get Standalone Credit Using Merchant Reference Number** above to see how to look up a Standalone Credit using the merchant reference number used in the original request.
+Click **Get Standalone Credit Using Merchant Reference Number** above to look up a Standalone Credit using the merchant reference number used in the original request.
 
 + Parameter
 
@@ -4436,7 +4437,7 @@ Original Credit transfers are supported for non-Worldpay Inc. merchants with the
 ### Process Original Credit [POST]
 <a name="originalcreditrequest" title="Process Original Credit"></a>
 
-Click on **Process Original Credit** above to see how to process an Original Credit request. 
+Click **Process Original Credit** above to process an Original Credit request. 
 
 + Attributes (OriginalCreditResponse)
 
@@ -4478,13 +4479,13 @@ Click on **Process Original Credit** above to see how to process an Original Cre
 ### Cancel Original Credit [PUT /v1/originalcredits/{original_credit_id}]
 <a name="canceloriginalcredit" title="Cancel an Original Credit"></a>
 
-Click on **Cancel Original Credit** above to see how to cancel an Original Credit. You must include the *status* parameter set to *CANCELLED*.
+Click **Cancel Original Credit** above to cancel an Original Credit. You must include the *status* parameter set to *CANCELLED*.
 
 > **Note:** You can cancel an Original Credit only if it has the payment type CARD and the status is PENDING.
 
 + Parameter
 
-   + original_credit_id : `86dcb68d-cbd0-4878-8da7-ffc0e6554513` - This is the ID returned in the response to the Original Credit request. Example: 86dcb68d-cbd0-4878-8da7-ffc0e6554513.
+   + original_credit_id : `86dcb68d-cbd0-4878-8da7-ffc0e6554513` - This is the ID returned in the response of the Original Credit request. Example: 86dcb68d-cbd0-4878-8da7-ffc0e6554513.
 
 + Request Cancel an Original Credit (application/json)
 
@@ -4513,7 +4514,7 @@ Click on **Cancel Original Credit** above to see how to cancel an Original Credi
 ### Get Original Credit [GET /v1/originalcredits/{original_credit_id}]
 <a name="getoriginalcredit" title="Look Up an Original Credit"></a>
 
-Click on **Get Original Credit** above to see how to look up an Original Credit using the ID returned in the response to the original request.
+Click **Get Original Credit** above to look up an Original Credit using the ID returned in the response of the original request.
 
 + Parameter
 
@@ -4547,7 +4548,7 @@ Click on **Get Original Credit** above to see how to look up an Original Credit 
 ### Get Original Credit Using Merchant Reference Number [GET /v1/originalcredits?merchantRefNum={merchant_ref_num}]
 <a name="getoriginalcreditmerchantrefnum" title="Look Up an Original Credit Using a Merchant Reference Number"></a>
 
-Click on **Get Original Credit Using Merchant Reference Number** above to see how to look up an Original Credit using the merchant reference number used in the original request.
+Click **Get Original Credit Using Merchant Reference Number** above to look up an Original Credit using the merchant reference number used in the original request.
 
 + Parameter
 
@@ -4604,9 +4605,9 @@ Click on **Get Original Credit Using Merchant Reference Number** above to see ho
 ### Create a Customer [POST]
 <a name="createcustomerrequest" title="Create a Customer"></a>
 
-Click on **Create a Customer** above to see how to create a customer. 
+Click **Create a Customer** above to create a customer. 
 
-You can create a customer in order to store credit card information to the customer profile by [adding a Customer Payment Handle](#createcustomerpaymenthandlerequest) to that customer.
+You can create a customer and store his/her credit card information to the customer profile by [adding a Customer Payment Handle](#createcustomerpaymenthandlerequest).
 
 + Attributes
     + Include Customer Base
@@ -4667,7 +4668,7 @@ You can create a customer in order to store credit card information to the custo
 ### Create a Customer Using a Single-Use Payment Handle Token [POST]
 <a name="createcustomerrequesttoken" title="Create a Customer"></a>
 
-Click on **Create a Customer Using a Single-Use Payment Handle Token** above to see how to create a customer using a single-use Payment Handle Token. 
+Click **Create a Customer Using a Single-Use Payment Handle Token** above to create a customer using a single-use Payment Handle Token. 
 
 **Note:** If the single-use Payment Handle Token you use for this request has profile-related information associated with it (e.g., *firstName*, *lastName*, *email*, etc.), 
 then if you include those same fields in this request, your values included here will override the values from the Payment Handle Token.
@@ -4768,7 +4769,7 @@ then if you include those same fields in this request, your values included here
 ### Get Customer [GET /v1/customers/{customer_id}]
 
 <a name="getcustomerrequest" title="Look Up a Customer"></a>
-Click on **Get Customer** above to see how to look up a Customer using the ID returned in the response to [the original request](#createcustomerequest).
+Click **Get Customer** above to look up a Customer using the ID returned in the response to [the original request](#createcustomerequest).
     
 + Parameters
     + customer_id:`ccb24e28-6e38-47ce-8815-94706c5b608c` (string, required) - This is the unique ID returned in the response to the [customer creation request](#createcustomerrequest).
@@ -4807,7 +4808,7 @@ Click on **Get Customer** above to see how to look up a Customer using the ID re
 
 ### Get Customer Using Merchant Customer ID [GET /v1/customers?merchantCustomerId={merchant_customer_id}]
 <a name="getcustomerrequest" title="Look Up a Customer"></a>
-Click on **Get Customer Using Merchant Reference Number** above to see how to look up a Customer using the merchant reference number used in [the original request](#createcustomerequest).
+Click **Get Customer Using Merchant Reference Number** above to look up a Customer using the merchant reference number used in [the original request](#createcustomerequest).
     
 + Parameters
     + merchant_customer_id:`mycustomer10` (string, required) - This is a customer ID that the merchant provided with the [customer creation request](#createcustomerrequest) for their own internal customer identification.. 
@@ -4844,7 +4845,7 @@ Click on **Get Customer Using Merchant Reference Number** above to see how to lo
 
 ### Get Customer Including Subcomponents [GET /v1/customers/{customer_id}?fields={fields}]
 <a name="getcustomerrequestsubcomponents" title="Look Up a Customer Including Subcomponents"></a>
-Click on **Get Customer Including Subcomponents** above to see how to look up a Customer along with its associated sub-components using one or more comma-separated values from this list:
+Click **Get Customer Including Subcomponents** above to look up a Customer along with its associated sub-components using one or more comma-separated values from this list:
   * paymenthandles
   * addresses
   
@@ -4922,7 +4923,7 @@ Click on **Get Customer Including Subcomponents** above to see how to look up a 
 ### Update a Customer [PUT /v1/customers/{customer_id}]
 
 <a name="updatecustomerrequest" title="Update a Customer"></a>
-Click on **Update a Customer** above to see how update a Customer using the ID returned in the response to [the original request](#createcustomerequest).
+Click **Update a Customer** above to update a Customer using the ID returned in the response to [the original request](#createcustomerequest).
 
 **Note:** You must provide all of the elements of the customer when you are updating it, including the elements that are not changing. Elements that are part of an existing customer but that are not included in the update request will be set to *null* in the resulting customer.
 
@@ -4989,7 +4990,7 @@ Click on **Update a Customer** above to see how update a Customer using the ID r
 ### Delete a Customer [DELETE /v1/customers/{customer_id}]
 <a name="deletecustomerrequest" title="Delete a Customer"></a>
 
-Click on **Delete a Customer** above to see how delete a Customer.
+Click **Delete a Customer** above to delete a Customer.
 
 + Parameters
     + customer_id:`a7b218e7-290a-4434-aea2-a1f985fc26c0` (string, required) - This is the customer ID returned in the response (in NETBANX this is called the Consumer ID).
@@ -5008,7 +5009,7 @@ Click on **Delete a Customer** above to see how delete a Customer.
 
 ## Create an Address [POST /v1/customers/{customer_id}/addresses]
 <a name="createaddressrequest" title="Create an Address"></a>
-Click on **Create an Address** above to see how to add an address to [Customer you have already created](#createcustomerequest).
+Click **Create an Address** above to add an address to [Customer you have already created](#createcustomerequest).
 
 + Attributes
 
@@ -5060,7 +5061,7 @@ Click on **Create an Address** above to see how to add an address to [Customer y
 ## Get Address [GET /v1/customers/{customer_id}/addresses/{address_id}]
 <a name="getaddressrequest" title="Look Up an Address"></a>
 
-Click on **Get Address** above to see how to look up an Address using the ID returned in the response to [the original request](#createaddressrequest).
+Click **Get Address** above to look up an Address using the ID returned in the response to [the original request](#createaddressrequest).
     
 + Parameters
     + customer_id:`a7b218e7-290a-4434-aea2-a1f985fc26c0` (string, required) - This is the customer ID returned in the response.
@@ -5094,7 +5095,7 @@ Click on **Get Address** above to see how to look up an Address using the ID ret
 ## Update an Address [PUT /v1/customers/{customer_id}/addresses/{address_id}]
 <a name="updateaddressrequest" title="Update an Address"></a>
 
-Click on **Update an Address** above to see how update an Address using the ID returned in the response to [the original request](#createaddressrequest).
+Click **Update an Address** above to update an Address using the ID returned in the response to [the original request](#createaddressrequest).
 
 **Note:** You must provide all of the elements of the address when you are updating it, including the elements that are not changing. Elements that are part of an existing address but that are not included in the update request will be set to *null* in the resulting address.
 
@@ -5149,7 +5150,7 @@ Click on **Update an Address** above to see how update an Address using the ID r
 ## Delete an Address [DELETE /v1/customers/{customer_id}/addresses/{address_id}]
 <a name="deletecustomerrequest" title="Delete a Customer"></a>
 
-Click on **Delete an Address** above to see how delete an Address.
+Click **Delete an Address** above to delete an Address.
 
 + Parameters
     + customer_id:`a7b218e7-290a-4434-aea2-a1f985fc26c0` (string, required) - This is the customer ID returned in the response (in NETBANX this is called the Consumer ID).
@@ -5170,7 +5171,7 @@ Click on **Delete an Address** above to see how delete an Address.
 ## Create a Payment Handle for a Customer [POST /v1/customers/{customer_id}/paymenthandles]
 <a name="createcustomerpaymenthandlerequest" title="Create a Customer Payment Handle"></a>
 
-Click on **Create a Payment Handle for a Customer** above to create a Payment Handle for a [Customer you have already created](#createcustomerequest).
+Click **Create a Payment Handle for a Customer** above to create a Payment Handle for a [Customer you have already created](#createcustomerequest).
 
 >**Note:** Currently, only CARD, ACH and EFT are supported as a *paymentType* parameter.
 
@@ -5302,7 +5303,7 @@ To use the saved payment instrument, use the multi-use Payment Handle token retu
 ## Get Customer Payment Handle [GET /v1/customers/{customer_id}/paymenthandles/{paymenthandle_id}]
 <a name="getcustomerpaymenthandlerequest" title="Look Up a Customer Payment Handle"></a>
 
-Click on **Get Customer Payment Handle** above to see how to look up a Customer Payment Handle using the ID returned in the response to [the original request](#createcustomerpaymenthandlerequest).
+Click **Get Customer Payment Handle** above to look up a Customer Payment Handle using the ID returned in the response to [the original request](#createcustomerpaymenthandlerequest).
     
 + Parameters
     + customer_id:`a5f1889d-f1be-4bbf-941d-fd9b8d09d5b1` (string,required) - This is the [ID of the customer](#createcustomerrequest) to which you are adding the Payment Handle.
@@ -5347,7 +5348,7 @@ Click on **Get Customer Payment Handle** above to see how to look up a Customer 
 ## Update a Customer Payment Handle [PUT /v1/customers/{customer_id}/paymenthandles/{paymenthandle_id}]
 <a name="updatecustomerpaymenthandlerequest" title="Update a Customer Payment Handle"></a>
 
-Click on **Update a Customer Payment Handle** above to see how update a Customer Payment Handle using the ID returned in the response to [the original request](#createcustomerpaymenthandlerequest).
+Click **Update a Customer Payment Handle** above to update a Customer Payment Handle using the ID returned in the response to [the original request](#createcustomerpaymenthandlerequest).
 
 **Note:** You must provide all of the elements of the Payment Handle when you are updating it, including the elements that are not changing. 
 Elements that are part of an existing Payment Handle but that are not included in the update request will be set to null in the resulting Payment Handle, 
@@ -5427,7 +5428,7 @@ with the exception of the *cardNum* element.
 ## Update a Multi-Use Customer Payment Handle with a Single-Use Payment Handle Token [PUT /v1/customers/{customer_id}/paymenthandles/{paymenthandle_id}]
 <a name="updatemultiusepaymenthandlerequest" title="Update a Customer Multi-Use Payment Handle with a Single-Use Payment Handle Token"></a>
 
-Click on **Update a Multi-Use Customer Payment Handle with a Single-Use Payment Handle Token** above to see how update a Customer Payment Handle using the ID returned in the response to [the original request](#paymenthandlerequest).
+Click **Update a Multi-Use Customer Payment Handle with a Single-Use Payment Handle Token** above to update a Customer Payment Handle using the ID returned in the response of [the original request](#paymenthandlerequest).
 
 **Note:** You must provide all of the elements of the payment handle while creating single use payment handle when you are updating multi-use payment handle with it, 
 including the elements that are not changing. Elements that are part of an existing payment handle but that are not included in the update request will be set to null in the resulting Payment Handle, with the exception of the *cardNum* element.
@@ -5487,7 +5488,7 @@ the *paymentHandleToken* returned in that response as the value for the *payment
 ## Delete a Customer Payment Handle [DELETE /v1/customers/{customer_id}/paymenthandles/{paymenthandle_id}]
 <a name="deletecardrequest" title="Delete a Card"></a>
 
-Click on **Delete a Customer Payment Handle** above to see how delete a Customer Payment Handle.
+Click **Delete a Customer Payment Handle** above to delete a Customer Payment Handle.
 
 + Parameters
     + customer_id:`a5f1889d-f1be-4bbf-941d-fd9b8d09d5b1` (string,required) - This is the [ID of the customer](#createcustomerrequest) from which you are deleting the Payment Handle.
@@ -5507,10 +5508,10 @@ Click on **Delete a Customer Payment Handle** above to see how delete a Customer
 ## Create a Single-Use Customer Token [POST /v1/customers/{customer_id}/singleusecustomertokens]
 <a name="createcustomersut" title="Create a Single-Use Customer Token"></a>
 
-Click on **Create a Single-Use Customer Token** above to create a single-use token for a [Customer you have already created](##createpaymenthandlerequestsut).
+Click **Create a Single-Use Customer Token** above to create a single-use token for a [Customer you have already created](##createpaymenthandlerequestsut).
 
 The *singleUseCustomerToken* returned in the response is then used in the Payments Checkout SDK (for the *singleUseCustomerToken* parameter) when you want to [use saved cards and addresses](#usingsavedcardscheckout). 
-Any addresses and/or payment details that have been saved for this *customer_id* would then be displayed in the Payments Checkout.
+Any addresses and/or payment details that are saved for this *customer_id* would then be displayed in the Payments Checkout.
 
 **Note:** The *customer_id* used in this request must be taken from [a Customer created using a single-use Payment Handle Token](#createpaymenthandlerequestsut).
 
@@ -5598,12 +5599,12 @@ Any addresses and/or payment details that have been saved for this *customer_id*
 ## Get Single-Use Customer Token [GET /v1/singleusecustomertokens/{singleusecustomertoken_id}]
 <a name="getcustomersut" title="Look Up a Card"></a>
 
-Click on **Get Single-Use Customer Token** above to see how to look up a Single-Use Customer Token using the ID returned in the response to [the original request](#createcustomersut).
+Click **Get Single-Use Customer Token** above to look up a Single-Use Customer Token using the ID returned in the response of [the original request](#createcustomersut).
 
 Use the *singleUseCustomerToken* returned in the response in the Payments Checkout SDK when you want to [use saved cards and addresses](#usingsavedcardscheckout), provided the *timeToLiveSeconds* has not expired.
     
 + Parameters
-    + singleusecustomertoken_id:`f39ebd23-e203-498f-9981-dfbc49882959` (string, required) - This is the Single-Use Customer Token ID returned in the response to the [Single-Use Customer Token creation request](#createcustomersut).
+    + singleusecustomertoken_id:`f39ebd23-e203-498f-9981-dfbc49882959` (string, required) - This is the Single-Use Customer Token ID returned in the response of the [Single-Use Customer Token creation request](#createcustomersut).
 
 + Request Look Up a Single-Use Customer Token (application/json)
     
