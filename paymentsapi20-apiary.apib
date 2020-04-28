@@ -1060,23 +1060,21 @@ This is a read-only raw response returned by an acquirer.
 <a name="level2level3object" title="level2level3 Object"></a>
 ## level2level3
 
-Level 2 and Level 3 (L2/L3) credit card processing refers to certain B2B card transactions for which the merchant might be eligible for lower credit card interchange rates. The lower rates may be available for 
-merchants who provide more detailed information when processing card-not-present transactions. In order to be eligible for L2/L3 transactions:
- * Your merchant account must be properly configured by Paysafe.
+Level 2 and Level 3 (L2/L3) credit card processing refers to certain B2B card transactions for which the merchant might be eligible for lower credit card interchange rates. The lower rates may be available for merchants who provide more detailed information when processing card-not-present transactions. To be eligible for L2/L3 transactions:
+ * Your merchant account must be adequately configured by Paysafe.
  * The BIN of the credit card used for the transaction must be eligible – typically, these are government-issued credit cards.
-
 
 |Element                |Type                               | Description|
 |---                    |---                                |---            |
-| exemptLocalTax        |boolean                            | This indicates whether or not local tax is exempted for the request. If set to true, then the localTaxAmount parameter will be ignored.<br/>**Note:** This value defaults to *false*. |
+| exemptLocalTax        |boolean                            |This indicates whether or not local tax is exempted for the request. If set to true, then the localTaxAmount parameter is ignored.<br/>**Note:** This value defaults to *false*. |
 | localTaxAmount        |integer<br/>`length<=99999999999`  | This is the local sales tax applied to the purchase.|
 | nationalTaxAmount     |number<br/>`length<=99999999999`   | This is the national tax included in the transaction amount. |
-| freightAmount         |number<br/>`length<=99999999999`   | This is the freight or shipping portion of the total transaction amount. |
-| dutyAmount            |number<br/>`length<=99999999999`   | This is the duty associated with the import of the purchased goods. |
+| freightAmount         |number<br/>`length<=99999999999`   | This is the freight or shipping portion of the total transaction amount.|
+| dutyAmount            |number<br/>`length<=99999999999`   | This is the duty associated with the import of the purchased goods.|
 | destinationZip        |number<br/>`length<=10`            | This is the postal/zip code of the address to which the purchased goods will be delivered. This field can be identical to the shipFromZip if the customer is present and takes immediate possession of the goods. |
-| destinationCountry    |number<br/>`length=2`              | This is the country to which the goods are being shipped. See [Country Codes](#countrycodes). |
-| shipFromZip           |number<br/>`length<=10`            | This is the postal/zip code of the address from which the purchased goods are being shipped. |
-| lineItems             |[lineItems](#lineitemsobject)      | This is more detailed information about the items that are being purchased.| 
+| destinationCountry    |number<br/>`length=2`              | This is the country to which the goods are shipped. See [Country Codes](#countrycodes).|
+| shipFromZip           |number<br/>`length<=10`            | This is the postal/zip code of the address from which the purchased goods are shipped.|
+| lineItems             |[lineItems](#lineitemsobject)      | This is more detailed information about the items that are purchased.| 
 
 ```apib
     {
@@ -1120,10 +1118,10 @@ merchants who provide more detailed information when processing card-not-present
 |description            |string<br/>`length<=50`            |This is a description of the item(s) being purchased.|
 |productCode            |string<br/>`length<=12`            |This is a merchant-defined description code of the item being purchased.|
 |quantity               |number<br/>`length<=99999999999`<br/>`max 4 decimals` |This is the quantity of the item.|
-|unitAmount             |number<br/>`length<=99999999999`   |This is the unit price of the item being purchased, in minor units. The currency will be based on the account setting.|
+|unitAmount             |number<br/>`length<=99999999999`   |This is the unit price of the item purchased, in minor units. The currency is based on the account setting.|
 |taxRate                |number<br/>`length<=100`<br/>`max 2 decimals`    |This is the tax rate used to calculate the tax amount. For example, if the tax rate is 10.5%, this value should be 10.5.|
-|taxAmount              |number<br/>`length<=99999999999`   |This is the amount of any value-added taxes that can be associated with the purchased item, in minor units. The currency will be based on the account setting. **Note:** Our system will not validate the accuracy of this value. The merchant's application must calculate this value correctly.|
-|totalAmount            |number<br/>`length<=99999999999`   |This is the total amount of the line item, typically calculated as price multiplied by quantity, in minor units. The currency will be based on the account setting. **Note:** Our system will not validate the accuracy of this value. The merchant's application must calculate this value correctly.|
+|taxAmount              |number<br/>`length<=99999999999`   |This is the amount of any value-added taxes that can be associated with the purchased item, in minor units. The currency is based on the account setting. **Note:** Our system will not validate the accuracy of this value. The merchant's application must calculate this value correctly.|
+|totalAmount            |number<br/>`length<=99999999999`   |This is the total amount of the line item, typically calculated as price multiplied by quantity, in minor units. The currency is based on the account setting. **Note:** Our system will not validate the accuracy of this value. The merchant's application must calculate this value correctly.|
 
 ```apib
     {
@@ -1166,8 +1164,8 @@ merchants who provide more detailed information when processing card-not-present
 ## merchantDescriptor
 |Element            |Type                       |Description                        |
 |---                |---                        |---                                |
-|dynamicDescriptor  |string <br/>`length<=20`   |This is a merchant descriptor that will be displayed on a customer’s card statement.|
-|phone              |string <br/>`length<=13`   |This is the merchant’s phone number, which will be appended to the merchant descriptor on a customer’s card statement.|
+|dynamicDescriptor  |string <br/>`length<=20`   |This is a merchant descriptor that is displayed on a customer’s card statement.|
+|phone              |string <br/>`length<=13`   |This is the merchant’s phone number, which is appended to the merchant descriptor on a customer’s card statement.|
 
 ```apib
     {
@@ -1203,7 +1201,7 @@ merchants who provide more detailed information when processing card-not-present
 
 |Element            |Type                       |Required|Description                        |
 |---                |---                        |---|---                            |
-|key                |string <br/>`length<=50`   |Read Only| This is a description of the data being added to the order.|
+|key                |string <br/>`length<=50`   |Read Only| This is a description of the data added to the order.|
 |value              |string <br/>`length<=100`  |Read Only| This is the value for the key/value pair.|
 
 <a name="originalcreditsobject" title="originalcredits Object"></a>
@@ -1211,11 +1209,11 @@ merchants who provide more detailed information when processing card-not-present
 
 |Element            |Type                                   |Required|Description                        |
 |---                |---                                    |---|---                                |
-|id                 |string <br/>`length<=36`               |Read Only|This is the ID returned in the response. This ID can be used for future associated requests.|
+|id                 |string <br/>`length<=36`               |Read Only|This is the ID returned in the response. You can use this ID for future associated requests.|
 |amount             |number<br/>`max=99999999999`           |Mandatory|This is the amount of the request, in minor units. For example, to process US $10.99, this value should be 1099. <br/>**Note:** The *amount* specified in the Original Credit request must match the *amount* specified in the Payment Handle request from which the *paymentHandleToken* is taken.|
-|merchantRefNum     |string <br/>`length<=255`              |Mandatory|This is the merchant reference number created by the merchant and submitted as part of the request. It must be unique for each request.|
-|paymentHandleToken |string<br/>`length<=36`                |Mandatory|This is the payment token generated by Paysafe that will be used by merchants for Original Credit requests.|
-|currencyCode       |string<br/>`length=3`                  |Mandatory|This is the currency of the merchant account, e.g., USD or CAD, returned in the request response. See [Currency Codes](#currencycodes). <br/>**Note:** The *currencyCode* specified in the Credit request must match the *currencyCode* specified in the Payment Handle request from which the *paymentHandleToken* is taken.|
+|merchantRefNum     |string <br/>`length<=255`              |Mandatory|This is the merchant reference number created by the merchant and submitted as a part of the request. It must be unique for each request.|
+|paymentHandleToken |string<br/>`length<=36`                |Mandatory|This is the payment token generated by Paysafe that is used by merchants for Original Credit requests.|
+|currencyCode       |string<br/>`length=3`                  |Mandatory|This is the currency of the merchant account, e.g., USD or CAD, returned in the request-response. See [Currency Codes](#currencycodes). <br/>**Note:** The *currencyCode* specified in the Credit request must match the *currencyCode* specified in the Payment Handle request from which the *paymentHandleToken* is taken.|
 |card               |[card](#cardobject)                    |Optional|These are the details of the card used.|
 |billingDetails     |[billingDetails](#billingdetailsobject)|Mandatory|These are the billing details for the request.|
 |customerIp         |string<br/>`length<=39`                |Mandatory|This is the customer's IP address.|
@@ -1260,21 +1258,21 @@ This is an authorization that is approved for an amount lower than the requested
 |id                     |string<br/>`length<=32`    |Read Only|This is the ID returned in the response. This ID can be used to retrieve the Payment Handle.|
 |accountId              |string<br/>`length<=10`    |Conditional|This is the merchant account number used for the request. Include this parameter if you have more than one merchant account for the currency/payment type combination you are specifying. |
 |paymentHandleTokenFrom |string<br/>`length<=36`    |Optional|This is an existing Payment Handle Token, from which the payment instrument and profile details are retrieved. |
-|merchantRefNum         |string<br/>`length<=255`   |Mandatory|This is the merchant reference number created by the merchant and submitted as part of the request. It must be unique for each request. |
+|merchantRefNum         |string<br/>`length<=255`   |Mandatory|This is the merchant reference number created by the merchant and submitted as a part of the request. It must be unique for each request. |
 |transactionType        |enum                       |Mandatory|This specifies the transaction type for which the Payment Handle is created. Possible values are: <ul><li>PAYMENT</li><li> STANDALONE_CREDIT</li><li>ORIGINAL_CREDIT</li><li>VERIFICATION</li></ul>|
-|status                 |enum                       |Read Only|This is the status of the request. Possible values are:<ul><li>INITIATED &ndash; The request was initiated with the downstream provider.</li><li>PAYABLE &ndash; The merchant can use the Payment Handle for a Payment request.</li><li>PROCESSING &ndash; The Payment Handle was authorized by customer, awaiting PSP response.</li><li>FAILED &ndash; The transaction failed due to either an error or being declined.</li><li>EXPIRED &ndash; The Payment Handle expired because the merchant did not proceed with the Payment transaction.</li><li>COMPLETED &ndash; The Payment request was initiated successfully using the Payment Handle.</li></ul>      |
-|usage                  |enum                       |Read Only|This specifies how the Payment Handle will be used for Payments. Possible values are:<ul><li>SINGLE_USE &ndash; The Payment Handle can be used for one transaction only and expires if not used.</li><li>MULTI_USE &ndash; The Payment Handle can be used multiple times.</li></ul>|
+|status                 |enum                       |Read Only|This is the status of the request. Possible values are:<ul><li>INITIATED &ndash; The request was initiated with the downstream provider.</li><li>PAYABLE &ndash; The merchant can use the Payment Handle for a Payment request.</li><li>PROCESSING &ndash; The Payment Handle was authorized by customer, awaiting PSP response.</li><li>FAILED &ndash; The transaction failed due to an error or got declined.</li><li>EXPIRED &ndash; The Payment Handle expired because the merchant did not proceed with the Payment transaction.</li><li>COMPLETED &ndash; The Payment request was initiated successfully using the Payment Handle.</li></ul>|
+|usage                  |enum                       |Read Only|This specifies how the Payment Handle will be used for Payments. Possible values are:<ul><li>SINGLE_USE &ndash; The Payment Handle can be used for only one transaction and expires if not used.</li><li>MULTI_USE &ndash; The Payment Handle can be used multiple times.</li></ul>|
 |paymentType            |enum                       |Mandatory|This is the payment type associated with this Payment Handle. Possible values are:<ul><li>CARD</li><li>PAYSAFECASH</li><li>PAYSAFECARD</li><li>VIP PREFERRED</li><li>SIGHTLINE</li><li>SKRILL</li><li>INSTANT ACH</li><li>ACH</li><li>EFT</li></ul>|
-|action                 |enum                       |Read Only|This specifies the next step of the user journey once they proceed to the Payment. Possible values are:<ul><li>NONE &ndash; No action is required, e.g., for a standard credit card payment.</li><li>REDIRECT &ndash; The user must be redirected in order to complete a Payment, e.g., when an alternate payment method like Paysafecard is used.</li></ul>|
-|executionMode          |enum                       |Read Only|This specifies the action of the merchant server in order to complete the Payment. Possible values are:<ul><li>SYNCHRONOUS &ndash; The status of the Payment request will be returned synchronously to the merchant, e.g., a credit card request.</li><li>ASYNCHRONOUS &ndash; The Payment request is not completed immediately and the merchant [must rely on webhooks](#paymentswebhooks) to retrieve the status of the Payment request.</li></ul>|
+|action                 |enum                       |Read Only|This specifies the next step of the user journey once they proceed to the Payment. Possible values are:<ul><li>NONE &ndash; No action is required, e.g., for a standard credit card payment.</li><li>REDIRECT &ndash; The user must be redirected to complete a Payment, e.g., when an alternate payment method like Paysafecard is used.</li></ul>|
+|executionMode          |enum                       |Read Only|This specifies the action of the merchant server to complete the Payment. Possible values are:<ul><li>SYNCHRONOUS &ndash; The status of the Payment request will be returned synchronously to the merchant, e.g., a credit card request.</li><li>ASYNCHRONOUS &ndash; The Payment request is not completed immediately and the merchant [must rely on webhooks](#paymentswebhooks) to retrieve the status of the Payment request.</li></ul>|
 |amount                 |number<br/>`max=99999999999` |Mandatory|This is the amount of the request, in minor units.<br/>**Note:** This field is mandatory if *transactionType* is included. <br/>The *amount* specified in the Payment Handle request must match the *amount* specified in the Payments API request the *paymentHandleToken* is used for. |
 |currencyCode           |string<br/>`length=3`      |Mandatory|This is the currency of the merchant account, e.g., USD or CAD. See [Currency Codes](#currencycodes). <br/>The *currencyCode* specified in the Payment Handle request must match the *currencyCode* specified in the Payments API request the *paymentHandleToken* is used for.|
 |paymentHandleToken     |string                     |Read Only|This is the payment token generated by Paysafe that will be used by merchants for Payment API requests.|
-|card \| paysafecard \| paysafecash \| sightline \| vippreferred \| skrill \| instant ACH \| ACH \|EFT |Mandatory| [card](#cardobject) \| [paysafecard](#paysafecardobject)\| [paysafecash](#paysafecashobject) \|[sightline](#sightlineobject) \| [vippreferred](#vippreferredobject) \| [skrill](#skrillobject) \| [instant ACH](#instantachobject)  \| [ACH](#achobject)    \| [EFT](#eftobject)  |These are details of the payment instrument used in the request. |
-|billingDetails         |[billingDetails](#billingdetailsobject)        |Conditional |These are billing details for the request.<br/>**Note:** For single-use Payment Handles, this address information will be ignored if the *paymentHandleTokenFrom* parameter is included and there is already address information associated with that customer.|
+|[card](#cardobject) \| [paysafecard](#paysafecardobject)\| [paysafecash](#paysafecashobject) \|[sightline](#sightlineobject) \| [vippreferred](#vippreferredobject) \| [skrill](#skrillobject) \| [instant ACH](#instantachobject)  \| [ACH](#achobject)    \| [EFT](#eftobject)   |Objects|Mandatory|These are details of the payment instrument used in the request. |
+|billingDetails         |[billingDetails](#billingdetailsobject)        |Conditional |These are billing details for the request.<br/>**Note:** For single-use Payment Handles, this address information is ignored if the *paymentHandleTokenFrom* parameter is included and there is already address information associated with that customer.|
 |profile                |[profile](#profileobject)  |Optional|This is the customer's profile. |
 |merchantDescriptor     |[merchantDescriptor](#merchantdescriptorobject) |Optional|This is the merchant descriptor that will be displayed on the customer's card or bank statement.<br/>**Note:** Not all processing gateways support this parameter. Contact your account manager for more information.|
-|returnLinks            |[returnLinks](#returnlinksobject)         |Conditional|These are links to which to redirect the customer, where applicable. Mandatory for the following Payment Methods: Cards, Skrill, Paysafecash, Paysafecard, Sightline, Vip Preferred. |
+|returnLinks            |[returnLinks](#returnlinksobject)         |Conditional|These are links to which redirect the customer, where applicable. Mandatory for the following Payment Methods: Cards, Skrill, Paysafecash, Paysafecard, Sightline, Vip Preferred. |
 |customerIp             |string<br/>`length<=39`    |Optional|This is the customer's IP address. |
 |timeToLiveSeconds      |number<br/>`length<=899`   |Read Only|This is the period of time, in seconds, the *paymentHandleToken* is valid before expiration.|
 |links            |[links](#linksobject)         |Read Only|These are links to which to redirect the customer, where applicable. |
@@ -2116,7 +2114,7 @@ Click on **Look Up Payment Methods** above to see how to look up the payment met
 
 ## Payment Handle [/v1/paymenthandles]
 
-A Payment Handle is basically a token that represents a payment method that you set up for a customer. Once the Payment Handle is created, you then include the *paymentHandleToken* returned in the Payment Handle request response in a new [payment request](#paymentrequest).  
+A Payment Handle represents tokenized information about the payment method that you set up for your customer. Once the Payment Handle is created, you can then include the *paymentHandleToken* returned in the Payment Handle request response in a new [payment request](#paymentrequest).  
 <br>
 > **Note:** A Payment Handle can be used in a [Payment request](#paymentrequest) only if it has the status of **PAYABLE**. 
 
@@ -2138,9 +2136,10 @@ Click on **Create a Payment Handle** above to see six examples of how to create 
 * A Payment Handle for a credit card Standalone Credit
 * A Payment Handle for a credit card Verification
 
- > **Note:** The status of Payment Handles that require the customer to be redirected to a *redirect_payment* URL will have the *status* of INITIATED until the customer verifies the payment instrument. 
- This is the case, for example, for alternate payment methods like Paysafecash and Paysafecard, and for credit cards that must be authenticated for 3D Secure, where the request amount is more than the maximum configured in the Business Portal.
-
+ > **Note:** The *status* of Payment Handles will remain INITIATED  for the following cases:
+* When the customer is redirected to a *redirect_payment* URL until the customer verifies the payment instrument.
+* When the requested amount is more than the maximum amount configured in the Business Portal.
+* When Alternate Payment Methods like Paysafecash, Paysafecards are selected by the customer.
 
 + Attributes 
     + Include PaymentHandleRequest
@@ -3246,7 +3245,7 @@ Click on **Create a Payment Handle** above to see six examples of how to create 
 ### Get Payment Handle [GET /v1/paymenthandles/{paymenthandle_id}]
 <a name="getpaymenthandle" title="Look Up a Payment Handle"></a>
 
-Click on **Get Payment Handle** above to see how to look up a Payment Handle using the ID returned in the response to the original request.
+Click on **Get Payment Handle** above to look up a Payment Handle using the ID returned in the response to the original request.
 
 + Parameters
 
