@@ -71,7 +71,7 @@ You use the Secret API key in all your server-to-server Payments API requests.
 
 To retrieve your Secret API key from the Business Portal: 
  1. Go to **Integrate>API Keys**.
- 2. Under **Secret Key**, click on **Authenticate Now**.
+ 2. Under **Secret Key**, click **Authenticate Now**.
  ![](https://github.com/paysafegroup/paysafe_api_paymenthub_v1/raw/master/images/Secret_Key1.png)
  3. Enter your Business Portal password and click **Authenticate**.
  4. You can now access your Secret API key. 
@@ -2278,7 +2278,7 @@ This call returns a status of READY if the API is available.
 <a name="getpaymentmethods" title="Look Up Payment Methods"></a>
 
 
-Click on **Look Up Payment Methods** above to see how to look up the payment methods that are enabled for each of your merchant accounts, by currency.
+Click **Look Up Payment Methods** above to see how to look up the payment methods that are enabled for each of your merchant accounts, by currency.
 
 + Parameters
 
@@ -2326,7 +2326,7 @@ A Payment Handle represents tokenized information about the payment method that 
 ### Create a Payment Handle [POST]
 <a name="paymenthandlerequest" title="Create a Payment Handle"></a>
 
-Click on **Create a Payment Handle** above to see the examples of how to create a Payment Handle object:
+Click **Create a Payment Handle** above to see the examples of how to create a Payment Handle object:
 
 * A Payment Handle for a standard credit card authorization
 * A Payment Handle for a credit card that is registered for 3D Secure - the response for this request will contain a redirect to present to the customer so they can validate their 3D Secure credentials
@@ -4188,7 +4188,7 @@ Click **Get Payment Using Merchant Reference Number** above to look up a Payment
 ### Cancel Payments [PUT /v1/payments/{paymentId}]
 <a name="cancelpayment" title="Cancel a Payment"></a>
 
-Click on **Cancel Payments** above to see how to cancel a Payment using the ID returned in the response to the original request. This is only valid for BACS.
+Click **Cancel Payments** above to see how to cancel a Payment using the ID returned in the response to the original request. This is only valid for BACS.
 
 + Parameter
 
@@ -4556,7 +4556,7 @@ Click **Get Settlements Using Merchant Reference Number** above to look up a Set
 ### Process Refund [POST]
 <a name="refundrequest" title="Process Refund"></a>
 
-Click on **Process Refund** above to see two examples of how to process a Refund request:
+Click **Process Refund** above to see two examples of how to process a Refund request:
 
 * A regular Refund
 * A Refund that is split into multiple merchant accounts. This is applicable for those merchants whose accounts are configured to do so
@@ -4747,7 +4747,7 @@ Standalone Credits allow merchants to issue credits to cardholders without requi
 ### Process Standalone Credit [POST]
 <a name="standalonecreditrequest" title="Process Standalone Credit"></a>
 
-Click on **Process Standalone Credit** above to see how to process a Standalone Credit request. 
+Click **Process Standalone Credit** above to see how to process a Standalone Credit request. 
 
 + Attributes (OriginalCreditResponse)
 
@@ -6020,7 +6020,7 @@ If you do not include it when creating the customer Payment Handle, you should t
 ## Create a Multi-Use Payment Handle Using a Single-Use Payment Handle Token [POST /v1/customers/{customer_id}/paymenthandles]
 <a name="createpaymenthandlerequestsut" title="Create a Payment Handle Using a Single-Use Payment Handle Token"></a>
 
-Click on **Create a Multi-Use Payment Handle Using a Single-Use Payment Handle Token** above to save a payment instrument that was created using a regular [single-use Payment Handle Token](#paymenthandlerequest) to a customer. 
+Click **Create a Multi-Use Payment Handle Using a Single-Use Payment Handle Token** above to save a payment instrument that was created using a regular [single-use Payment Handle Token](#paymenthandlerequest) to a customer. 
 The single-use Payment Handle Token must still be valid &ndash; i.e., the *timeToLiveSeconds* has not expired.
 
 To use the saved payment instrument, use the multi-use Payment Handle token returned in the response to this request to create another [single-use Payment Handle Token](#paymenthandlerequest) and then use the *paymentHandleToken* in that response to 
