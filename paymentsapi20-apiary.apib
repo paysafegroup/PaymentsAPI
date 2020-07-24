@@ -1306,7 +1306,7 @@ This is an authorization that is approved for an amount lower than the requested
 |transactionType        |enum                       |Mandatory|This specifies the transaction type for which the Payment Handle is created. Possible values are: <ul><li>PAYMENT</li><li> STANDALONE_CREDIT</li><li>ORIGINAL_CREDIT</li><li>VERIFICATION</li></ul>|
 |status                 |enum                       |Read Only|This is the status of the request. Possible values are:<ul><li>INITIATED &ndash; The request was initiated with the downstream provider.</li><li>PAYABLE &ndash; The merchant can use the Payment Handle for a Payment request.</li><li>PROCESSING &ndash; The Payment Handle was authorized by customer, awaiting PSP response.</li><li>FAILED &ndash; The transaction failed due to an error or got declined.</li><li>EXPIRED &ndash; The Payment Handle expired because the merchant did not proceed with the Payment transaction.</li><li>COMPLETED &ndash; The Payment request was initiated successfully using the Payment Handle.</li></ul>|
 |usage                  |enum                       |Read Only|This specifies how the Payment Handle will be used for Payments. Possible values are:<ul><li>SINGLE_USE &ndash; The Payment Handle can be used for only one transaction and expires if not used.</li><li>MULTI_USE &ndash; The Payment Handle can be used multiple times.</li></ul>|
-|paymentType            |enum                       |Mandatory|This is the payment type associated with this Payment Handle. Possible values are:<ul><li>CARD</li><li>PAYSAFECASH</li><li>PAYSAFECARD</li><li>VIP PREFERRED</li><li>SIGHTLINE</li><li>SKRILL</li><li>INSTANT ACH</li><li>ACH</li><li>EFT</li></ul>|
+|paymentType            |enum                       |Mandatory|This is the payment type associated with this Payment Handle. Possible values are:<ul><li>CARD</li><li>PAYSAFECASH</li><li>PAYSAFECARD</li><li>VIP PREFERRED</li><li>SIGHTLINE</li><li>SKRILL</li><li>INSTANT ACH</li><li>PAYPAL</li><li>ACH</li><li>EFT</li><li>BACS</li><li>SEPA</li></ul>|
 |action                 |enum                       |Read Only|This specifies the next step of the user journey once they proceed to the Payment. Possible values are:<ul><li>NONE &ndash; No action is required, e.g., for a standard credit card payment.</li><li>REDIRECT &ndash; The user must be redirected to complete a Payment, e.g., when an alternate payment method like Paysafecard is used.</li></ul>|
 |executionMode          |enum                       |Read Only|This specifies the action of the merchant server to complete the Payment. Possible values are:<ul><li>SYNCHRONOUS &ndash; The status of the Payment request will be returned synchronously to the merchant, e.g., a credit card request.</li><li>ASYNCHRONOUS &ndash; The Payment request is not completed immediately and the merchant [must rely on webhooks](#paymentswebhooks) to retrieve the status of the Payment request.</li></ul>|
 |amount                 |number<br/>`max=99999999999` |Mandatory|This is the amount of the request, in minor units.<br/>**Note:** This field is mandatory if *transactionType* is included. <br/>The *amount* specified in the Payment Handle request must match the *amount* specified in the Payments API request the *paymentHandleToken* is used for. |
@@ -1396,7 +1396,7 @@ This is an authorization that is approved for an amount lower than the requested
 |error              |[error](#errorobject)                  |Read Only| Details of the error.    |
 |statusReason       |string<br/>`length<=255`               |Read Only|This is reason for the status. This is present in the case where *status* is ERROR, FAILURE, or HELD. |
 |authentication     |[authentication](#authenticationobject)|Read Only|These are 3D Secure details.|
-|paymentType            |enum                       |Optional|This is the payment type associated with this Payment Handle. Possible values are:<ul><li>CARD</li><li>PAYSAFECASH</li><li>PAYSAFECARD</li><li>VIP PREFERRED</li><li>SIGHTLINE</li><li>SKRILL</li><li>INSTANT ACH</li><li>ACH</li><li>EFT</li></ul>|
+|paymentType            |enum                       |Optional|This is the payment type associated with this Payment Handle. Possible values are:<ul><li>CARD</li><li>PAYSAFECASH</li><li>PAYSAFECARD</li><li>VIP PREFERRED</li><li>SIGHTLINE</li><li>SKRILL</li><li>INSTANT ACH</li><li>PAYPAL</li><li>ACH</li><li>EFT</li><li>BACS</li><li>SEPA</li></ul>|
 |gatewayReconciliationId |string                 |Optional|Transaction identifier that can be used to reconcile this transaction with the provider gateway.<br/><i>Read Only</i>|
 |updatedTime             |datetime               |Optional|ISO 8601 format (UTC) </b>This is the date and time the resource was last updated, e.g., `2014-01-26T10:32:28Z`<br/><i>Read Only</i>|
 |statusTime              |datetime               |Optional|ISO 8601 format (UTC) </b>This is the date and time the resource status was last updated, e.g., `2014-01-26T10:32:28Z`<br/><i>Read Only</i>|
@@ -6995,9 +6995,12 @@ Click  **Cancel a Mandate** above to see how to cancel a Mandate.
         + SKRILL
         + VIPPREFERRED
         + SIGHTLINE
-        + SKRILL
+        + INSTANTACH
         + ACH
         + EFT
+        + BACS
+        + SEPA
+        + PAYPAL
 + `status`: `PENDING` (enum) - This is the status of the transaction request.
     _Read Only_
     + Members
@@ -7074,12 +7077,13 @@ Click  **Cancel a Mandate** above to see how to cancel a Mandate.
 + `paymentType`: `CARD` (enum) - This is the payment type associated with this Payment Handle. If applicable, you need to pass the corresponding payment type object as listed after this parameter.
     _Mandatory_
     + Members
-        + CARD
+         + CARD
         + PAYSAFECASH
         + PAYSAFECARD
         + SIGHTLINE
         + SKRILL
         + INSTANTACH
+        + PAYPAL
         + VIPPREFERRED
         + ACH
         + EFT
@@ -7155,6 +7159,10 @@ Click  **Cancel a Mandate** above to see how to cancel a Mandate.
     _Mandatory_
     + Members
         + CARD
+        + ACH
+        + EFT
+        + BACS
+        + SEPA
 + `executionMode`: `SYNCHRONOUS`(enum) - This specifies the action of the merchant server in order to complete the Payment.
     _Read Only_
     + Members
@@ -7306,6 +7314,7 @@ Click  **Cancel a Mandate** above to see how to cancel a Mandate.
             + SIGHTLINE
             + SKRILL
             + INSTANTACH
+            + PAYPAL
             + ACH
             + EFT
             + VIPPREFERRED
