@@ -5660,15 +5660,21 @@ Click **Delete an Address** above to delete an Address.
 ## Create a Payment Handle for a Customer [POST /v1/customers/{customer_id}/paymenthandles]
 <a name="createcustomerpaymenthandlerequest" title="Create a Customer Payment Handle"></a>
 
-Click **Create a Payment Handle for a Customer** above to create a Payment Handle for a [Customer you have already created](#createcustomerequest).
+Click **Create a Payment Handle for a Customer** above to see examples of how to  create a Payment Handle for a [Customer you have already created](#createcustomerequest):
 
->**Note:** Currently, only CARD, ACH and EFT are supported as a *paymentType* parameter.
+* A Payment Handle for a CARD payment
+* A Payment Handle for a BACS payment
+* A Payment Handle for a SEPA payment
+* A Payment Handle for a BACS payment with existing bank and new Mandate
+* A Payment Handle for a SEPA payment with existing bank and new Mandate
 
-The *paymentHandleToken* returned in the response can be used for [payment requests in the Payments API](#paymentrequest), once it has the *status* of PAYABLE.
+>**Note:** Currently, only CARD, ACH, EFT, BACS and SEPA are supported as a *paymentType* parameter.
 
-To modify its *status* to PAYABLE, include this *paymentHandleToken* as the value for the *paymentHandleTokenFrom* parameter in a request to [create a regular Payment Handle](#paymenthandlerequest).  
+For card processing, the *paymentHandleToken* returned in the response can be used for [payment requests in the Payments API](#paymentrequest), once it has the *status* of PAYABLE. To modify its *status* to PAYABLE, include this *paymentHandleToken* as the value for the *paymentHandleTokenFrom* parameter in a request to [create a regular Payment Handle](#paymenthandlerequest).  
 That response in turn contains a *paymentHandleToken* with a status of PAYABLE, with the *usage* parameter set to SINGLE_USE. Once you use this single-use *paymentHandleToken* 
 in a [successful payment request](#paymentrequest), then the *status* of the Customer *paymentHandleToken* created here will change to PAYABLE. 
+
+For ACH, EFT, BACS and SEPA processing, the *paymentHandleToken* returned in the response has the *status* of PAYABLE and can be used for [payment requests in the Payments API](#paymentrequest) directly.
 
 **Note:** Although the *billingDetails* parameter is optional, it is recommended that you include it when you create the customer Payment Handle 
 because a Payment request that uses the *paymentHandleToken* in the response will fail AVS checks unless there is a billing address associated with it. 
@@ -5727,6 +5733,286 @@ If you do not include it when creating the customer Payment Handle, you should t
                      }
                  }
              }
+
++ Request Create a Multi-Use Payment Handle for a BACS Payment (application/json)
+
+    + Headers
+
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+            Simulator: "EXTERNAL"
+        
+    + Body
+
+            {
+                {
+               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
+               "paymentType": "BACS",
+               "bacs": {
+                  "nickName": "Sally's Barclays Account",
+                  "accountHolderName": "Sally Barnes",
+                  "accountNumber": "51120171",
+                  "sortCode": "086081",
+                  "mandate": {
+                     "reference" : "ABCDEF0796"
+                  }
+               },
+               "billingDetails": {
+                  "nickName": "sam",
+                  "street": "123 Street1",
+                  "city": "Toronto",
+                  "state": "ON",
+                  "country": "CA",
+                  "zip": "M5H2N2"
+               },
+               "customerIp": "204.91.0.0"
+            }
+            }
+
++ Response 200 (application/json)
+    
+    + Body
+
+             {
+                {
+               "id": "fe60c28d-486e-4b0a-bbf9-314033863542",
+               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
+               "usage": "MULTI_USE", 
+               "status": "PAYABLE",
+               "paymentType": "BACS",
+               "paymentHandleToken": "MAbz0rAAOIIEqu79",
+               "executionMode" : "ASYNCHRONOUS",
+               "bacs": {
+                  "nickName": "Sally's Barclays Account",
+                  "accountHolderName": "Sally Barnes",
+                  "lastDigits": "71",
+                  "sortCode": "086081",
+                  "mandate": {
+                     "id" : "abcdc28d-486e-4b0a-bbf9-314033863542",
+                     "reference" : "ABCDEF0796",
+                     "status" : "PENDING"
+                  }
+               },
+               "billingDetails": {
+                  "nickName": "sam",
+                  "street": "123 Street1",
+                  "city": "Toronto",
+                  "state": "ON",
+                  "country": "CA",
+                  "zip": "M5H2N2"
+               },
+               "customerIp": "204.91.0.0"
+            }
+            }
+
++ Request Create a Multi-Use Payment Handle for a SEPA Payment (application/json)
+
+    + Headers
+
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+            Simulator: "EXTERNAL"
+        
+    + Body
+
+            {
+               {
+               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
+               "paymentType": "SEPA",
+               "sepa": {
+                    "nickName": "Sally's Barclays Account",
+                    "accountHolderName": "Sally Barnes",
+                    "iban": "NL77ABNA0492122466",
+                    "bic": "ABNANL2A",
+                    "mandate": {
+                     "reference" : "ABCDEF0796"
+                  }
+               },
+               "billingDetails": {
+                  "nickName": "sam",
+                  "street": "123 Street1",
+                  "city": "Toronto",
+                  "state": "ON",
+                  "country": "CA",
+                  "zip": "M5H2N2"
+               },
+               "customerIp": "204.91.0.0"
+            }
+            }
+
++ Response 200 (application/json)
+    
+    + Body
+
+             {
+                {
+               "id": "fe60c28d-486e-4b0a-bbf9-314033863542",
+               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
+               "usage": "MULTI_USE", 
+               "status": "PAYABLE",
+               "paymentType": "SEPA",
+               "executionMode": "SYNCHRONOUS",
+               "paymentHandleToken": "Mbz0rAAOIIEqu79",
+               "sepa": {
+                  "nickName": "Sally's Barclays Account",
+                  "accountHolderName": "Sally Barnes",
+                  "lastDigits": "71",
+                  "bic": "ABNANL2A",
+                  "mandate": {
+                     "id" : "20de4b06-d4dc-4388-99be-1f390627d7b0",
+                     "reference" : "ABCDEF0796",
+                     "status" : "ACTIVE"
+                  }
+               },
+               "billingDetails": {
+                  "nickName": "sam",
+                  "street": "123 Street1",
+                  "city": "Toronto",
+                  "state": "ON",
+                  "country": "CA",
+                  "zip": "M5H2N2"
+               },
+               "customerIp": "204.91.0.0"
+            }
+            }
+
++ Request Create a Multi-Use Payment Handle for a BACS payment with existing bank and new Mandate (application/json)
+
+    + Headers
+
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+            Simulator: "EXTERNAL"
+        
+    + Body
+
+            {
+               {
+               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
+               "paymentType": "BACS",
+               "bacs": {
+                  "nickName": "Sally's Barclays Account",
+                  "accountHolderName": "Sally Barnes",
+                  "accountNumber": "51120171",
+                  "sortCode": "086081",
+                  "mandate": {
+                     "reference" : "ABCDEF0796"
+                  }
+               },
+               "billingDetails": {
+                  "nickName": "sam",
+                  "street": "123 Street1",
+                  "city": "Toronto",
+                  "state": "ON",
+                  "country": "CA",
+                  "zip": "M5H2N2"
+               },
+               "customerIp": "204.91.0.0"
+            }
+            }
+
++ Response 200 (application/json)
+    
+    + Body
+
+             {
+                {
+               "id": "fe60c28d-486e-4b0a-bbf9-314033863542",
+               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
+               "usage": "MULTI_USE", 
+               "status": "PAYABLE",
+               "paymentType": "BACS",
+               "paymentHandleToken": "MAbz0rAAOIIEqu79",
+               "executionMode" : "ASYNCHRONOUS",
+               "bacs": {
+                  "nickName": "Sally's Barclays Account",
+                  "accountHolderName": "Sally Barnes",
+                  "lastDigits": "71",
+                  "sortCode": "086081",
+                  "mandate": {
+                     "id" : "abcdc28d-486e-4b0a-bbf9-314033863542",
+                     "reference" : "ABCDEF0796",
+                     "status" : "PENDING"
+                  }
+               },
+               "billingDetails": {
+                  "nickName": "sam",
+                  "street": "123 Street1",
+                  "city": "Toronto",
+                  "state": "ON",
+                  "country": "CA",
+                  "zip": "M5H2N2"
+               },
+               "customerIp": "204.91.0.0"
+            }
+            }
+
++ Request Create a Multi-Use Payment Handle for a SEPA payment with existing bank and new Mandate (application/json)
+
+    + Headers
+
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+            Simulator: "EXTERNAL"
+        
+    + Body
+
+            {
+               {
+               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
+               "paymentType": "SEPA",
+               "sepa": {
+                  "nickName": "Sally's Barclays Account",
+                  "accountHolderName": "Sally Barnes",
+                  "iban": "NL77ABNA0492122466",
+                  "bic": "ABNANL2A",
+                  "mandate": {
+                     "reference" : "ABCDEF0796"
+                  }
+               },
+               "billingDetails": {
+                  "nickName": "sam",
+                  "street": "123 Street1",
+                  "city": "Toronto",
+                  "state": "ON",
+                  "country": "CA",
+                  "zip": "M5H2N2"
+               },
+               "customerIp": "204.91.0.0"
+            }
+            }
+
++ Response 200 (application/json)
+    
+    + Body
+
+             {
+               {
+               "id": "fe60c28d-486e-4b0a-bbf9-314033863542",
+               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
+               "usage": "MULTI_USE", 
+               "status": "PAYABLE",
+               "paymentType": "SEPA",
+               "executionMode": "SYNCHRONOUS",
+               "paymentHandleToken": "Mbz0rAAOIIEqu79",
+               "sepa": {
+                  "nickName": "Sally's Barclays Account",
+                  "accountHolderName": "Sally Barnes",
+                  "lastDigits": "71",
+                  "bic": "ABNANL2A",
+                  "mandate": {
+                     "id" : "20de4b06-d4dc-4388-99be-1f390627d7b0",
+                     "reference" : "ABCDEF0796",
+                     "status" : "ACTIVE"
+                  }
+               },
+               "billingDetails": {
+                  "nickName": "sam",
+                  "street": "123 Street1",
+                  "city": "Toronto",
+                  "state": "ON",
+                  "country": "CA",
+                  "zip": "M5H2N2"
+               },
+               "customerIp": "204.91.0.0"
+            }
+            }
 
 ## Create a Multi-Use Payment Handle Using a Single-Use Payment Handle Token [POST /v1/customers/{customer_id}/paymenthandles]
 <a name="createpaymenthandlerequestsut" title="Create a Payment Handle Using a Single-Use Payment Handle Token"></a>
@@ -6162,6 +6448,75 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
                  }]
              }
 
+# Group Mandate
+
+A Mandate is an authorisation for payments to be collected from a customer in the future. This is an legal agreement between the customer and merchant that informs users that they are agreeing to have their bank account debited periodically and also provides them with full details of their refund rights.
+
+### Setting Up A Mandate
+In order to set up a Mandate a form must be completed in one of three ways: 
+* Paper: A hand completed paper form is the most traditional way of completing the action. 
+* Telephone: Customers can phone their Direct Debit provider and details can be collated in that manner, if customers prefer to have an actual conversation. 
+* Online: Using bank-approved payment pages, Service Users can collect customer detail in what is a more private, non-rushed manner.
+
+### Look Up Mandate Status [GET /v1/mandates/{mandateId}]
+
+Click **Look Up Mandate Status** above to see the status of the mandate.
+    
++ Parameters
+    + mandateId: `abcdc28d-486e-4b0a-bbf9-314033863542` (string,required) - This is the ID of the mandate that got created.
+
++ Request Look Up Mandate Status(application/json)
+    
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+            Simulator: "EXTERNAL"
+            
++ Response 200 (application/json)
+
+    + Body
+
+            {
+               "id" : "abcdc28d-486e-4b0a-bbf9-314033863542",
+               "reference" : "ABCDEF0796",
+               "status" : "PENDING"
+            }
+
+### Cancel a Mandate [PUT /v1/mandates/{mandate_Id}]
+
+Merchant can cancel a mandate by using PUT call. The respective payment handle will also becomes CANCELLED with statusReasonCode as MANDATE_CANCELLED. 
+Webhooks notification for payment handle will be sent to merchant. 
+
+Click  **Cancel a Mandate** above to see how to cancel a Mandate.
+
++ Parameter
+
+    + mandate_Id : `d9bcfd85-8aa6-469d-80a3-e2ca196544da` - This is the ID of the mandate that got created
+
++ Request Cancel a Mandate (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+            {
+              "status": "CANCELLED"
+            }
+                        
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "id": "ea49ab6c-cf9b-4efd-bde8-2fa3bb5ccd85",
+              "reference" : "ABCDEF0796",
+              "status": "CANCELLED"
+            }
+            
+
 
 # Data Structures
 
@@ -6276,6 +6631,25 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
     + `fieldErrors` (array) - This is a list of fields that have issues.
         + `field`:`amount` (string) - Field name.
         + `error`:`Contain invalid characters` (string)  - Error associated with the field name.
+
+
+## `Bacs`
+
++ bacs (object) - These are the details of the [bacs](#bacsobject) used for the request.
+
+    + Properties
+
+        + nickName: `Sally's Barclays Account` (string) - This is an alias for this bank account.
+            _Optional, length<=50_
+        + accountHolderName: `XYZ Company` (string) - This is the name of the customer or company that owns the bank account.
+            _Mandatory, length<=18_
+        + accountNumber: `98877219` (string) - This is the bank account number.
+            _Mandatory, length=8_
+        + sortCode:`Jane's Card` (string) - This is the 6-digit sort code that identifies the financial institution and branch of the customer’s bank.
+            _Mandatory, length=6_
+        + Include Mandate
+        + lastDigits: `11` (string) - These are the last two digits of the account number.
+            _Read Only, length=2_
 
 ## Billing Details
 + billingDetails (object) - These are the customer's billing details. **Note:** For single-use Payment Handles, this address information will be ignored if the *paymentHandleTokenFrom* parameter is included in the Payment Handle creation request and there is already address information associated with that customer.
@@ -6552,6 +6926,19 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
         _length<=99999999999_
     + totalAmount:504000 (number) - This is the total amount of the line item, typically calculated as price multiplied by quantity, in minor units.
         _length<=99999999999_
+
+## Mandate
++ `mandate` (object) - This object contains mandate information like id, reference and status of mandate.
+    _Mandatory_
+
+    + Properties
+        + `id`: `abcdc28d-486e-4b0a-bbf9-314033863542` (string) - This is the id of the mandate that got created.
+             _Read Only_
+        + `reference`: `ABCDEF0796` (string) - This is the identifier of the mandate in the banking system.
+            _Mandatory_
+        + `status`: `PENDING` (string) - This is the status of the mandate.
+             _Read Only_
+
 
 ## Merchant Descriptor
 + merchantDescriptor (object)
@@ -7058,7 +7445,28 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
                 _Optional_
             + `descriptor`:`Merchant's trading name` (string) - This is the merchant descriptor that will be displayed on the consumer's bank statement.
                 _Optional_
-            
+        
+        + paypal (object) - These are the details of the [Paypal account](#paypalobject) used for the request.
+            + Properties
+                + `consumerId`:`john.doe@email.com` (string) - The source of funds for this payment, the email address of the consumer or payer.
+                    _Mandatory, length<=50_
+                + `recipientDescription`:`logo_url_alt_text` (string) - A label that overrides the business name in the merchant's PayPal account on the PayPal checkout pages.
+                    _Optional, length<=127_
+                + `language`:`EN` (string) - The locale of pages that the PayPal payment experience displays. A valid value is AU, AT, BE, BR, CA, CH, CN, DE, ES, GB, FR, IT, NL, PL, PT, RU, or US.  A five-character code is also valid for languages in these countries: da_DK, he_IL, id_ID, ja_JP, no_NO, pt_BR, ru_RU, sv_SE, th_TH, zh_CN, zh_HK, and zh_TW.
+                    _Optional, length=5_
+                + `shippingPreference` :`NO_SHIPPING`(enum) - The shipping preference. The possible values are:
+                _Read Only_
+                    + Members
+                        + NO_SHIPPING - Redacts the shipping address from the PayPal pages. Recommended for digital goods.
+                        + GET_FROM_FILE - Uses the customer-selected shipping address on PayPal pages.
+                        + SET_PROVIDED_ADDRESS - If available, uses the merchant-provided shipping address, which the customer cannot change on the PayPal pages. If the merchant does not provide an address, the customer can enter the address on PayPal pages.
+                + `consumerMessage`: `Details 1 description` (string) - Note to display on PayPal page.
+                    _Optional_
+                + `orderDescription`:`Order Description` (string) - Order description to display on PayPal page. If merchant does not set this field it defaults to 'Payment for order'.
+                    _Optional_
+                + `recipientType`:`PAYPAL_ID` (string) - Type of payout recipient. The only supported value is 'PAYPAL_ID'.
+                    _Optional_   
+
     + sightline (object) - These are the details of the [Play+ account](#sightlineobject) used for the request. Only one payment instrument object (e.g., *card* or *sightline*) can be included in the request.
         + Properties
             + `consumerId`:`12312313` (string) - This is the Loyalty Membership Number unique to the customer to be enrolled with Play+ (Sightline). This is to be provided by the merchant. 
@@ -7069,7 +7477,7 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
                 _Optional_
             + `last4ssn`:`6789` (string) - This is the last 4 digits of the customer's SSN, required to make the payments call. This is required only for a Payment transaction.
                 _Optional_
-            + `card`: (object) - This is the card object. This will be present if customer registers with Play+ as part of the card recovery flow or when a customer adds fund to Play+ (Sightline).
+            + `card`: `` (object) - This is the card object. This will be present if customer registers with Play+ as part of the card recovery flow or when a customer adds fund to Play+ (Sightline).
                 _Optional_
     
     + ach (object) - These are the details of the [ach account](#achobject) used for the request. Only one payment instrument object (e.g., *card* or *ach*) can be included in the request.
@@ -7112,6 +7520,116 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
         + `consumerId`:`550726575` (string) - The is the consumer social security number (SSN). As it is sensitive data the consumerId will not be passed in the response. Last 4 digits will be passed as lastDigits. 
             _Mandatory_
 
+
+## `Payment Instrument Customer`
+
++ One of
+
+    + card (object, required) - These are the details of the [card](#cardobject) used for the request.
+       
+        + Properties
+
+            + cardNum:`4111111111111111` (string) - This is the card number used for the request.
+                _Mandatory, length=8-20_
+            + cardExpiry (object) - This is the card's [expiry date](#cardexpiryobject).
+                __Mandatory_
+                + month:12 (number) - This is the card expiry month.
+                    _length=2_
+                + year:2020 (number) - This is the card expiry year.
+                    _length=4_
+            + cvv:`123` (string) - This is the 3- or 4-digit security code that appears on the card following the card number.
+                _Conditional, length=3-4_
+            + lastDigits:`1111` (string) - These are the last four digits of the card used for the request.
+                _Read Only, length=4_
+        
+    + bacs (object) - These are the details of the [bacs object](#bacsobject) used for the request.
+
+        + Properties
+    
+            + nickName: `Sally's Barclays Account` (string) - This is an alias for this bank account.
+                _Optional, length<=50_
+            + accountHolderName: `XYZ Company` (string) - This is the name of the customer or company that owns the bank account.
+                _Mandatory, length<=18_
+            + accountNumber: `98877219` (string) - This is the bank account number.
+                _Mandatory, length=8_
+            + sortCode:`Jane's Card` (string) - This is the 6-digit sort code that identifies the financial institution and branch of the customer’s bank.
+                _Mandatory, length=6_
+            + `mandate` (object) - This object contains mandate information like id, reference and status of mandate.
+                _Mandatory_
+            
+                + Properties
+                    + `id`: `abcdc28d-486e-4b0a-bbf9-314033863542` (string) - This is the id of the mandate that got created.
+                         _Read Only_
+                    + `reference`: `ABCDEF0796` (string) - This is the identifier of the mandate in the banking system.
+                        _Mandatory_
+                    + `status`: `PENDING` (string) - This is the status of the mandate.
+                         _Read Only_
+            + lastDigits: `11` (string) - These are the last two digits of the account number.
+                _Read Only, length=2_
+            
+    
+    
+    + sepa (object) - These are the details of the [sepa object](#sepaobject) used for the request.
+
+        + Properties
+    
+            + nickName: `Sally's Barclays Account` (string) - This is an alias for this bank account.
+                _Optional, length<=50_
+            + accountHolderName: `XYZ Company` (string) - This is the name of the customer or company that owns the bank account.
+                _Mandatory, length<=32_
+            + bic: `ABNANL2APIP` (string) - This is the Bank Identifier Code for the consumer's bank account.
+                _Optional, length=8-11_
+            + iban: `DE89370400440532013000` (string) - This is the International Bank Account Number for the costumer's bank account.
+                _Mandatory, length=8-34_
+            + `mandate` (object) - This object contains mandate information like id, reference and status of mandate.
+                _Mandatory_
+            
+                + Properties
+                    + `id`: `abcdc28d-486e-4b0a-bbf9-314033863542` (string) - This is the id of the mandate that got created.
+                         _Read Only_
+                    + `reference`: `ABCDEF0796` (string) - This is the identifier of the mandate in the banking system.
+                        _Mandatory_
+                    + `status`: `PENDING` (string) - This is the status of the mandate.
+                         _Read Only_
+            + lastDigits:`11` (string) - These are the last two digits of the iban.
+                _Read Only, length=2_
+
+    + ach (object) - These are the details of the [ach account](#achobject) used for the request. Only one payment instrument object (e.g., *card* or *ach*) can be included in the request.
+        + Properties
+            + `accountHolderName`:`XYZ Company` (string) - This is the name of the customer or company.
+                _Mandatory, length<=22_
+            + `payMethod` :`WEB`(enum) - This is the payment type.
+            _Read Only_
+                + Members
+                    + WEB - Personal bank accounts only
+                    + TEL - Personal bank accounts only
+                    + PPD - Personal bank accounts only
+                    + CCD - Business bank accounts only
+            + `accountType` :`SAVINGS`(enum) - This is the bank account type.
+            _Read Only_
+                + Members
+                    + SAVINGS
+                    + CHECKING
+                    + LOAN
+            + `accountNumber`:`988772192` (string) - This is the bank account number.
+               _Mandatory, length=4-17_
+            + `routingNumber`:`211589828` (string) - For USD accounts, this is the 9-digit routing number of the bank.
+                _Mandatory, length<=9_
+            + `lastDigits`:`92` (string) - This is returned in response. It contains only last 2 digits of bank account.
+                _Read Only, length=2_
+    
+     + eft (object) - These are the details of the [eft account](#eftobject) used for the request. Only one payment instrument object (e.g., *card* or *eft*) can be included in the request.
+        + `accountHolderName`:`XYZ Company` (string) - This is the name of the customer or company.
+                _Mandatory, length<=30_
+        + `accountNumber`:`988772192` (string) - This is the bank account number.
+               _Mandatory, length=4-12_
+        + `transitNumber`:`211589828` (string) - This is the 5-digit transit number of the customer's bank branch.
+                _Mandatory, length<=5_
+        + `institutionId`:`001` (string) - This is the 3-digit institution ID of the customer’s bank branch.
+                _Optional, length<=3_
+        + `lastDigits`:`92` (string) - This is returned in response. It contains only last 2 digits of bank account.
+                _Read Only, length=2_
+
 ## PaymentsRequest (object)
 
 + `id`:`3aeb9c63-6386-46a3-9f8e-f452e722228a` (string) - This is the ID returned in the response. This ID can be used for future associated requests, e.g., looking up the Payment. 
@@ -7148,7 +7666,12 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
         + SIGHTLINE
         + SKRILL
         + INSTANTACH
+        + PAYPAL
         + VIPPREFERRED
+        + ACH
+        + EFT
+        + BACS
+        + SEPA
 + `status`: `HELD`(enum) - This is the status of the transaction request.
     _Read Only_
     + Members
@@ -7256,6 +7779,24 @@ Use the *singleUseCustomerToken* returned in the response in the Payments Checko
     _Read Only_
 + Include Gateway Response
 + Include Metadata Object
+
+## `Sepa`
+
++ sepa (object) - These are the details of the [sepa](#sepaobject) used for the request.
+
+    + Properties
+
+        + nickName: `Sally's Barclays Account` (string) - This is an alias for this bank account.
+            _Optional, length<=50_
+        + accountHolderName: `XYZ Company` (string) - This is the name of the customer or company that owns the bank account.
+            _Mandatory, length<=32_
+        + bic: `ABNANL2APIP` (string) - This is the Bank Identifier Code for the consumer's bank account.
+            _Optional, length=8-11_
+        + iban: `DE89370400440532013000` (string) - This is the International Bank Account Number for the costumer's bank account.
+            _Mandatory, length=8-34_
+        + Include Mandate
+        + lastDigits:`11` (string) - These are the last two digits of the iban.
+            _Read Only, length=2_
 
 ## settlementsArray
 + Include Metadata Object
