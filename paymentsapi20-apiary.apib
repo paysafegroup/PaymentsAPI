@@ -11,8 +11,6 @@ HOST: https://api.test.paysafe.com/paymenthub/
 You can easily and securely process payments from your customers using one single API – The **Payments API**.
 
 The Paysafe Payments API helps you to process payments of your customers using a variety of payment methods and a single API Endpoint.
- Or
-The Paysafe Payments API allows you to accept payments via multiple payment methods while using a single endpoint integration.
 
 Paysafe also enables you to access your transaction analytics and manage accounts with our all-in-one [Business Portal](https://merchant.paysafe.com/portal). 
 
@@ -29,6 +27,11 @@ The Payments API currently supports the following payment methods:
 - Play+ (Sightline)
 - Skrill
 - Instant ACH (iACH)
+- ACH
+- EFT
+- Paypal
+- BACS
+- SEPA
 
 ## Transaction Types Supported
 Payments API supports  the following transaction types:
@@ -803,7 +806,33 @@ You must not include the following characters in your request parameters. If you
   }
   }
 ```
+<a name="bacsobject" title="BACS Object"></a>
+## bacs
+|Element            |Type                       |Required |Description                        |
+|---                |---                        |--- |---       |
+|nickName           |string <br/>`length<=50`   |Optional |This is an alias for this bank account.|
+|accountHolderName  |string <br/>`length<=18`   |Mandatory|This is the name of the customer or company that owns the bank account. |
+|accountNumber      |string<br/>`length=8`      |Mandatory|This is the bank account number.|
+|sortCode           |string<br/>`length=6`      |Mandatory|This is the 6-digit sort code that identifies the financial institution and branch of the customer’s bank.|
+|[mandate](#mandateobject)|object               |Mandatory|This object contains mandate information like id, reference and status of mandate.|
+|lastDigits         |string<br/>`length=2`      |Read Only|This is returned in response. It contains only last 2 digits of bank account.|
 
+```apib
+        {
+            "bacs": {
+                "accountHolderName": "XYZ Company",
+                "sortCode": "321654",
+                "accountNumber": "98877219",
+                "nickName": "Sally's Barclays Account",
+                "mandate" : {
+                    "id" : "20de4b06-d4dc-4388-99be-1f390627d7b0",
+                    "reference" : "ABCDEF0796",
+                    "status" : "ACTIVE"
+                    }
+                }
+        }
+
+```
 
 <a name="billingdetailsobject" title="Billing Details Object"></a>
 ## billingDetails
@@ -1154,7 +1183,26 @@ Level 2 and Level 3 (L2/L3) credit card processing refers to certain B2B card tr
     ]
 }
 ```
+<a name="mandateobject" title="mandate Object"></a>
+## mandate
 
+|Element    |Type           |Required|Description|
+|---        |---            |---|---|
+|id         |string         |Read Only|This is the id of the mandate that got created.|
+|reference  |string         |Mandatory|This is the identifier of the mandate in the banking system.|
+|status     |enum           |Read Only|This is the status of the mandate.|
+
+```apib
+{
+    {
+     "meta": {
+               "id" : "abcdc28d-486e-4b0a-bbf9-314033863542",
+               "reference" : "ABCDEF0796",
+               "status" : "PENDING"
+            }
+    }
+}
+```
 
 <a name="merchantdescriptorobject" title="merchantDescriptor Object"></a>
 ## merchantDescriptor
