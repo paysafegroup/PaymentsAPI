@@ -7486,7 +7486,9 @@ Click  **Cancel a Mandate** above to see how to cancel a Mandate.
                 _Optional_
             + `balance`:`20000` (string) - This is the balance on the Play+ (Sightline) prepaid card.
                 _Optional_
-            + `last4ssn`:`6789` (string) - This is the last 4 digits of the customer's SSN, required to make the payments call. This is required only for a Payment transaction.
+             + `SSN` : `123456789` (string) - This is the customer's Social Security Number.
+                _Optional_
+            + `last4ssn`:`6789` (string) - This the customer’s last 4 digits of Social Security Number. If the customer is already enrolled for Sightline, then instead of sending the full ‘SSN’ field, you can send the last 4 digits of SSN which will get prefilled during Payment flow. If not provided, then the system will check if ‘SSN’ field is present to prefill the last 4 digits. If both these fields are not provided, then the customer has to enter the last 4 digits of SSN to complete the payment.
                 _Optional_
             + `card`: `` (object) - This is the card object. This will be present if customer registers with Play+ as part of the card recovery flow or when a customer adds fund to Play+ (Sightline).
                 _Optional_
