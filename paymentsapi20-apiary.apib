@@ -4181,7 +4181,42 @@ Click **Get Payment Using Merchant Reference Number** above to look up a Payment
                 }
               ]
             }
-            
+
+### Cancel Payments [PUT /v1/payments/{paymentId}]
+<a name="cancelpayment" title="Cancel a Payment"></a>
+
+Click on **Cancel Payments** above to see how to cancel a Payment using the ID returned in the response to the original request. This is only valid for BACS.
+
++ Parameter
+
+   + paymentId : `dac421cc-c6e9-44ba-b1ce-4c13a3860544` - This is the ID returned in the response to the Payments request.
+   
++ Attributes
+        + status : `CANCELLED` - This is the status sent to cancel the Payments request.
+    
++ Request Cancel Payment (application/json)
+    
+    + Headers
+    
+        Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+        Simulator: "EXTERNAL"
+
+    + Body
+    
+            {
+            "status":"CANCELLED"
+             }
+
++ Response 200 (application/json)
+
+    + Body
+
+             {
+                "id": "dac421cc-c6e9-44ba-b1ce-4c13a3860544",
+                "txnTime": "2020-03-30T06:31:23.000+0000",
+                "status": "CANCELLED"
+             }
+
 # Group Void Authorizations 
 
 A Void Authorization request allows you to void (or cancel) an authorization request, provided the authorization is not yet settled. An authorization is part of a [payment request](#paymentrequest). 
