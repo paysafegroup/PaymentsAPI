@@ -3623,15 +3623,16 @@ Click **Process Payment** above to create a Payment request using a Payment Hand
             {
                {
                "merchantRefNum": "Oc019787c398",
-               "paymentHandleToken": "MAOO1DIuygoQfNH6",
-               "payOnActiveMandates" : false,
+               "paymentHandleToken":"DAOO1DIuygoQfNH6",
+               "payOnActiveMandate" : false,
                "amount": 123459,
-               "settleWithAuth": "true",
-               "currencyCode": "USD",
+               "settleWithAuth":true,
+               "currencyCode": "GBP",
                "customerIp": "204.91.0.0",
                "dupCheck": false,
-               "description":"Magazine subscription"
-                }
+               "description":"Magazine subscription",
+               "mandateId":"034594dc-8011-4698-aff8-9260558193f9"   
+            }
             }
             
 + Response 200 (application/json)
@@ -3639,23 +3640,21 @@ Click **Process Payment** above to create a Payment request using a Payment Hand
     + Body
 
             {
-              {
+             {
                 "id" : "abcdc28d-486e-4b0a-bbf9-314033863544",
                 "merchantRefNum": "Oc019787c398",
                 "amount": 123459,
-                "status": "PENDING",
-                "statusReasonCode" : "MANDATE_IN_PENDING",
-                "payOnActiveMandates" : false,
-                "settleWithAuth":"true",
+                "status": "PENDING",     
+                "paymentType": "BACS",
+                "accountId": "1001770190",
+                "statusReason" : "MANDATE_IN_PENDING",
+                "payOnActiveMandate" : false,
+                "settleWithAuth":true,
                 "bacs": {
                    "nickName": "Sally's Barclays Account",
                    "accountHolderName": "Sally Barnes",
                    "lastDigits": "71",
-                   "sortCode": "086081",
-                   "mandate": {
-                      "id" : "abcdc28d-486e-4b0a-bbf9-314033863542",
-                      "reference" : "ABCDEF0796",
-                   }
+                   "sortCode": "086081"
                 },
                 "billingDetails": {
                     "street": "100 Queens",
@@ -3666,11 +3665,12 @@ Click **Process Payment** above to create a Payment request using a Payment Hand
                     "nickName": "Homefdsffds"
                 },
                 "dupCheck": true,
-                "description":"Magazine subscription"
+                "description":"Magazine subscription",
                 "txnTime": "2020-01-27T09:43:28Z",
-                "currencyCode": "USD",
-                "settleWithAuth": true,
-                "paymentHandleToken": "MAOO1DIuygoQfNH6"
+                "currencyCode": "GBP",
+                "paymentHandleToken": "DAOO1DIuygoQfNH6",    
+                "mandateId":"034594dc-8011-4698-aff8-9260558193f9",     
+                "customerIp": "204.91.0.0"
             }
             }
 
@@ -3686,13 +3686,14 @@ Click **Process Payment** above to create a Payment request using a Payment Hand
 
            {
                "merchantRefNum": "Oc019787c398",
-               "paymentHandleToken": "MAOO1DIuygoQfNH6",
+               "paymentHandleToken":"DAOO1DIuygoQfNH6",
                "amount": 123459,
-               "settleWithAuth": "true",
-               "currencyCode": "GBP",
+               "settleWithAuth":true,
+               "currencyCode": "EUR",
                "customerIp": "204.91.0.0",
                "dupCheck": false,
-               "description":"Magazine subscription"
+               "description":"Magazine subscription",    
+               "mandateId":"034594dc-8011-4698-aff8-9260558193f9"
             }
 
 + Response 200 (application/json)
@@ -3700,21 +3701,17 @@ Click **Process Payment** above to create a Payment request using a Payment Hand
     + Body
 
             {
-              {
+                {
                 "id" : "abcdc28d-486e-4b0a-bbf9-314033863544",
                 "merchantRefNum": "Oc019787c398",
                 "amount": 123459,
                 "status": "COMPLETED",
-                "settleWithAuth": "true",
+                "settleWithAuth":true,
                 "sepa": {
                    "nickName": "Sally's Barclays Account",
                    "accountHolderName": "Sally Barnes",
                    "lastDigits": "71",
-                   "bic": "ABNANL2A",
-                   "mandate": {
-                      "id" : "abcdc28d-486e-4b0a-bbf9-314033863542",
-                      "reference" : "MNBVCX0796"
-                   }
+                   "bic": "ABNANL2A"
                 },
                 "billingDetails": {
                     "street": "100 Queens",
@@ -3726,18 +3723,19 @@ Click **Process Payment** above to create a Payment request using a Payment Hand
                 },
                 "dupCheck": true,
                 "txnTime": "2020-01-27T09:43:28Z",
-                "currencyCode": "GBP",
-                "settleWithAuth": true,
-                "paymentHandleToken": "Mp3BkVTbLU13ytW",
+                "currencyCode": "EUR",
+                "paymentHandleToken": "DAOO1DIuygoQfNH6",
                 "settlements" : [
                      {
                          "id" : "abcdc28d-486e-4b0a-bbf9-314033863123",
                          "amount" : 123459,
-                         "currencyCode" : "GBP",
+                         "currencyCode" : "EUR",
                          "status" : "PENDING"
                      }
-                 ],
-                "description":"Magazine subscription"
+                ],    
+                "mandateId": "034594dc-8011-4698-aff8-9260558193f9",     
+                "description": "Magazine subscription",     
+                "customerIp":  "204.91.0.0"
             }
             }
 
