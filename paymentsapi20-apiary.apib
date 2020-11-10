@@ -5982,6 +5982,9 @@ Click **Look Up Mandate Status** above to see the status of the mandate.
 
 ### Assign a Mandate [POST /v1/customers/{customerId}/paymenthandles/{paymenthandleid}/mandates]
 
+Click **Assign a Mandate** above to add a mandate to the multi-use paymentHandle returned in response.
+You can add multiple mandates to a multi-use payment handle. Mandate is added to the multi-use payment handle after mandate reference number validations. Mandate reference, mandate id, mandate status (PENDING) is returned in response.
+
 + Parameters
     + customerId: `ccb24e28-6e38-47ce-8815-94706c5b608c` (string,required) - This is the ID of the customer.
     + paymenthandleid: `11fab6fc-de08-4feb-868b-b4e900ad21c9` (string, required) - This is the ID of the Payment Handle.
@@ -5997,6 +6000,7 @@ Click **Look Up Mandate Status** above to see the status of the mandate.
         + reference: `ABCDEF0721` (string, required) - This is the identifier of the mandate in the banking system.
 
     + Body
+
         {
             "reference" : "ABCDEF0721"
         }
