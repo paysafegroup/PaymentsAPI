@@ -5776,6 +5776,70 @@ Click **Delete a Customer Payment Handle** above to delete a Customer Payment Ha
             
 + Response 200 (application/json)
 
+### Look Up Mandate Status [GET /v1//customers/{customerId}/paymenthandles/{paymentHandleId}/mandates/{mandateId}]
+
+Click **Look Up Mandate Status** above to see the status of the mandate.
+    
++ Parameters
+    + customerId: `ccb24e28-6e38-47ce-8815-94706c5b608c` (string,required) - This is the ID of the customer.
+    + paymenthandleId: `11fab6fc-de08-4feb-868b-b4e900ad21c9` (string, required) - This is the ID of the Payment Handle.
+    + mandateId:
+
++ Request Look Up Mandate Status(application/json)
+    
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+            Simulator: "EXTERNAL"
+            
++ Response 200 (application/json)
+
+    + Body
+
+            {
+               "id" : "abcdc28d-486e-4b0a-bbf9-314033863542",
+               "reference" : "ABCDEF0796",
+               "status" : "PENDING"
+            }
+
+
+### Cancel a Mandate [PUT /customers/{customerId}/paymenthandles/{paymenthandleid}/mandates/{mandate_Id}]
+
+Merchant can cancel a mandate by using PUT call. The respective payment handle will also becomes CANCELLED with statusReasonCode as MANDATE_CANCELLED. 
+Webhooks notification for payment handle will be sent to merchant. 
+
+Click  **Cancel a Mandate** above to see how to cancel a Mandate.
+
++ Parameters
+    + customerId: `ccb24e28-6e38-47ce-8815-94706c5b608c` (string,required) - This is the ID of the customer.
+    + paymenthandleid: `11fab6fc-de08-4feb-868b-b4e900ad21c9` (string, required) - This is the ID of the Payment Handle.
+    + mandate_Id: `abcdc28d-486e-4b0a-bbf9-314033863542` (string,required) - This is the ID of the mandate that got created.
+
++ Request Cancel a Mandate (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+            {
+              "status": "CANCELLED"
+            }
+                        
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "id": "ea49ab6c-cf9b-4efd-bde8-2fa3bb5ccd85",
+              "reference" : "ABCDEF0796",
+              "status": "CANCELLED"
+            }
+
+
+
 # Single-Use Tokens [/singleusecustomertokens]
 
 ## Create a Single-Use Customer Token [POST /v1/customers/{customer_id}/singleusecustomertokens]
