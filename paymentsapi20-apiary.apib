@@ -5325,8 +5325,6 @@ Click **Create a Payment Handle for a Customer** above to see examples of how to
 * A Payment Handle for a CARD payment
 * A Payment Handle for a BACS payment
 * A Payment Handle for a SEPA payment
-* A Payment Handle for a BACS payment with existing bank and new Mandate
-* A Payment Handle for a SEPA payment with existing bank and new Mandate
 
 >**Note:** Currently, only CARD, ACH, EFT, BACS and SEPA are supported as a *paymentType* parameter.
 
@@ -5404,7 +5402,7 @@ If you do not include it when creating the customer Payment Handle, you should t
     + Body
 
             {
-                {
+               {
                "paymentType": "BACS",
                "bacs": {
                   "nickName": "Sally's Barclays Account",
@@ -5450,8 +5448,7 @@ If you do not include it when creating the customer Payment Handle, you should t
                   "country": "CA",
                   "zip": "M5H2N2"
                },
-               "customerId": "816658ce-e9e2-436b-9a85-5478b09c92a5",   
-               "customerIp": "204.91.0.0"
+               "customerId": "816658ce-e9e2-436b-9a85-5478b09c92a5",    "customerIp": "204.91.0.0"
             }
             }
 
@@ -5466,156 +5463,12 @@ If you do not include it when creating the customer Payment Handle, you should t
 
             {
                {
-               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
-               "paymentType": "SEPA",
-               "sepa": {
-                    "nickName": "Sally's Barclays Account",
-                    "accountHolderName": "Sally Barnes",
-                    "iban": "NL77ABNA0492122466",
-                    "bic": "ABNANL2A",
-                    "mandate": {
-                     "reference" : "ABCDEF0796"
-                  }
-               },
-               "billingDetails": {
-                  "nickName": "sam",
-                  "street": "123 Street1",
-                  "city": "Toronto",
-                  "state": "ON",
-                  "country": "CA",
-                  "zip": "M5H2N2"
-               },
-               "customerIp": "204.91.0.0"
-            }
-            }
-
-+ Response 200 (application/json)
-    
-    + Body
-
-             {
-                {
-               "id": "fe60c28d-486e-4b0a-bbf9-314033863542",
-               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
-               "usage": "MULTI_USE", 
-               "status": "PAYABLE",
-               "paymentType": "SEPA",
-               "executionMode": "SYNCHRONOUS",
-               "paymentHandleToken": "Mbz0rAAOIIEqu79",
-               "sepa": {
-                  "nickName": "Sally's Barclays Account",
-                  "accountHolderName": "Sally Barnes",
-                  "lastDigits": "71",
-                  "bic": "ABNANL2A",
-                  "mandate": {
-                     "id" : "20de4b06-d4dc-4388-99be-1f390627d7b0",
-                     "reference" : "ABCDEF0796",
-                     "status" : "ACTIVE"
-                  }
-               },
-               "billingDetails": {
-                  "nickName": "sam",
-                  "street": "123 Street1",
-                  "city": "Toronto",
-                  "state": "ON",
-                  "country": "CA",
-                  "zip": "M5H2N2"
-               },
-               "customerIp": "204.91.0.0"
-            }
-            }
-
-+ Request Create a Multi-Use Payment Handle for a BACS payment with existing bank and new Mandate (application/json)
-
-    + Headers
-
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-            Simulator: "EXTERNAL"
-        
-    + Body
-
-            {
-               {
-               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
-               "paymentType": "BACS",
-               "bacs": {
-                  "nickName": "Sally's Barclays Account",
-                  "accountHolderName": "Sally Barnes",
-                  "accountNumber": "51120171",
-                  "sortCode": "086081",
-                  "mandate": {
-                     "reference" : "ABCDEF0796"
-                  }
-               },
-               "billingDetails": {
-                  "nickName": "sam",
-                  "street": "123 Street1",
-                  "city": "Toronto",
-                  "state": "ON",
-                  "country": "CA",
-                  "zip": "M5H2N2"
-               },
-               "customerIp": "204.91.0.0"
-            }
-            }
-
-+ Response 200 (application/json)
-    
-    + Body
-
-             {
-                {
-               "id": "fe60c28d-486e-4b0a-bbf9-314033863542",
-               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
-               "usage": "MULTI_USE", 
-               "status": "PAYABLE",
-               "paymentType": "BACS",
-               "paymentHandleToken": "MAbz0rAAOIIEqu79",
-               "executionMode" : "ASYNCHRONOUS",
-               "bacs": {
-                  "nickName": "Sally's Barclays Account",
-                  "accountHolderName": "Sally Barnes",
-                  "lastDigits": "71",
-                  "sortCode": "086081",
-                  "mandate": {
-                     "id" : "abcdc28d-486e-4b0a-bbf9-314033863542",
-                     "reference" : "ABCDEF0796",
-                     "status" : "PENDING"
-                  }
-               },
-               "billingDetails": {
-                  "nickName": "sam",
-                  "street": "123 Street1",
-                  "city": "Toronto",
-                  "state": "ON",
-                  "country": "CA",
-                  "zip": "M5H2N2"
-               },
-               "customerIp": "204.91.0.0"
-            }
-            }
-
-+ Request Create a Multi-Use Payment Handle for a SEPA payment with existing bank and new Mandate (application/json)
-
-    + Headers
-
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-            Simulator: "EXTERNAL"
-        
-    + Body
-
-            {
-               {
-               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
                "paymentType": "SEPA",
                "sepa": {
                   "nickName": "Sally's Barclays Account",
                   "accountHolderName": "Sally Barnes",
                   "iban": "NL77ABNA0492122466",
-                  "bic": "ABNANL2A",
-                  "mandate": {
-                     "reference" : "ABCDEF0796"
-                  }
+                  "bic": "ABNANL2A"
                },
                "billingDetails": {
                   "nickName": "sam",
@@ -5634,24 +5487,18 @@ If you do not include it when creating the customer Payment Handle, you should t
     + Body
 
              {
-               {
+                {
                "id": "fe60c28d-486e-4b0a-bbf9-314033863542",
-               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
                "usage": "MULTI_USE", 
                "status": "PAYABLE",
                "paymentType": "SEPA",
                "executionMode": "SYNCHRONOUS",
-               "paymentHandleToken": "Mbz0rAAOIIEqu79",
+               "paymentHandleToken": "Dbz0rAAOIIEqu79",
                "sepa": {
                   "nickName": "Sally's Barclays Account",
                   "accountHolderName": "Sally Barnes",
                   "lastDigits": "71",
-                  "bic": "ABNANL2A",
-                  "mandate": {
-                     "id" : "20de4b06-d4dc-4388-99be-1f390627d7b0",
-                     "reference" : "ABCDEF0796",
-                     "status" : "ACTIVE"
-                  }
+                  "bic": "ABNANL2A"
                },
                "billingDetails": {
                   "nickName": "sam",
@@ -5660,10 +5507,12 @@ If you do not include it when creating the customer Payment Handle, you should t
                   "state": "ON",
                   "country": "CA",
                   "zip": "M5H2N2"
-               },
+               },    
+               "customerId": "816658ce-e9e2-436b-9a85-5478b09c92a5",
                "customerIp": "204.91.0.0"
             }
             }
+
 
 ## Create a Multi-Use Payment Handle Using a Single-Use Payment Handle Token [POST /v1/customers/{customer_id}/paymenthandles]
 <a name="createpaymenthandlerequestsut" title="Create a Payment Handle Using a Single-Use Payment Handle Token"></a>
