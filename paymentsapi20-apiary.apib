@@ -5405,16 +5405,12 @@ If you do not include it when creating the customer Payment Handle, you should t
 
             {
                 {
-               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
                "paymentType": "BACS",
                "bacs": {
                   "nickName": "Sally's Barclays Account",
                   "accountHolderName": "Sally Barnes",
                   "accountNumber": "51120171",
-                  "sortCode": "086081",
-                  "mandate": {
-                     "reference" : "ABCDEF0796"
-                  }
+                  "sortCode": "086081"
                },
                "billingDetails": {
                   "nickName": "sam",
@@ -5433,24 +5429,18 @@ If you do not include it when creating the customer Payment Handle, you should t
     + Body
 
              {
-                {
+               {
                "id": "fe60c28d-486e-4b0a-bbf9-314033863542",
-               "merchantRefNum": "Oc019787c398-fd45-4e8e-906f-47fd741asdsbavz803",
                "usage": "MULTI_USE", 
                "status": "PAYABLE",
                "paymentType": "BACS",
-               "paymentHandleToken": "MAbz0rAAOIIEqu79",
+               "paymentHandleToken": "DAbz0rAAOIIEqu79",
                "executionMode" : "ASYNCHRONOUS",
                "bacs": {
                   "nickName": "Sally's Barclays Account",
                   "accountHolderName": "Sally Barnes",
                   "lastDigits": "71",
-                  "sortCode": "086081",
-                  "mandate": {
-                     "id" : "abcdc28d-486e-4b0a-bbf9-314033863542",
-                     "reference" : "ABCDEF0796",
-                     "status" : "PENDING"
-                  }
+                  "sortCode": "086081"
                },
                "billingDetails": {
                   "nickName": "sam",
@@ -5460,6 +5450,7 @@ If you do not include it when creating the customer Payment Handle, you should t
                   "country": "CA",
                   "zip": "M5H2N2"
                },
+               "customerId": "816658ce-e9e2-436b-9a85-5478b09c92a5",   
                "customerIp": "204.91.0.0"
             }
             }
