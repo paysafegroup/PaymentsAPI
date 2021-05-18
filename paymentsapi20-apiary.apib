@@ -7212,7 +7212,8 @@ Click  **Cancel a Mandate** above to see how to cancel a Mandate.
     + vippreferred (object) - These are the details of the [vip preferred account](#vippreferredobject) used for the request. Only one payment instrument object (for example, *card* or *vippreferred*) can be included in the request. 
         + `consumerId`:`550726575` (string) - The is the consumer social security number (SSN). As it is sensitive data the consumerId will not be passed in the response. Last 4 digits will be passed as lastDigits. 
             _Mandatory_
-
+        + `registrationId`:`550726575` (string) - The is the registration ID of the consumer. The registrationId is also supported once you do a successful enrollment. You can pass the registrationId in the place of consumerId in the set up option call. 
+            _Optional_
 
 ## `Payment Instrument Customer`
 
