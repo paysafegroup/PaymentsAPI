@@ -8,7 +8,7 @@ HOST: https://api.test.paysafe.com/paymenthub/
 
 > **Note:** Payments API now supports all types of merchants. 
 
-You can easily and securely process payments from your customers using one single API – The **Payments API**.
+You can easily and securely process payments from your customers using one single API – The **Payments API**.   
 
 The Paysafe Payments API helps you to process payments of your customers using a variety of payment methods and a single API Endpoint.
 
@@ -127,7 +127,7 @@ Paysafe offers multiple payment methods to process your transaction. You can obt
 * [VIP Preferred]()
 * [ACH]()
 * [EFT]()
-* [Paypal]()
+* [PayPal]()
 * [BACS]()
 * [SEPA]()
 * [Interac]()
@@ -156,7 +156,7 @@ For example:
 
 # API
 The Payments API processes payment-related requests across a wide variety of payment methods.
-The API is constructed around REST and has followng features:
+The API is constructed around REST and has following features:
 * Definite resource-oriented URLs
 * Receives form-encoded request bodies
 * Returns JSON-encoded responses 
@@ -853,7 +853,7 @@ This is an authorization that is approved for an amount lower than the requested
 |customerOperation      |Enumeration                |Either customerOperation or transactionType is Mandatory.|This is the consumer operation on the payment instrument. ADD – Consumer wants to save the payment instrument to the profile. EDIT – Consumer wants to edit the payment instrument which is attached to the profile. DELETE – Consumer wants to delete the saved payment instrument from his profile.|
 |singleUseCustomerToken |String  <br/>`length<=50` |Mandatory, if customerOperation is EDIT or DELETE | TThis is the single use customer token of the profile on which customer operation (ADD/EDIT/DELETE) needs to be done.|
 |transactionType        |Enumeration                |Either customerOperation or transactionType is Mandatory.|This specifies the transaction type for which the Payment Handle is created. Possible values are: <ul><li>PAYMENT - Payment Handle is created to continue the Payment.</li><li> STANDALONE_CREDIT - Payment Handle is created to continue the standalone credit.</li><li>ORIGINAL_CREDIT - Payment Handle is created to continue the original credit.</li><li>VERIFICATION - Payment Handle is created to continue the verification request.</li></ul>|
-|status                 |Enumeration                |Read Only   |This is the status of the request. Possible values are:<ul><li>RECEIVED &ndash; Our system has received the request and is waiting for the downstream processor’s response.</li><li>INITIATED &ndash; The request was initiated with the downstream provider.</li><li>PAYABLE &ndash; The merchant can use the Payment Handle for a Payment request.</li><li>PROCESSING &ndash; The Payment Handle was authorized by customer, awaiting PSP response.</li><li>FAILED &ndash; The transaction failed due to an error or got declined.</li><li>EXPIRED &ndash; The Payment Handle expired because the merchant did not proceed with the Payment transaction.</li><li>COMPLETED &ndash; The Payment request was initiated successfully using the Payment Handle.</li><li>ERROR &ndash; The Payment Handle has errored. The reason for this state might be because of some system or environmental issues. </li></ul> By default, PaymentHandles will EXPIRE after 15 mins unless in a PROCESSING status.  Once the transaction flow has been is initiated by the customer, the time permitted for the customer to complete authorization is dependent upon the payment type. PaymentHandles that lapse the permitted processing will be marked EXPIRED.If the customer is required to complete authorization as part of a redirect flow, the PaymentHandle is updated to have a PROCESSING status and the expiration time is extended to allow this additional time for the customer to complete these activities.For payment types where there is automatic settlement (settleWithAuth=true), if the PAYABLE Payment Handle has EXPIRED,  the corresponding Payment/Settlement resources will be auto created.  IF the PSP supports refunds, they will be auto refunded to the customer.|
+|status                 |Enumeration                |Read Only   |This is the status of the request. Possible values are:<ul><li>RECEIVED &ndash; Our system has received the request and is waiting for the downstream processor’s response.</li><li>INITIATED &ndash; The request was initiated with the downstream provider.</li><li>PAYABLE &ndash; The merchant can use the Payment Handle for a Payment request.</li><li>PROCESSING &ndash; The Payment Handle was authorized by customer, awaiting PSP response.</li><li>FAILED &ndash; The transaction failed due to an error or got declined.</li><li>EXPIRED &ndash; The Payment Handle expired because the merchant did not proceed with the Payment transaction.</li><li>COMPLETED &ndash; The Payment request was initiated successfully using the Payment Handle.</li><li>ERROR &ndash; The Payment Handle has errored. The reason for this state might be because of some system or environmental issues. </li></ul> By default, PaymentHandles will EXPIRE after 15 mins unless in a PROCESSING status.  Once the transaction flow has been initiated by the customer, the time permitted for the customer to complete authorization is dependent upon the payment type. PaymentHandles that lapse the permitted processing will be marked EXPIRED.If the customer is required to complete authorization as part of a redirect flow, the PaymentHandle is updated to have a PROCESSING status and the expiration time is extended to allow this additional time for the customer to complete these activities.For payment types where there is automatic settlement (settleWithAuth=true), if the PAYABLE Payment Handle has EXPIRED,  the corresponding Payment/Settlement resources will be auto created.  IF the PSP supports refunds, they will be auto refunded to the customer.|
 |statusReason           |Enumeration                |Read Only   |<ul><li>AUTH_VOIDED - Authorization was cancelled (voided).</li><li> USER_CANCELLED - User cancelled the transaction </li><li>AUTH_EXPIRED - Authorization has expired and no settlements were completed.</ul>|
 |usage                  |Enumeration                |Read Only   |This specifies how the Payment Handle will be used for Payments. Possible values are:<ul><li>SINGLE_USE &ndash; The Payment Handle can be used for only one transaction and expires if not used.</li><li>MULTI_USE &ndash; The Payment Handle can be used multiple times.</li></ul>|
 |paymentType            |Enumeration                |Mandatory   |This is the payment type associated with this Payment Handle. Possible values are:<ul><li>CARD</li><li>PAYSAFECASH</li><li>PAYSAFECARD</li><li>VIP PREFERRED</li><li>SIGHTLINE</li><li>SKRILL</li><li>INSTANT ACH</li><li>NETELLER</li></ul>|
@@ -1347,6 +1347,16 @@ The *storedCredential* object is used to identify [authorization requests](#auth
 |status             |enum                                   |Read Only|This is the status of the transaction request. Possible values are:<ul><li>RECEIVED &ndash; Our system has received the request and is waiting for the downstream processor’s response.</li><li>COMPLETED &ndash; The transaction has been completed.</li><li>HELD &ndash; The transaction has been placed on hold due to risk considerations.</li><li>FAILED &ndash; The transaction failed, due to either an error or being declined.</li><li>CANCELLED &ndash; The request has been fully voided (reversed).</li><li>PENDING &ndash; The request is pending.</li></ul>|
 
 
+<a name="vippreferredobject" title="VIP Preferred Object"></a>
+## VIP Preferred
+
+|Element            |Type                      |Required  | Description                       |
+|---                |---                       |--------  |---                                |
+|consumerId         |string <br/>              |Mandatory |This is the consumer social security number (SSN). As it is sensitive data the consumerId will not be passed in the response. Last 4 digits will be passed as lastDigits.|
+|registrationId     |string <br/>              |Optional  |This is the registrationId of the consumer. You can pass the registrationId in place of consumerId in the setup option call. <ul><li>By making a verification request, you can get the registrationId as part of the response.</li><li> If the merchant is already enrolled, the registrationId will be a part of the payment response.</li>|
+|paymentHandleToken |string <br/>              |Mandatory |This is the bank token of the registered bank account. The bank token is returned in the Verification API response.|
+
+
 # Error Summary
 
 ## Common Errors
@@ -1597,7 +1607,7 @@ However, you can use the [Paysafe Merchant Back Office](https://developer.paysaf
 | R07          | Authorization revoked Note 2                                                                                                                                     | ACH         |
 | R08          | Stop payment                                                                                                                                                     | ACH         |
 | R09          | Uncollected funds                                                                                                                                                | ACH         |
-| R10          | Not authorizedNote 2                                                                                                                                             | ACH         |
+| R10          | Not authorized Note 2                                                                                                                                            | ACH         |
 | R11          | Check truncation entry return                                                                                                                                    | ACH         |
 | R12          | Branch sold to another DFI                                                                                                                                       | ACH         |
 | R13          | RDFI not qualified to participate/or invalid route                                                                                                               | ACH         |
@@ -1897,7 +1907,7 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
 * A Payment Handle for a Play+ payment
 * A Payment Handle for a Skrill payment
 * A Payment Handle for an Instant ACH payment
-* A Payment Handle for a Paypal payment
+* A Payment Handle for a PayPal payment
 * A Payment Handle for an ACH payment
 * A Payment Handle for an EFT payment
 * A Payment Handle for a VIP Preferred payment
@@ -2627,7 +2637,7 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
                 "statusTime": "2019-06-24T14:18:33Z"
             }
 
-+ Request Create Payment Handle for Paypal (application/json)
++ Request Create Payment Handle for PayPal (application/json)
 
     + Headers
 
@@ -4587,7 +4597,7 @@ Original Credits allow merchants with specific merchant category codes (MCCs) to
 **Note:** Acquirers and processors do not necessarily support all available MCCs; before integrating, you should contact [Integration Support](https://developer.paysafe.com/en/resources-and-support/contact-us/) for details.
 
 Worldpay Inc. (formerly Vantiv) supports Original Credit transactions with the following MCCs:
-<a name="originalcreditmccs" title="Orignal Credit MCCs"></a>
+<a name="originalcreditmccs" title="Original Credit MCCs"></a>
 
  * 5816
  * 7800
@@ -5181,7 +5191,7 @@ Click **Create an Address** above to add an address to [Customer you have alread
     + Include Address
 
 + Parameters
-    + customer_id:`a5f1889d-f1be-4bbf-941d-fd9b8d09d5b1` (string,required) - This is the ID of the customer to which you are adding an address.
+    + customer_id:`a5f1889d-f1be-4bbf-941d-fd9b8d09d5b1` (string, required) - This is the ID of the customer to which you are adding an address.
 
 + Request Create an Address (application/json)
         
@@ -6191,7 +6201,636 @@ Click  **Cancel a Mandate** above to see how to cancel a Mandate.
               "reference" : "ABCDEF0796",
               "status": "CANCELLED"
             }
-            
+
+# Group Registration 
+
+## Sightline Registration [/v1/sightline/registrations]
+
+### Create a Partial Registration Call [POST]
+<a name="partialregistrationcall" title="Create a Partial Registration Call"></a>
+
+Use this API to register a new customer in the Sightline payment method.  
+
++ Parameters
+    + merchantRefNum: `576d95e8-a8e6-48b5-a8a8-11ae8352071q` (string,required) - This is the reference number for the merchant.
+    + paymentType: `SIGHTLINE` (string,required) - This is the payment type.
+    + profile: `` (string,required) - This contains the profile details of the user. 
+    + billingDetails: `` (string,required) - This contains the billing details of the user. 
+    + vippreferred: `` (string,required) - This object contains the consumerID/SSN of the user. 
+    + returnLinks: `` (string,required) - This contains the return links that we show for the user. The return links must not exceed 10 URLs.
+
++ Request Create a Partial Registration Call (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+            {
+    "merchantRefNum": "576d95e8-a8e6-48b5-a8a8-11ae8352071q",
+    "paymentType": "SIGHTLINE",
+    "profile": {
+        "firstName": "John",
+        "lastName": "Smith",
+        "locale": "en-US",
+        "email": "john.smith@paysafe.com",
+        "dateOfBirth": {
+            "day": 15,
+            "month": 4,
+            "year": 1970
+        },
+        "phone": "84632876432",
+        "cellphone": "2121212121"
+    },
+    "billingDetails": {
+        "street1": "street",
+        "street2": "street",
+        "city": "US",
+        "state": "US",
+        "country": "US",
+        "zip": "12345"
+    },
+    "sightline":
+    {
+        "consumerId":"123456789"
+    },
+    "returnLinks": [
+        {
+            "rel": "default",
+            "href": "https://usgaminggamblig.com/payment/return/success"
+        },
+        {
+            "rel": "on_failed",
+            "href": "https://usgaminggamblig.com/payment/return/failed"
+        },
+        {
+            "rel": "on_completed",
+            "href": "https://usgaminggamblig.com/payment/return/cancelled"
+        }
+    ]
+}
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+    "id": "6fd97b65-f03e-4bff-a60c-ab40fde1e471",
+    "merchantRefNum": "576d95e8-a8e6-48b5-a8a8-11ae8352071q",
+    "txnTime": "2021-04-27T09:10:55Z",
+    "billingDetails": {
+        "street": "street,street",
+        "city": "US",
+        "zip": "12345",
+        "state": "US",
+        "country": "US"
+    },
+    "status": "INITIATED",
+    "links": [
+        {
+            "rel": "redirect_registration",
+            "href": "https://api.dev.paysafe.com/alternatepayments/v1/sightline/hostedsession?sessionId=e24064e1-2340-469a-808a-5561b725bfa0&jwt=eyJhbGciOiJIUzI1NiJ9.eyJoc2QiOiJlMjQwNjRlMS0yMzQwLTQ2OWEtODA4YS01NTYxYjcyNWJmYTAiLCJleHAiOjE2MTk1MTY0NTksInBtbCI6IjMwNTA2MCJ9.PtfAil3wxw1JJkPslsFMayt72O4VmXwUZ_coCLeadNw"
+        }
+    ],
+    "liveMode": false,
+    "returnLinks": [
+        {
+            "rel": "on_completed",
+            "href": "https://usgaminggamblig.com/payment/return/cancelled"
+        },
+        {
+            "rel": "on_failed",
+            "href": "https://usgaminggamblig.com/payment/return/failed"
+        },
+        {
+            "rel": "default",
+            "href": "https://usgaminggamblig.com/payment/return/success"
+        }
+    ],
+    "profile": {
+        "firstName": "John",
+        "lastName": "Smith",
+        "email": "john.smith@paysafe.com",
+        "dateOfBirth": {
+            "day": 15,
+            "month": 4,
+            "year": 1970
+        },
+        "phone": "84632876432",
+        "cellphone": "2121212121",
+        "locale": "en-US",
+        "identityDocuments": [
+            {
+                "type": "SOCIAL_SECURITY"
+            }
+        ]
+    }
+}
+
+### Get Registration By ID [GET]
+<a name="getregistrationbyid" title="Get Registration by Id"></a>
+
+Use this API to get the customer's registered bank account by ID. 
+
+
++ Parameters
+    + merchantRefNum: `576d95e8-a8e6-48b5-a8a8-11ae8352071q` (string,required) - This is the reference number for the merchant.
+    + paymentType: `SIGHTLINE` (string,required) - This is the payment type.
+    + profile: `` (string,required) - This contains the profile details of the user. 
+    + billingDetails: `` (string,required) - This contains the billing details of the user. 
+    + vippreferred: `` (string,required) - This object contains the consumerID/SSN of the user. 
+    + returnLinks: `` (string,required) - This contains the return links that we show for the user. The return links must not exceed 10 URLs.
+
++ Request Get Registration by ID (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+            {
+    "merchantRefNum": "576d95e8-a8e6-48b5-a8a8-11ae8352071q",
+    "paymentType": "SIGHTLINE",
+    "profile": {
+        "firstName": "John",
+        "lastName": "Smith",
+        "locale": "en-US",
+        "email": "john.smith@paysafe.com",
+        "dateOfBirth": {
+            "day": 15,
+            "month": 4,
+            "year": 1970
+        },
+        "phone": "84632876432",
+        "cellphone": "2121212121"
+    },
+    "billingDetails": {
+        "street1": "street",
+        "street2": "street",
+        "city": "US",
+        "state": "US",
+        "country": "US",
+        "zip": "12345"
+    },
+    "sightline":
+    {
+        "consumerId":"123456789"
+    },
+    "returnLinks": [
+        {
+            "rel": "default",
+            "href": "https://usgaminggamblig.com/payment/return/success"
+        },
+        {
+            "rel": "on_failed",
+            "href": "https://usgaminggamblig.com/payment/return/failed"
+        },
+        {
+            "rel": "on_completed",
+            "href": "https://usgaminggamblig.com/payment/return/cancelled"
+        }
+    ]
+}
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+    "id": "6fd97b65-f03e-4bff-a60c-ab40fde1e471",
+    "merchantRefNum": "576d95e8-a8e6-48b5-a8a8-11ae8352071q",
+    "txnTime": "2021-04-27T09:10:55Z",
+    "billingDetails": {
+        "street": "street,street",
+        "city": "US",
+        "zip": "12345",
+        "state": "US",
+        "country": "US"
+    },
+    "status": "INITIATED",
+    "links": [
+        {
+            "rel": "redirect_registration",
+            "href": "https://api.dev.paysafe.com/alternatepayments/v1/sightline/hostedsession?sessionId=e24064e1-2340-469a-808a-5561b725bfa0&jwt=eyJhbGciOiJIUzI1NiJ9.eyJoc2QiOiJlMjQwNjRlMS0yMzQwLTQ2OWEtODA4YS01NTYxYjcyNWJmYTAiLCJleHAiOjE2MTk1MTcwNTEsInBtbCI6IjMwNTA2MCJ9.NdkLx_GrbU55o7gkrqw01DGfDhY6gdJ8TdqjvI3CK4U"
+        }
+    ],
+    "liveMode": false,
+    "returnLinks": [
+        {
+            "rel": "on_completed",
+            "href": "https://usgaminggamblig.com/payment/return/cancelled"
+        },
+        {
+            "rel": "default",
+            "href": "https://usgaminggamblig.com/payment/return/success"
+        },
+        {
+            "rel": "on_failed",
+            "href": "https://usgaminggamblig.com/payment/return/failed"
+        }
+    ],
+    "profile": {
+        "firstName": "John",
+        "lastName": "Smith",
+        "email": "john.smith@paysafe.com",
+        "dateOfBirth": {
+            "day": 15,
+            "month": 4,
+            "year": 1970
+        },
+        "phone": "84632876432",
+        "cellphone": "2121212121",
+        "locale": "en-US",
+        "identityDocuments": [
+            {
+                "type": "SOCIAL_SECURITY"
+            }
+        ]
+    }
+}
+
+## VIP Preferred Registration [/v1/vippreferred/registrations]
+
+### Create a Partial Registration Call [POST]
+<a name="partialregistrationcall" title="Create a Partial Registration Call"></a>
+
+Use this API to register a new customer using the VIP Preferred payment method.  
+
++ Parameters
+    + merchantRefNum: `576d95e8-a8e6-48b5-a8a8-11ae8352071q` (string,required) - This is the reference number for the merchant.
+    + paymentType: `SIGHTLINE` (string,required) - This is the payment type.
+    + profile: `` (string,required) - This contains the profile details of the user. 
+    + billingDetails: `` (string,required) - This contains the billing details of the user. 
+    + vippreferred: `` (string,required) - This object contains the consumerID/SSN of the user. 
+    + returnLinks: `` (string,required) - This contains the return links that we show for the user. The return links must not exceed 10 URLs. 
+
++ Request Create a Partial Registration Call (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+            {
+    "merchantRefNum": "576d95e8-a8e6-48b5-a8a8-11ae8352071q",
+    "paymentType": "VIPPREFERRED",
+    "profile": {
+        "firstName": "John",
+        "lastName": "Smith",
+        "locale": "en-US",
+        "email": "john.smith@paysafe.com",
+        "dateOfBirth": {
+            "day": 15,
+            "month": 4,
+            "year": 1970
+        },
+        "phone": "84632876432",
+        "cellphone": "2121212121"
+    },
+    "billingDetails": {
+        "street1": "street",
+        "street2": "street",
+        "city": "US",
+        "state": "US",
+        "country": "US",
+        "zip": "12345"
+    },
+    "vippreferred":
+    {
+        "consumerId":"123456789"
+    },
+    "returnLinks": [
+        {
+            "rel": "default",
+            "href": "https://usgaminggamblig.com/payment/return/success"
+        },
+        {
+            "rel": "on_failed",
+            "href": "https://usgaminggamblig.com/payment/return/failed"
+        },
+        {
+            "rel": "on_completed",
+            "href": "https://usgaminggamblig.com/payment/return/cancelled"
+        }
+    ]
+}
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+    "id": "6fd97b65-f03e-4bff-a60c-ab40fde1e471",
+    "merchantRefNum": "576d95e8-a8e6-48b5-a8a8-11ae8352071q",
+    "txnTime": "2021-04-27T09:10:55Z",
+    "billingDetails": {
+        "street": "street,street",
+        "city": "US",
+        "zip": "12345",
+        "state": "US",
+        "country": "US"
+    },
+    "status": "INITIATED",
+    "links": [
+        {
+            "rel": "redirect_registration",
+            "href": "https://api.dev.paysafe.com/alternatepayments/v1/vippreferred/hostedsession?sessionId=e24064e1-2340-469a-808a-5561b725bfa0&jwt=eyJhbGciOiJIUzI1NiJ9.eyJoc2QiOiJlMjQwNjRlMS0yMzQwLTQ2OWEtODA4YS01NTYxYjcyNWJmYTAiLCJleHAiOjE2MTk1MTY0NTksInBtbCI6IjMwNTA2MCJ9.PtfAil3wxw1JJkPslsFMayt72O4VmXwUZ_coCLeadNw"
+        }
+    ],
+    "liveMode": false,
+    "returnLinks": [
+        {
+            "rel": "on_completed",
+            "href": "https://usgaminggamblig.com/payment/return/cancelled"
+        },
+        {
+            "rel": "on_failed",
+            "href": "https://usgaminggamblig.com/payment/return/failed"
+        },
+        {
+            "rel": "default",
+            "href": "https://usgaminggamblig.com/payment/return/success"
+        }
+    ],
+    "profile": {
+        "firstName": "John",
+        "lastName": "Smith",
+        "email": "john.smith@paysafe.com",
+        "dateOfBirth": {
+            "day": 15,
+            "month": 4,
+            "year": 1970
+        },
+        "phone": "84632876432",
+        "cellphone": "2121212121",
+        "locale": "en-US",
+        "identityDocuments": [
+            {
+                "type": "SOCIAL_SECURITY"
+            }
+        ]
+    }
+}
+
+### Get Registration by Id [GET]
+<a name="get registration by Id" title="Get Registration by Id"></a>
+
+Use this API to get the customer's registered bank account by ID. 
+
++ Parameters
+    + merchantRefNum: `576d95e8-a8e6-48b5-a8a8-11ae8352071q` (string,required) - This is the reference number for the merchant.
+    + paymentType: `SIGHTLINE` (string,required) - This is the payment type.
+    + profile: `` (string,required) - This contains the profile details of the user. 
+    + billingDetails: `` (string,required) - This contains the billing details of the user. 
+    + vippreferred: `` (string,required) - This object contains the consumerID/SSN of the user. 
+    + returnLinks: `` (string,required) - This contains the return links that we show for the user. The return links must not exceed 10 URLs.
+
++ Request Get Registration by Id (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+            {
+    "merchantRefNum": "576d95e8-a8e6-48b5-a8a8-11ae8352071q",
+    "paymentType": "VIPPREFERRED",
+    "profile": {
+        "firstName": "John",
+        "lastName": "Smith",
+        "locale": "en-US",
+        "email": "john.smith@paysafe.com",
+        "dateOfBirth": {
+            "day": 15,
+            "month": 4,
+            "year": 1970
+        },
+        "phone": "84632876432",
+        "cellphone": "2121212121"
+    },
+    "billingDetails": {
+        "street1": "street",
+        "street2": "street",
+        "city": "US",
+        "state": "US",
+        "country": "US",
+        "zip": "12345"
+    },
+    "vippreferred":
+    {
+        "consumerId":"123456789"
+    },
+    "returnLinks": [
+        {
+            "rel": "default",
+            "href": "https://usgaminggamblig.com/payment/return/success"
+        },
+        {
+            "rel": "on_failed",
+            "href": "https://usgaminggamblig.com/payment/return/failed"
+        },
+        {
+            "rel": "on_completed",
+            "href": "https://usgaminggamblig.com/payment/return/cancelled"
+        }
+    ]
+}
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+    "id": "6fd97b65-f03e-4bff-a60c-ab40fde1e471",
+    "merchantRefNum": "576d95e8-a8e6-48b5-a8a8-11ae8352071q",
+    "txnTime": "2021-04-27T09:10:55Z",
+    "billingDetails": {
+        "street": "street,street",
+        "city": "US",
+        "zip": "12345",
+        "state": "US",
+        "country": "US"
+    },
+    "status": "INITIATED",
+    "links": [
+        {
+            "rel": "redirect_registration",
+            "href": "https://api.dev.paysafe.com/alternatepayments/v1/vippreferred/hostedsession?sessionId=e24064e1-2340-469a-808a-5561b725bfa0&jwt=eyJhbGciOiJIUzI1NiJ9.eyJoc2QiOiJlMjQwNjRlMS0yMzQwLTQ2OWEtODA4YS01NTYxYjcyNWJmYTAiLCJleHAiOjE2MTk1MTcwNTEsInBtbCI6IjMwNTA2MCJ9.NdkLx_GrbU55o7gkrqw01DGfDhY6gdJ8TdqjvI3CK4U"
+        }
+    ],
+    "liveMode": false,
+    "returnLinks": [
+        {
+            "rel": "on_completed",
+            "href": "https://usgaminggamblig.com/payment/return/cancelled"
+        },
+        {
+            "rel": "default",
+            "href": "https://usgaminggamblig.com/payment/return/success"
+        },
+        {
+            "rel": "on_failed",
+            "href": "https://usgaminggamblig.com/payment/return/failed"
+        }
+    ],
+    "profile": {
+        "firstName": "John",
+        "lastName": "Smith",
+        "email": "john.smith@paysafe.com",
+        "dateOfBirth": {
+            "day": 15,
+            "month": 4,
+            "year": 1970
+        },
+        "phone": "84632876432",
+        "cellphone": "2121212121",
+        "locale": "en-US",
+        "identityDocuments": [
+            {
+                "type": "SOCIAL_SECURITY"
+            }
+        ]
+    }
+}
+
+# Group Bank Account Operations 
+
+Use the Add an Account and Remove an Account APIs to add or remove bank accounts in the VIP Preferred payment method. 
+
+## Add an Account [/v1/registrations/{registrationid}/achbankaccounts ]
+
+### Add an Account [POST]
+<a name="addanaccount" title="Add an Account"></a>
+
+Use this API to add an account in the VIP preferred payment method.  
+
+
++ Parameters
+    + accountNumber: `576d95e8-a8e6-48b5-a8a8-11ae8352071q` (string,required) - This is the reference number for the merchant.
+    + bankName: `sample bank name` (string,required) - This is the payment type.
+    + routingNumber: `sample bank name` (string,required) - This is the routing number. min = 8, max = 9. 
+    
++ Request Create a Partial Registration Call (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+                    {
+          "accountNumber": "123456",
+          "bankName": "sample bank name",
+          "routingNumber": "12345678"
+        }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+    "id": "6fd97b65-f03e-4bff-a60c-ab40fde1e471",
+    "merchantRefNum": "576d95e8-a8e6-48b5-a8a8-11ae8352071q",
+    "txnTime": "2021-04-27T09:10:55Z",
+    "billingDetails": {
+        "street": "street,street",
+        "city": "US",
+        "zip": "12345",
+        "state": "US",
+        "country": "US"
+    },
+    "status": "INITIATED",
+    "links": [
+        {
+            "rel": "redirect_registration",
+            "href": "https://api.dev.paysafe.com/alternatepayments/v1/vippreferred/hostedsession?sessionId=e24064e1-2340-469a-808a-5561b725bfa0&jwt=eyJhbGciOiJIUzI1NiJ9.eyJoc2QiOiJlMjQwNjRlMS0yMzQwLTQ2OWEtODA4YS01NTYxYjcyNWJmYTAiLCJleHAiOjE2MTk1MTY0NTksInBtbCI6IjMwNTA2MCJ9.PtfAil3wxw1JJkPslsFMayt72O4VmXwUZ_coCLeadNw"
+        }
+    ],
+    "liveMode": false,
+    "returnLinks": [
+        {
+            "rel": "on_completed",
+            "href": "https://usgaminggamblig.com/payment/return/cancelled"
+        },
+        {
+            "rel": "on_failed",
+            "href": "https://usgaminggamblig.com/payment/return/failed"
+        },
+        {
+            "rel": "default",
+            "href": "https://usgaminggamblig.com/payment/return/success"
+        }
+    ],
+    "profile": {
+        "firstName": "John",
+        "lastName": "Smith",
+        "email": "john.smith@paysafe.com",
+        "dateOfBirth": {
+            "day": 15,
+            "month": 4,
+            "year": 1970
+        },
+        "phone": "84632876432",
+        "cellphone": "2121212121",
+        "locale": "en-US",
+        "identityDocuments": [
+            {
+                "type": "SOCIAL_SECURITY"
+            }
+        ]
+    }
+}
+
+
+## Remove an Account [/v1/registrations/{registration id}/achbankaccounts/{ach bank account id}]
+
+### Remove an Account [DELETE]
+<a name="removeanaccount" title="Remove an Account"></a>
+
+Use this API to remove an account in the VIP preferred payment method.  
+
++ Parameters
+    + id: `576d95e8-a8e6-48b5-a8a8-11ae8352071q` (string,required) - This is the reference number for the merchant. 
+    + bankName: `sample bank name` (string,required) - This is the customer's bank name.
+    + routingNumber: `12345678` (string,required) - This is the routing number.
+    + lastDigits: `56` (string,required) - This is the last two digits of the customer's bank account number.
+    + achBankAccountId: `` (string,required) - This is the bank account ID of the customer. 
+    
++ Request Remove an account (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+                    {
+          "accountNumber": "123456",
+          "bankName": "sample bank name",
+          "routingNumber": "12345678"
+        }
+
++ Response 200 (application/json)
+
+    + Body
+        {
+            "id": "f67021ef-6323-4724-b048-3d54fccd1c47",
+            "bankName": "sample bank name",
+            "routingNumber": "12345678",
+            "lastDigits": "56"
+        }
+
+
 
 
 # Data Structures
@@ -7137,7 +7776,7 @@ Click  **Cancel a Mandate** above to see how to cancel a Mandate.
             + `descriptor`:`Merchant's trading name` (string) - This is the merchant descriptor that will be displayed on the consumer's bank statement.
                 _Optional_
         
-        + paypal (object) - These are the details of the [Paypal account](#paypalobject) used for the request.
+        + paypal (object) - These are the details of the [PayPal account](#paypalobject) used for the request.
             + Properties
                 + `consumerId`:`john.doe@email.com` (string) - The source of funds for this payment, the email address of the consumer or payer.
                     _Mandatory, length<=50_
@@ -7212,7 +7851,10 @@ Click  **Cancel a Mandate** above to see how to cancel a Mandate.
     + vippreferred (object) - These are the details of the [vip preferred account](#vippreferredobject) used for the request. Only one payment instrument object (for example, *card* or *vippreferred*) can be included in the request. 
         + `consumerId`:`550726575` (string) - The is the consumer social security number (SSN). As it is sensitive data the consumerId will not be passed in the response. Last 4 digits will be passed as lastDigits. 
             _Mandatory_
-
+        + `registrationId`:`83745937-4B3D-49EA-B3C6-9A7AA8CCA32F` (string) - This is the registrationId of the consumer. You can pass the registrationId in place of consumerId in the setup option call.For more information, see [VIP Preferred Object](#vippreferredobject). 
+            _Optional_
+        + `paymentHandleToken`:`SSx4RtFqzVeoqZqQ` (string) - This is the bank token of the registered bank account. The bank token is returned in the [Verification API](https://developer.paysafe.com/en/paysafe-payments-api/payments/api/#/reference/verifications/verification/verification) response. 
+            _Mandatory_
 
 ## `Payment Instrument Customer`
 
@@ -7567,7 +8209,7 @@ Click  **Cancel a Mandate** above to see how to cancel a Mandate.
             + Default: INITIAL
 
 ## VerificationResponse (object)
-+ `id`:`25f6dadf-176a-415f-95c9-6ff39ff697ba` (string) - TThis is the ID returned in the response. You can use this ID for future associated requests.
++ `id`:`25f6dadf-176a-415f-95c9-6ff39ff697ba` (string) - This is the ID returned in the response. You can use this ID for future associated requests.
     _Read Only, length<=36_
 + `paymentHandleToken`:`842778a0-03a2-11e9-8eb2-f2801f1b9fd1` (string) - This is the payment token generated by Paysafe that will be used for the verification request.
     _Mandatory, length<=36_
