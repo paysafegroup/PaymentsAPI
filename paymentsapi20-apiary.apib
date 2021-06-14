@@ -6202,9 +6202,11 @@ Click  **Cancel a Mandate** above to see how to cancel a Mandate.
               "status": "CANCELLED"
             }
 
-# Group Registration 
+# Group Registration
 
-## Sightline Registration [/v1/sightline/registrations]
+In the VIP Preferred payment method, if a customer is not registered, then you can use the APIs mentioned in this section to create a registration flow. 
+
+## Sightline Registration [/v1/sightline/registrations/{registrationId}]
 
 ### Create a Partial Registration Call [POST]
 <a name="partialregistrationcall" title="Create a Partial Registration Call"></a>
@@ -6224,8 +6226,7 @@ Use this API to register a new customer in the Sightline payment method.
     + Headers
 
             Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
-            Simulator: "EXTERNAL"
-    
+            
     + Body
 
             {
@@ -6332,24 +6333,14 @@ Use this API to register a new customer in the Sightline payment method.
 ### Get Registration By ID [GET]
 <a name="getregistrationbyid" title="Get Registration by Id"></a>
 
-Use this API to get the customer's registered bank account by ID. 
-
-
-+ Parameters
-    + merchantRefNum: `576d95e8-a8e6-48b5-a8a8-11ae8352071q` (string,required) - This is the reference number for the merchant.
-    + paymentType: `SIGHTLINE` (string,required) - This is the payment type.
-    + profile: `` (string,required) - This contains the profile details of the user. 
-    + billingDetails: `` (string,required) - This contains the billing details of the user. 
-    + vippreferred: `` (string,required) - This object contains the consumerID/SSN of the user. 
-    + returnLinks: `` (string,required) - This contains the return links that we show for the user. The return links must not exceed 10 URLs.
+Use this API to get the customer's registration status by using ID returned in the partial registration call. 
 
 + Request Get Registration by ID (application/json)
 
     + Headers
 
             Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
-            Simulator: "EXTERNAL"
-    
+            
     + Body
 
             {
@@ -6411,13 +6402,7 @@ Use this API to get the customer's registered bank account by ID.
         "state": "US",
         "country": "US"
     },
-    "status": "INITIATED",
-    "links": [
-        {
-            "rel": "redirect_registration",
-            "href": "https://api.dev.paysafe.com/alternatepayments/v1/sightline/hostedsession?sessionId=e24064e1-2340-469a-808a-5561b725bfa0&jwt=eyJhbGciOiJIUzI1NiJ9.eyJoc2QiOiJlMjQwNjRlMS0yMzQwLTQ2OWEtODA4YS01NTYxYjcyNWJmYTAiLCJleHAiOjE2MTk1MTcwNTEsInBtbCI6IjMwNTA2MCJ9.NdkLx_GrbU55o7gkrqw01DGfDhY6gdJ8TdqjvI3CK4U"
-        }
-    ],
+    "status": "COMPLETED",
     "liveMode": false,
     "returnLinks": [
         {
@@ -6453,6 +6438,7 @@ Use this API to get the customer's registered bank account by ID.
     }
 }
 
+
 ## VIP Preferred Registration [/v1/vippreferred/registrations]
 
 ### Create a Partial Registration Call [POST]
@@ -6473,8 +6459,7 @@ Use this API to register a new customer using the VIP Preferred payment method.
     + Headers
 
             Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
-            Simulator: "EXTERNAL"
-    
+            
     + Body
 
             {
@@ -6581,23 +6566,15 @@ Use this API to register a new customer using the VIP Preferred payment method.
 ### Get Registration by Id [GET]
 <a name="get registration by Id" title="Get Registration by Id"></a>
 
-Use this API to get the customer's registered bank account by ID. 
+Use this API to get the customer's registration status by using ID returned in the partial registration call. 
 
-+ Parameters
-    + merchantRefNum: `576d95e8-a8e6-48b5-a8a8-11ae8352071q` (string,required) - This is the reference number for the merchant.
-    + paymentType: `SIGHTLINE` (string,required) - This is the payment type.
-    + profile: `` (string,required) - This contains the profile details of the user. 
-    + billingDetails: `` (string,required) - This contains the billing details of the user. 
-    + vippreferred: `` (string,required) - This object contains the consumerID/SSN of the user. 
-    + returnLinks: `` (string,required) - This contains the return links that we show for the user. The return links must not exceed 10 URLs.
 
 + Request Get Registration by Id (application/json)
 
     + Headers
 
             Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
-            Simulator: "EXTERNAL"
-    
+            
     + Body
 
             {
@@ -6659,13 +6636,7 @@ Use this API to get the customer's registered bank account by ID.
         "state": "US",
         "country": "US"
     },
-    "status": "INITIATED",
-    "links": [
-        {
-            "rel": "redirect_registration",
-            "href": "https://api.dev.paysafe.com/alternatepayments/v1/vippreferred/hostedsession?sessionId=e24064e1-2340-469a-808a-5561b725bfa0&jwt=eyJhbGciOiJIUzI1NiJ9.eyJoc2QiOiJlMjQwNjRlMS0yMzQwLTQ2OWEtODA4YS01NTYxYjcyNWJmYTAiLCJleHAiOjE2MTk1MTcwNTEsInBtbCI6IjMwNTA2MCJ9.NdkLx_GrbU55o7gkrqw01DGfDhY6gdJ8TdqjvI3CK4U"
-        }
-    ],
+    "status": "COMPLETED",
     "liveMode": false,
     "returnLinks": [
         {
@@ -6701,13 +6672,14 @@ Use this API to get the customer's registered bank account by ID.
     }
 }
 
-# Group Bank Account Operations 
+
+## Add or Remove Bank Accounts 
 
 Use the Add an Account and Remove an Account APIs to add or remove bank accounts in the VIP Preferred payment method. 
 
-## Add an Account [/v1/registrations/{registrationid}/achbankaccounts ]
+### Add an Account [/v1/registrations/{registrationid}/achbankaccounts]
 
-### Add an Account [POST]
+#### Add an Account [POST]
 <a name="addanaccount" title="Add an Account"></a>
 
 Use this API to add an account in the VIP preferred payment method.  
@@ -6718,13 +6690,12 @@ Use this API to add an account in the VIP preferred payment method.
     + bankName: `sample bank name` (string,required) - This is the payment type.
     + routingNumber: `sample bank name` (string,required) - This is the routing number. min = 8, max = 9. 
     
-+ Request Create a Partial Registration Call (application/json)
++ Request Add an Account (application/json)
 
     + Headers
 
             Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
-            Simulator: "EXTERNAL"
-    
+            
     + Body
 
                     {
@@ -6791,9 +6762,9 @@ Use this API to add an account in the VIP preferred payment method.
 }
 
 
-## Remove an Account [/v1/registrations/{registration id}/achbankaccounts/{ach bank account id}]
+### Remove an Account [/v1/registrations/{registration id}/achbankaccounts/{ach bank account id}]
 
-### Remove an Account [DELETE]
+#### Remove an Account [DELETE]
 <a name="removeanaccount" title="Remove an Account"></a>
 
 Use this API to remove an account in the VIP preferred payment method.  
@@ -6810,7 +6781,7 @@ Use this API to remove an account in the VIP preferred payment method.
     + Headers
 
             Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
-            Simulator: "EXTERNAL"
+           
     
     + Body
 
