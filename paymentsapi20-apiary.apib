@@ -6439,7 +6439,7 @@ Use this API to get the customer's registration status by using ID returned in t
 }
 
 
-## VIP Preferred Registration [/v1/vippreferred/registrations]
+## VIP Preferred Registration [/v1/vippreferred/registrations{registrationId}]
 
 ### Create a Partial Registration Call [POST]
 <a name="partialregistrationcall" title="Create a Partial Registration Call"></a>
@@ -6673,11 +6673,7 @@ Use this API to get the customer's registration status by using ID returned in t
 }
 
 
-#### Add an Account [/v1/registrations/{registrationid}/achbankaccounts]
-
-Use the Add an Account and Remove an Account APIs to add or remove bank accounts in the VIP Preferred payment method. 
-
-##### Add an Account [POST]
+## Add an Account [POST /v1/registrations/{registrationid}/achbankaccounts]
 <a name="addanaccount" title="Add an Account"></a>
 
 Use this API to add an account in the VIP preferred payment method.  
@@ -6760,9 +6756,8 @@ Use this API to add an account in the VIP preferred payment method.
 }
 
 
-#### Remove an Account [/v1/registrations/{registration id}/achbankaccounts/{ach bank account id}]
+### Remove an Account [DELETE /v1/registrations/{registration id}/achbankaccounts/{ach bank account id}]
 
-##### Remove an Account [DELETE]
 <a name="removeanaccount" title="Remove an Account"></a>
 
 Use this API to remove an account in the VIP preferred payment method.  
