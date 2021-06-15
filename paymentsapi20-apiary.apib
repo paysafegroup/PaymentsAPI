@@ -6206,7 +6206,7 @@ Click  **Cancel a Mandate** above to see how to cancel a Mandate.
 
 If a customer is not registered, then you can use the APIs mentioned in this section to create a registration flow.
 
-## Sightline Registration [/v1/sightline/registrations/{registrationId}]
+## Sightline Registration [/v1/sightline/registrations]
 
 ### Create a Partial Registration Call [POST]
 <a name="partialregistrationcall" title="Create a Partial Registration Call"></a>
@@ -6216,10 +6216,10 @@ Use this API to register a new customer in the Sightline payment method.
 + Parameters
     + merchantRefNum: `576d95e8-a8e6-48b5-a8a8-11ae8352071q` (string,required) - This is the reference number for the merchant.
     + paymentType: `SIGHTLINE` (string,required) - This is the payment type.
-    + profile: `` (string,required) - This contains the profile details of the user. 
-    + billingDetails: `` (string,required) - This contains the billing details of the user. 
-    + vippreferred: `` (string,required) - This object contains the consumerID/SSN of the user. 
-    + returnLinks: `` (string,required) - This contains the return links that we show for the user. The return links must not exceed 10 URLs.
+    + profile: (string,required) - This contains the profile details of the user. 
+    + billingDetails: (string,required) - This contains the billing details of the user. 
+    + vippreferred: (string,required) - This object contains the consumerID/SSN of the user. 
+    + returnLinks: (string,required) - This contains the return links that we show for the user. The return links must not exceed 10 URLs.
 
 + Request Create a Partial Registration Call (application/json)
 
@@ -6343,50 +6343,7 @@ Use this API to get the customer's registration status by using ID returned in t
             
     + Body
 
-            {
-    "merchantRefNum": "576d95e8-a8e6-48b5-a8a8-11ae8352071q",
-    "paymentType": "SIGHTLINE",
-    "profile": {
-        "firstName": "John",
-        "lastName": "Smith",
-        "locale": "en-US",
-        "email": "john.smith@paysafe.com",
-        "dateOfBirth": {
-            "day": 15,
-            "month": 4,
-            "year": 1970
-        },
-        "phone": "84632876432",
-        "cellphone": "2121212121"
-    },
-    "billingDetails": {
-        "street1": "street",
-        "street2": "street",
-        "city": "US",
-        "state": "US",
-        "country": "US",
-        "zip": "12345"
-    },
-    "sightline":
-    {
-        "consumerId":"123456789"
-    },
-    "returnLinks": [
-        {
-            "rel": "default",
-            "href": "https://usgaminggamblig.com/payment/return/success"
-        },
-        {
-            "rel": "on_failed",
-            "href": "https://usgaminggamblig.com/payment/return/failed"
-        },
-        {
-            "rel": "on_completed",
-            "href": "https://usgaminggamblig.com/payment/return/cancelled"
-        }
-    ]
-}
-
+            
 + Response 200 (application/json)
 
     + Body
@@ -6439,7 +6396,7 @@ Use this API to get the customer's registration status by using ID returned in t
 }
 
 
-## VIP Preferred Registration [/v1/vippreferred/registrations{registrationId}]
+## VIP Preferred Registration [/v1/vippreferred/registrations]
 
 ### Create a Partial Registration Call [POST]
 <a name="partialregistrationcall" title="Create a Partial Registration Call"></a>
@@ -6563,7 +6520,7 @@ Use this API to register a new customer using the VIP Preferred payment method.
     }
 }
 
-### Get Registration by Id [GET]
+### Get Registration by Id [GET /{registrationId}]
 <a name="get registration by Id" title="Get Registration by Id"></a>
 
 Use this API to get the customer's registration status by using ID returned in the partial registration call. 
@@ -6577,49 +6534,7 @@ Use this API to get the customer's registration status by using ID returned in t
             
     + Body
 
-            {
-    "merchantRefNum": "576d95e8-a8e6-48b5-a8a8-11ae8352071q",
-    "paymentType": "VIPPREFERRED",
-    "profile": {
-        "firstName": "John",
-        "lastName": "Smith",
-        "locale": "en-US",
-        "email": "john.smith@paysafe.com",
-        "dateOfBirth": {
-            "day": 15,
-            "month": 4,
-            "year": 1970
-        },
-        "phone": "84632876432",
-        "cellphone": "2121212121"
-    },
-    "billingDetails": {
-        "street1": "street",
-        "street2": "street",
-        "city": "US",
-        "state": "US",
-        "country": "US",
-        "zip": "12345"
-    },
-    "vippreferred":
-    {
-        "consumerId":"123456789"
-    },
-    "returnLinks": [
-        {
-            "rel": "default",
-            "href": "https://usgaminggamblig.com/payment/return/success"
-        },
-        {
-            "rel": "on_failed",
-            "href": "https://usgaminggamblig.com/payment/return/failed"
-        },
-        {
-            "rel": "on_completed",
-            "href": "https://usgaminggamblig.com/payment/return/cancelled"
-        }
-    ]
-}
+            
 
 + Response 200 (application/json)
 
@@ -6691,12 +6606,13 @@ Use this API to add an account in the VIP preferred payment method.
             Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
             
     + Body
-
-                    {
-          "accountNumber": "123456",
-          "bankName": "sample bank name",
-          "routingNumber": "12345678"
-        }
+            {
+            "id": "f67021ef-6323-4724-b048-3d54fccd1c47",
+            "bankName": "sample bank name",
+            "routingNumber": "12345678",
+            "lastDigits": "56"
+            }
+                    
 
 + Response 200 (application/json)
 
@@ -6762,13 +6678,7 @@ Use this API to add an account in the VIP preferred payment method.
 
 Use this API to remove an account in the VIP preferred payment method.  
 
-+ Parameters
-    + id: `576d95e8-a8e6-48b5-a8a8-11ae8352071q` (string,required) - This is the reference number for the merchant. 
-    + bankName: `sample bank name` (string,required) - This is the customer's bank name.
-    + routingNumber: `12345678` (string,required) - This is the routing number.
-    + lastDigits: `56` (string,required) - This is the last two digits of the customer's bank account number.
-    + achBankAccountId: `` (string,required) - This is the bank account ID of the customer. 
-    
+
 + Request Remove an account (application/json)
 
     + Headers
@@ -6778,11 +6688,7 @@ Use this API to remove an account in the VIP preferred payment method.
     
     + Body
 
-                    {
-          "accountNumber": "123456",
-          "bankName": "sample bank name",
-          "routingNumber": "12345678"
-        }
+                   
 
 + Response 200 (application/json)
 
