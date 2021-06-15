@@ -6330,7 +6330,7 @@ Use this API to register a new customer in the Sightline payment method.
     }
 }
 
-### Get Registration By ID [GET]
+### Get Registration By ID [GET /v1/sightline/registrations/{registrationId}]
 <a name="getregistrationbyid" title="Get Registration by Id"></a>
 
 Use this API to get the customer's registration status by using ID returned in the partial registration call. 
@@ -6520,7 +6520,7 @@ Use this API to register a new customer using the VIP Preferred payment method.
     }
 }
 
-### Get Registration by Id [GET /{registrationId}]
+### Get Registration by Id [GET /v1/vippreferred/registrations/{registrationId}]
 <a name="get registration by Id" title="Get Registration by Id"></a>
 
 Use this API to get the customer's registration status by using ID returned in the partial registration call. 
@@ -6672,7 +6672,7 @@ Use this API to add an account in the VIP preferred payment method.
 }
 
 
-### Remove an Account [DELETE /v1/registrations/{registration id}/achbankaccounts/{ach bank account id}]
+### Remove an Account [DELETE /v1/registrations/{registrationid}/achbankaccounts/{achbankaccountid}]
 
 <a name="removeanaccount" title="Remove an Account"></a>
 
