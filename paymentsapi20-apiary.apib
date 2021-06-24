@@ -7343,9 +7343,6 @@ Use this API to remove an account in the VIP preferred payment method.
     _Read Only_
 +`statusTime`: `2016-01-01T04:55:55Z` (string) - Indicates when the status was last updated.
     _Read Only_
-+ threeDs 
-    + `threeDs`: (string) - Indicates the threeDs object.
-    _Optional_
 
 
 ## PaymentHandleRequest Customer
@@ -7602,6 +7599,8 @@ Use this API to remove an account in the VIP preferred payment method.
                 _Optional, length<=50_
             + cardBin:`411111` (string) - This is the card BIN (typically the first 6 digits).
                 _Read Only, length=6_
+            + threeDs: (string) - Indicates the threeDs object.
+                _Optional_
         
     + paysafecard (object) - These are the details of the [paysafecard](#paysafecardobject) used for the request. Only one payment instrument object (for example, *card* or *paysafecard* or *sightline*) can be included in the request.
         + Properties
