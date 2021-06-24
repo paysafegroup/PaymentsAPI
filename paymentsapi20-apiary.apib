@@ -34,6 +34,9 @@ The Payments API currently supports the following payment methods:
 - SEPA
 - Interac
 
+ > **Note:** For payment methods using cards, we support both 3DS 1.0 and 3DS 2.0 
+
+
 ## Transaction Types Supported
 Payments API supports  the following transaction types:
 
@@ -1334,7 +1337,24 @@ The *storedCredential* object is used to identify [authorization requests](#auth
     }
 }
 ```
+<a name="threeDsobject" title= "threeDs Object"></a>
+## threeDs
 
+|Element            |Type                      |Required  | Description                       |
+|---                |---                       |--------  |---                                |
+|threeDs            |string <br/>              |Optional  |Denotes the status of threeDs object. If true and is configured in the backend for the respective accountId, it is mandatory to pass this parameters. If false, parameters need not be passed.
+
+```apib
+{
+    "threeDs": {
+         "merchantUrl": "https://api.qa.paysafe.com/checkout/v2/index.html#/desktop",
+         "deviceChannel": "BROWSER",
+         "messageCategory": "PAYMENT",
+         "transactionIntent": "GOODS_OR_SERVICE_PURCHASE",
+         "authenticationPurpose": "PAYMENT_TRANSACTION"
+     },
+}
+```
 <a name="voidauthsobject" title="Void Authorizations Object"></a>
 ## Void Authorizations
 
@@ -7323,6 +7343,9 @@ Use this API to remove an account in the VIP preferred payment method.
     _Read Only_
 +`statusTime`: `2016-01-01T04:55:55Z` (string) - Indicates when the status was last updated.
     _Read Only_
++ threeDs 
+    + `threeDs`: (string) - Indicates the threeDs object.
+    _Optional_
 
 
 ## PaymentHandleRequest Customer
