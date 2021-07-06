@@ -1050,14 +1050,14 @@ This is an authorization that is approved for an amount lower than the requested
 <a name="profileobject" title="Profile Object"></a>
 ## profile
 
-|Element            |Type                               |Description    |
-|---                |---                                |---            |
-|locale             |enum                               |This indicates the language of the profile. Possible values are:<ul><li>en_US</li><li>fr_CA</li><li>en_GB</li></ul>|
-|firstName          |string <br/>`length<=80`           |This is the customer’s first name. |
-|lastName           |string <br/>`length<=80`           |This is the customer’s last name. |
-|email              |string<br/>`length<=255`           |This is the customer's email address.|
-|phone              |string<br/>`length<=40`            |This is the customer's phone number.|
-|dateOfBirth        |[dateOfBirth](#dateofbirthobject)  |These are the addresses associated with saved payment instruments for the customer. |
+|Element            |Type                               |Required           |Description    |
+|---                |---                                |---                |---            |
+|locale             |enum                               |Required           |This indicates the language of the profile. Possible values are:<ul><li>en_US</li><li>fr_CA</li><li>en_GB</li></ul>|
+|firstName          |string <br/>`length<=80`           |Required           |This is the customer’s first name. |
+|lastName           |string <br/>`length<=80`           |Required           |This is the customer’s last name. |
+|email              |string<br/>`length<=255`           |Required           |This is the customer's email address.|
+|phone              |string<br/>`length<=40`            |Required           |This is the customer's phone number.|
+|dateOfBirth        |[dateOfBirth](#dateofbirthobject)  |Required           |This is the customer's date of birth.|
 
 ```apib
             {
@@ -1066,6 +1066,7 @@ This is an authorization that is approved for an amount lower than the requested
               "lastName" : "Smith",
               "email" : "john.smith@somedomain.com",
               "phone" : "713-444-5555"
+              "dateOfBirth" : "04-25-1987"
              }
 ```
 
