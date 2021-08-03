@@ -239,17 +239,19 @@ You are responsible for ensuring its continued availability.
 + In case you have received the same notification multiple times for an already processed event, we request you to ignore the duplicate notification. It is recommended to make the notification URL endpoints idempotent.
 
 
-<a name="pagination" title="Pagination"></a>
 # Pagination
 
-In the case where an API GET request returns multiple results, Paysafe returns the first 10 records by default and uses HATEOAS links to provide page navigation. In addition to the default behavior, it is also possible to control the number of results and starting point by passing the following parameters in the query:
+In the case where an API GET request returns multiple results, Paysafe returns the first 10 records by default and uses HATEOAS links to provide page navigation. In addition to the default behavior, it is also possible to control the number of results and starting point by passing in query parameters  as described in this [section](https://developer.paysafe.com/en/resources-and-support/pagination/).
 
-|    Name       | Description   |
-|---            |---            |
-| limit         | This is the total number of records to return. Max = 50. Default = 10. |
-| offset        | This is the starting position, where 0 is the first record. Default = 0. |
-| startDate     | This is the start date in UTC. Default = 30 days before the *endDate*.|
-| endDate       | This is the end date in UTC. Default = current date and time. |
+<a name="globalinvalidcharacters" title="Global Invalid Characters"></a>
+# Global Invalid Characters
+
+You must not include any of the characters in this [table](https://developer.paysafe.com/en/resources-and-support/global-invalid-characters/) as values in any of your request parameters. Object. If you do, your request will result in an error.
+
+<a name="isostandards" title="ISO Standards"></a>
+# ISO Standards
+
+ISO standards add value by providing the common business process data semantics to be used in the API based exchanges. This [section](https://developer.paysafe.com/en/resources-and-support/iso-standards/) presents you codes for four areas - Currency, Province, State, and Country. 
 
 
 Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-payments-api/payments-api/miscellaneous/) for Global Invalid Characters, ISO Standards, Currency Codes, Province Codes, State Codes, Country Codes.
