@@ -6428,8 +6428,8 @@ Use this API to get the customer's registration status by using ID returned in t
 
 ## VIP Preferred Registration [/v1/vippreferred/registrations]
 
-### Create a Partial Registration Call [POST]
-<a name="partialregistrationcall" title="Create a Partial Registration Call"></a>
+### Create a Partial Registration Call - Redirect Flow [POST]
+<a name="partialregistrationcallredirectflow" title="Create a Partial Registration Call - Redirect Flow"></a>
 
 Use this API to register a new customer using the VIP Preferred payment method.  
 
@@ -6441,7 +6441,7 @@ Use this API to register a new customer using the VIP Preferred payment method.
     + vippreferred: `` (string,required) - This object contains the consumerID/SSN of the user. 
     + returnLinks: `` (string,required) - This contains the return links that we show for the user. The return links must not exceed 10 URLs. 
 
-+ Request Create a Partial Registration Call (application/json)
++ Request Create a Partial Registration Call - Redirect Flow (application/json)
 
     + Headers
 
@@ -6549,6 +6549,166 @@ Use this API to register a new customer using the VIP Preferred payment method.
         ]
     }
 }
+
+### Create a Partial Registration Call - Direct Integration [POST]
+<a name="create a partial registration call - direct integration" title="Create a Partial Registration Call - Direct integration"></a>
+
+Enroll a new customer using the VIP Preferred payment method.  
+
++ Parameters
+    + firstName: `John` (string,required) - This contains the profile details of the user.
+    + lastName: `Smith` (string,required) - This contains the profile details of the user.
+    + dateOfBirth: `"day": 15,"month": 4 "year": 1970` (string,required) - This contains the profile details of the user. 
+    + phone: `84632876432` (string,required) - This contains the contact details of the user. 
+    + SSN: `` (string,required) - This object contains the consumerID/SSN of the user. 
+    + billingDetails: `` (string,required) - This contains the billing details such as bill unique reference id, merchantRefnum, address and other details.
+    + vippreferred: `` (string,required) - This contains the transaction details. 
+
++ Request Create a Partial Registration Call - Redirect Flow (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            
+    + Body
+
+            {
+    "merchantRefNum": "{{guid}}",
+     
+    "paymentType": "VIPPREFERRED",
+    "profile": {
+        "firstName": "John", // Mandatory
+        "lastName": "Smith", // Mandatory
+        "locale": "en-US",
+        "email": "john.smith@paysafe.com", // Mandatory
+        "dateOfBirth": {    // Mandatory
+            "day": 15,
+            "month": 4,
+            "year": 1970
+        },
+        "phone": "84632876432", // Mandatory
+        "cellphone": "2121212121",
+        "identityDocuments": [
+            {                   // SSN is Mandatory
+                "type": "SOCIAL_SECURITY",
+                "documentNumber": "153179819",
+                "issuingCountry": "US",
+                "issuingCountrySubdvision": "CA",
+                "issueDate": {
+                    "year": 2017,
+                    "month": 12,
+                    "day": 25
+                }
+            },
+            {   // This is conditional meaning if provided then all fields have to be provided
+                "type": "DRIVING_LICENSE",
+                "documentNumber": "DL153179819",
+                "issuingCountry": "US",
+                "issuingCountrySubdvision": "IL",
+                "issueDate": {
+                    "year": 2011,
+                    "month": 11,
+                    "day": 11
+                }
+            }
+        ]
+    },
+    "billingDetails": { //Mandatory
+        "street1": "Queen Street West",
+        "street2": "Queen Street West",
+        "city": "Livingston",
+        "state": "NJ",
+        "country": "US",
+        "zip": "07039"
+    },
+    "vippreferred": { // Mandatory
+        "ach": {
+            "routingNumber": "123103729",
+            "accountNumber": "7751153179819"
+        }
+    }
+}
+
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+    "id": "ac02be45-7ae5-40b5-a9ec-234086b2640e",
+    "merchantRefNum": "f8ca8b342e561ccaf185",
+    "txnTime": "2021-09-27T05:14:08Z",
+    "billingDetails": {
+        "street": "Queen Street West,Queen Street",
+        "city": "Livingston",
+        "zip": "07039",
+        "state": "NJ",
+        "country": "US"
+    },
+    "status": "COMPLETED",
+    "liveMode": false,
+    "gatewayResponse": {
+        "name": "John Smith",
+        "id": "161CF26193434D74BE7D1001D",
+        "processor": "VIPPREFERRED",
+        "transactionId": "161CF26193434D74BE7D1001D",
+        "responseCode": "00"
+    },
+    "vippreferred": {
+        "lastDigits": "0150",
+        "cardLimit": 450000,
+        "balance": 450000,
+        "achBankAccounts": [
+            {
+                "id": "4fc8df40-033b-47cd-952b-bffcb52374bc",
+                "bankName": "Paysafe Test Bank",
+                "registrationId": "ac02be45-7ae5-40b5-a9ec-234086b2640e",
+                "routingNumber": "123103729",
+                "accountNumber": "###",
+                "paymentToken": "BAxdQf1eUonA5adC",
+                "paymentHandleToken": "BAxdQf1eUonA5adC"
+            }
+        ]
+    },
+    "profile": {
+        "firstName": "John",
+        "lastName": "Smith",
+        "email": "john.smith@paysafe.com",
+        "dateOfBirth": {
+            "day": 15,
+            "month": 4,
+            "year": 1970
+        },
+        "phone": "84632876432",
+        "cellphone": "2121212121",
+        "locale": "en-US",
+        "identityDocuments": [
+            {
+                "type": "SOCIAL_SECURITY",
+                "countryOfIssue": "US",
+                "issuingCountry": "US",
+                "issuingCountrySubdvision": "CA",
+                "issueDate": {
+                    "day": 25,
+                    "month": 12,
+                    "year": 2017
+                }
+            },
+            {
+                "type": "DRIVING_LICENSE",
+                "countryOfIssue": "US",
+                "issuingCountry": "US",
+                "issuingCountrySubdvision": "IL",
+                "issueDate": {
+                    "day": 11,
+                    "month": 11,
+                    "year": 2011
+                }
+            }
+        ]
+    }
+}
+
 
 ### Get Registration by Id [GET /v1/vippreferred/registrations/{registrationId}]
 <a name="get registration by Id" title="Get Registration by Id"></a>
