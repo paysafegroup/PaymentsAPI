@@ -6428,8 +6428,8 @@ Use this API to get the customer's registration status by using ID returned in t
 
 ## VIP Preferred Registration [/v1/vippreferred/registrations]
 
-### Create a Partial Registration Call - Redirect Flow [POST]
-<a name="partialregistrationcallredirectflow" title="Create a Partial Registration Call - Redirect Flow"></a>
+### Create a Registration Call - Redirect Flow [POST]
+<a name="registrationcallredirectflow" title="Create a Registration Call - Redirect Flow"></a>
 
 Use this API to register a new customer using the VIP Preferred payment method.  
 
@@ -6550,8 +6550,8 @@ Use this API to register a new customer using the VIP Preferred payment method.
     }
 }
 
-### Create a Partial Registration Call - Direct Integration [POST]
-<a name="create a partial registration call - direct integration" title="Create a Partial Registration Call - Direct integration"></a>
+### Create a Registration Call - Direct Integration [POST]
+<a name="create a registration call - direct integration" title="Create a Registration Call - Direct integration"></a>
 
 Enroll a new customer using the VIP Preferred payment method.  
 
@@ -6561,7 +6561,7 @@ Enroll a new customer using the VIP Preferred payment method.
     + dateOfBirth: `"day": 15,"month": 4 "year": 1970` (string,required) - This contains the profile details of the user. 
     + phone: `84632876432` (string,required) - This contains the contact details of the user. 
     + SSN: `` (string,required) - This object contains the consumerID/SSN of the user. 
-    + billingDetails: `` (string,required) - This contains the billing details such as bill unique reference id, merchantRefnum, address and other details.
+    + [billingDetails](https://confluence.neterra.paysafe.com/pages/viewpage.action?pageId=252876150): `` (string,required) - This contains the billing details such as bill unique reference id, merchantRefnum, address and other details.
     + vippreferred: `` (string,required) - This contains the transaction details. 
 
 + Request Create a Partial Registration Call - Redirect Flow (application/json)
@@ -6577,19 +6577,19 @@ Enroll a new customer using the VIP Preferred payment method.
      
     "paymentType": "VIPPREFERRED",
     "profile": {
-        "firstName": "John", // Mandatory
-        "lastName": "Smith", // Mandatory
+        "firstName": "John", 
+        "lastName": "Smith", 
         "locale": "en-US",
-        "email": "john.smith@paysafe.com", // Mandatory
-        "dateOfBirth": {    // Mandatory
+        "email": "john.smith@paysafe.com", 
+        "dateOfBirth": {    
             "day": 15,
             "month": 4,
             "year": 1970
         },
-        "phone": "84632876432", // Mandatory
+        "phone": "84632876432", 
         "cellphone": "2121212121",
         "identityDocuments": [
-            {                   // SSN is Mandatory
+            {                   
                 "type": "SOCIAL_SECURITY",
                 "documentNumber": "153179819",
                 "issuingCountry": "US",
@@ -6600,7 +6600,7 @@ Enroll a new customer using the VIP Preferred payment method.
                     "day": 25
                 }
             },
-            {   // This is conditional meaning if provided then all fields have to be provided
+            {   
                 "type": "DRIVING_LICENSE",
                 "documentNumber": "DL153179819",
                 "issuingCountry": "US",
@@ -6613,7 +6613,7 @@ Enroll a new customer using the VIP Preferred payment method.
             }
         ]
     },
-    "billingDetails": { //Mandatory
+    "billingDetails": { 
         "street1": "Queen Street West",
         "street2": "Queen Street West",
         "city": "Livingston",
@@ -6621,7 +6621,7 @@ Enroll a new customer using the VIP Preferred payment method.
         "country": "US",
         "zip": "07039"
     },
-    "vippreferred": { // Mandatory
+    "vippreferred": { 
         "ach": {
             "routingNumber": "123103729",
             "accountNumber": "7751153179819"
