@@ -6556,12 +6556,12 @@ Use this API to register a new customer using the VIP Preferred payment method.
 Enroll a new customer using the VIP Preferred payment method.  
 
 + Parameters
-    + firstName: `John` (string,required) - This contains the profile details of the user.
-    + lastName: `Smith` (string,required) - This contains the profile details of the user.
+    + firstName: `John` (string,required) - [This contains the profile details of the user](https://developer.paysafe.com/en/paysafe-payments-api/payments/api/#/introduction/common-objects/profile).
+    + lastName: `Smith` (string,required) - [This contains the profile details of the user](https://developer.paysafe.com/en/paysafe-payments-api/payments/api/#/introduction/common-objects/profile).
     + dateOfBirth: `"day": 15,"month": 4 "year": 1970` (string,required) - This contains the profile details of the user. 
     + phone: `84632876432` (string,required) - This contains the contact details of the user. 
     + SSN: `` (string,required) - This object contains the consumerID/SSN of the user. 
-    + [billingDetails](https://confluence.neterra.paysafe.com/pages/viewpage.action?pageId=252876150): `` (string,required) - This contains the billing details such as bill unique reference id, merchantRefnum, address and other details.
+    + billingDetails: `` (string,required) - This contains the billing details such as bill unique reference id, merchantRefnum, address and other details.
     + vippreferred: `` (string,required) - This contains the transaction details. 
 
 + Request Create a Partial Registration Call - Redirect Flow (application/json)
