@@ -8088,7 +8088,7 @@ Use this API to remove an account in the VIP preferred payment method.
 + `riskReasonCode`:`1001` (array) - An array of integers is returned, displaying the detailed risk reason codes when your transaction was declined. It is returned only when your account is configured accordingly.
 + Include Splitpay
 + Include Stored Credential
-+ settlements (array) - This is the list of all Settlements. This will be returned only if *settleWithAuth* = *true* in the request.
++ settlements (array) - This is an array only for card payments, else it would be an object for other payment methods. This will be returned only if *settleWithAuth* =*true* in the request.
 + Include Error Attributes
 + Include Metadata Object
 + `statusReason` - This is reason for the status. This is present in case of ERROR, FAILURE, HELD status.
