@@ -1074,12 +1074,12 @@ This is an authorization that is approved for an amount lower than the requested
 
 |Element            |Type                               |Required                                                          |Description    |
 |---                |---                                |---                                                               |---            |
-|locale             |enum                               |Required > **Note:** This is not mandatory for GiroPay.           |This indicates the language of the profile. Possible values are:<ul><li>en_US</li><li>fr_CA</li><li>en_GB</li></ul>|
+|locale             |enum                               |Required <br/> **Note:** This is not mandatory for GiroPay. |     |This indicates the language of the profile. Possible values are:<ul><li>en_US</li><li>fr_CA</li><li>en_GB</li></ul>|
 |firstName          |string <br/>`length<=80`           |Required                                                          |This is the customer’s first name. |
 |lastName           |string <br/>`length<=80`           |Required                                                          |This is the customer’s last name. |
 |email              |string<br/>`length<=255`           |Required                                                          |This is the customer's email address.|
-|phone              |string<br/>`length<=40`            |Required > **Note:** This is not mandatory for GiroPay.           |This is the customer's phone number.|
-|dateOfBirth        |[dateOfBirth](#dateofbirthobject)  |Required > **Note:** This is not mandatory for GiroPay.           |This is the customer's date of birth.|
+|phone              |string<br/>`length<=40`            |Required <br/> **Note:** This is not mandatory for GiroPay. |     |This is the customer's phone number.|
+|dateOfBirth        |[dateOfBirth](#dateofbirthobject)  |Required <br/> **Note:** This is not mandatory for GiroPay. |     |This is the customer's date of birth.|
 
 ```apib
             {
