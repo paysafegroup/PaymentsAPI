@@ -1396,7 +1396,7 @@ The *storedCredential* object is used to identify [authorization requests](#auth
 |Element            |Type                      |Required  | Description                       |
 |---                |---                       |--------  |---                                |
 |consumerId         |string <br/>              |Mandatory |This is the consumer social security number (SSN). As it is sensitive data the consumerId will not be passed in the response. Last 4 digits will be passed as lastDigits.|
-|registrationId     |string <br/>              |Optional  |This is the registrationId of the consumer. You can pass the registrationId in place of consumerId in the setup option call. <ul><li>By making a verification request, you can get the registrationId as part of the response.</li><li> If the merchant is already enrolled, the registrationId will be a part of the payment response.</li>|
+|registrationId     |string <br/>              |Optional  |This is the registrationId of the consumer. You can pass the registrationId in place of consumerId in the setup option call. <ul><li>By making a verification request, you can get the registrationId as part of the response.</li><li> If the user is already enrolled, the registrationId will be a part of the payment response.</li>|
 |paymentHandleToken |string <br/>              |Mandatory |This is the bank token of the registered bank account. The bank token is returned in the Verification API response.|
 
 
