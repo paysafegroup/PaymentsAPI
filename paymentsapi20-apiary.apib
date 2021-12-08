@@ -3450,7 +3450,12 @@ Click **Get Payment Handle Using Merchant Reference Number** above to look up a 
 
 # Group Verifications 
 
-Verification allows merchants to validate a credit card without charging any amount on the card. 
+Verification allows merchants to validate a credit card without charging any amount on the card.
+
+###VIPPreferred
+
++ Verification allows merchants to validate user's registration status
++ If user is registered, then verification allows merchants to get bankToken associated with each bank account present in user's VIPP account. This bankToken is used when merchants want to initiate Payment/Withdrawal using direct APIs.
 
 ## Verification [/v1/verifications]
 
@@ -3461,7 +3466,7 @@ Click **Verification** above to submit a Verification request using Payment Hand
 
 + Attributes (VerificationResponse)
 
-+ Request Verify a Credit Card (application/json)
++ Request
 
     + Headers
 
