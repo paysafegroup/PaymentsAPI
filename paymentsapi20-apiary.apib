@@ -28,7 +28,6 @@ The Payments API currently supports the following payment methods:
 - Play+ (Sightline)
 - Skrill
 - Neteller
-- Instant ACH (iACH)
 - ACH
 - EFT
 - Paypal
@@ -128,7 +127,6 @@ Paysafe offers multiple payment methods to process your transaction. You can obt
 * [Paysafe Card]()
 * [Skrill]()
 * [Neteller]()
-* [Instant ACH]()
 * [Play+ (Sightline)]()
 * [VIP Preferred]()
 * [ACH]()
@@ -605,36 +603,7 @@ This is a read-only raw response returned by an acquirer.
 | cvv2Result         | string |Read Only| This is the raw cvv2 result code.                                                                   |
 | orderId            | string |Read Only| Unique reference for the order. `ie: ORD_7915d463-ccc8-4305-9d33-9e5c9310f12e, SUB_c46645ea-b7b0-4a91-87f7-88c00ec0dea1`|
 
-<a name="instantachobject" title="Instant ACH Object"></a>
-## instantach
 
-|Element                 |Type                   |Required|Description|
-|---                     |---                    |---|---|
-|consumerId              |string<br>`length<=50` |Mandatory|This is the email address of the customer who is making the payment. If provided by the merchant, this will be populated in a redirected screen for the customer. |
-|paymentId               |string<br>`length<=36` |Mandatory|This is the ID returned in response to a prior Payment that the customer made using Instant ACH. It is required for withdrawal checkout.|
-|emailSubject            |string<br>`length<=30` |Mandatory|This is the Subject line to use in the customer email. |
-|emailMessage            |string<br>`length<=50` |Mandatory|This is the message to use in the customer email. |
-|recipientDescription    |string<br>`length<=30` |Optional|This is a description displayed on the Instant ACH payment page in the logo area when there is no *logo\_url* parameter. If no value is submitted and there is no logo, the *pay\_to\_email* value is displayed as the recipient of the payment.|
-|language                |string<br>`length=2`   |Optional|This is the 2-character preferred language code for the consumer (for example, EN, FR).|
-|logoUrl                 |string                 |Optional|This is the URL of the logo that will appear in the top right of the Instant ACH page. The logo must be accessible via HTTPS or it will not be dispayed. The logo will be resized to fit. To avoid scaling distortion, the minimum size should be as follows:<br>If the logo width > height - at least 107px wide.<br>If logo width > height - at least 65px high<br>Avoid large images (much greater than 256 by 256px) to minimize the page loading time.|
-|detail1Description      |string                 |Optional|You can show additional details about the product in the More information section in the header of Quick Checkout.|
-|detail1Text             |string                 |Optional|The detail1Text is displayed next to the detail1Description in the More Information section in the header of the payment form with the other payment details. The detail1Description combined with the detail1Text is shown in the more information field of the merchant account history CSV file.|
-|descriptor              |string<br>`length<=30` |Optional|This is the merchant descriptor that will be displayed on the consumer's bank statement.|
-
-```
-     {
-         "consumerId": "john.doe@email.com",
-         "paymentId": "3aeb9c63-6386-46a3-9f8e-f452e722228a",
-         "emailSubject": "InstantACH Payment",
-         "emailMessage": "Your Instant ACH Payment request has been processed",
-         "recipientDescription": "logo_url_alt_text",
-         "language": "EN",
-         "logoUrl": "http://www.paysafe.com/icon.jpg",
-         "detail1Description": "Details 1 description",
-         "detail1Text": "Details 1 text",
-         "descriptor": "My company name"
-     }
-```
 <a name="level2level3object" title="level2level3 Object"></a>
 ## level2level3
 
@@ -881,14 +850,14 @@ This is an authorization that is approved for an amount lower than the requested
 |status                 |Enumeration                |Read Only   |This is the status of the request. Possible values are:<ul><li>RECEIVED &ndash; Our system has received the request and is waiting for the downstream processor’s response.</li><li>INITIATED &ndash; The request was initiated with the downstream provider.</li><li>PAYABLE &ndash; The merchant can use the Payment Handle for a Payment request.</li><li>PROCESSING &ndash; The Payment Handle was authorized by customer, awaiting PSP response.</li><li>FAILED &ndash; The transaction failed due to an error or got declined.</li><li>EXPIRED &ndash; The Payment Handle expired because the merchant did not proceed with the Payment transaction.</li><li>COMPLETED &ndash; The Payment request was initiated successfully using the Payment Handle.</li><li>ERROR &ndash; The Payment Handle has errored. The reason for this state might be because of some system or environmental issues. </li></ul> By default, PaymentHandles will EXPIRE after 15 mins unless in a PROCESSING status.  Once the transaction flow has been initiated by the customer, the time permitted for the customer to complete authorization is dependent upon the payment type. PaymentHandles that lapse the permitted processing will be marked EXPIRED.If the customer is required to complete authorization as part of a redirect flow, the PaymentHandle is updated to have a PROCESSING status and the expiration time is extended to allow this additional time for the customer to complete these activities.For payment types where there is automatic settlement (settleWithAuth=true), if the PAYABLE Payment Handle has EXPIRED,  the corresponding Payment/Settlement resources will be auto created.  IF the PSP supports refunds, they will be auto refunded to the customer.|
 |statusReason           |Enumeration                |Read Only   |<ul><li>AUTH_VOIDED - Authorization was cancelled (voided).</li><li> USER_CANCELLED - User cancelled the transaction </li><li>AUTH_EXPIRED - Authorization has expired and no settlements were completed.</ul>|
 |usage                  |Enumeration                |Read Only   |This specifies how the Payment Handle will be used for Payments. Possible values are:<ul><li>SINGLE_USE &ndash; The Payment Handle can be used for only one transaction and expires if not used.</li><li>MULTI_USE &ndash; The Payment Handle can be used multiple times.</li></ul>|
-|paymentType            |Enumeration                |Mandatory   |This is the payment type associated with this Payment Handle. Possible values are:<ul><li>CARD</li><li>PAYSAFECASH</li><li>PAYSAFECARD</li><li>VIP PREFERRED</li><li>SIGHTLINE</li><li>SKRILL</li><li>INSTANT ACH</li><li>NETELLER</li></ul>|
+|paymentType            |Enumeration                |Mandatory   |This is the payment type associated with this Payment Handle. Possible values are:<ul><li>CARD</li><li>PAYSAFECASH</li><li>PAYSAFECARD</li><li>VIP PREFERRED</li><li>SIGHTLINE</li><li>SKRILL</li><li>NETELLER</li></ul>|
 |action                 |Enumeration                |Read Only   |This specifies the next step of the user journey once they proceed to the Payment. Possible values are:<ul><li>NONE &ndash; No action is required, for example, for a standard credit card payment.</li><li>REDIRECT &ndash; The user must be redirected to complete a Payment, for example, when an alternate payment method like Paysafecard is used.</li></ul>|
 |executionMode          |Enumeration                |Read Only   |This specifies the action of the merchant server to complete the Payment. Possible values are:<ul><li>SYNCHRONOUS &ndash; The status of the Payment request will be returned synchronously to the merchant, for example, a credit card request.</li><li>ASYNCHRONOUS &ndash; The Payment request is not completed immediately and the merchant [must rely on webhooks](#paymentswebhooks) to retrieve the status of the Payment request.</li></ul>|
 |amount                 |number <br/>`max=99999999999` |Mandatory |This is the amount of the request, in minor units. For example, to process US $10.99, this value should be 1099. To process US $109.9, this value should be 10990.<br/>**Note:** This field is mandatory if *transactionType* is included. <br/>The *amount* specified in the Payment Handle request must match the *amount* specified in the Payments API request the *paymentHandleToken* is used for. |
 |currencyCode           |string <br/>`length=3`     |Mandatory  |This is the currency of the merchant account, for example, USD or CAD. See [Currency Codes](#currencycodes). <br/>The *currencyCode* specified in the Payment Handle request must match the *currencyCode* specified in the Payments API request the *paymentHandleToken* is used for.|
 |paymentHandleToken     |string <br/>`length=50`     |Read Only  |This is the payment token generated by Paysafe that will be used by merchants for Payment API requests.|
 |paymentObject, card or any relevant paymentInstrument object as per paymentType |Complex                    |Mandatory  |These are the details of the card or payment instrument used for the transaction.|
-[card](#cardobject) \| [paysafecard](#paysafecardobject)\| [paysafecash](#paysafecashobject) \|[sightline](#sightlineobject) \| [vippreferred](#vippreferredobject) \| [skrill](#skrillobject) \| [instant ACH](#instantachobject)  \| Interac \|[paypal](#paypalobject) \| [ACH](#achobject)    \| [EFT](#eftobject) \| [BACS](#bacsobject)\| [SEPA](#sepaobject) |Objects | Mandatory |These are details of the payment instrument used in the request. |
+[card](#cardobject) \| [paysafecard](#paysafecardobject)\| [paysafecash](#paysafecashobject) \|[sightline](#sightlineobject) \| [vippreferred](#vippreferredobject) \| [skrill](#skrillobject) \| Interac \|[paypal](#paypalobject) \| [ACH](#achobject)    \| [EFT](#eftobject) \| [BACS](#bacsobject)\| [SEPA](#sepaobject) |Objects | Mandatory |These are details of the payment instrument used in the request. |
 |billingDetails         |[billingDetails](#billingdetailsobject) |Conditional |These are billing details for the request.<br/>**Note:** For single-use Payment Handles, this address information is ignored if the *paymentHandleTokenFrom* parameter is included and there is already address information associated with that customer.|
 |profile                |[profile](#profileobject)  |Conditional| This is the customer's profile. Mandatory for VIP_PREFERRED and Sightline (Play+). Optional for all other payment methods. |
 |shippingDetails        |Complex                    |Conditional| These are the shipping details of the request.|
@@ -983,7 +952,7 @@ This is an authorization that is approved for an amount lower than the requested
 |error              |[error](#errorobject)                  |Read Only| Details of the error.    |
 |statusReason       |string<br/>`length<=255`               |Read Only|This is reason for the status. This is present in the case where *status* is ERROR, FAILURE, or HELD. |
 |authentication     |[authentication](#authenticationobject)|Read Only|These are 3D Secure details.|
-|paymentType            |enum                       |Optional|This is the payment type associated with this Payment Handle. Possible values are:<ul><li>CARD</li><li>PAYSAFECASH</li><li>PAYSAFECARD</li><li>VIP PREFERRED</li><li>SIGHTLINE</li><li>SKRILL</li><li>INSTANT ACH</li><li>INTERAC</li><li>PAYPAL</li><li>ACH</li><li>EFT</li><li>BACS</li><li>SEPA</li></ul>|
+|paymentType            |enum                       |Optional|This is the payment type associated with this Payment Handle. Possible values are:<ul><li>CARD</li><li>PAYSAFECASH</li><li>PAYSAFECARD</li><li>VIP PREFERRED</li><li>SIGHTLINE</li><li>SKRILL</li><li>INTERAC</li><li>PAYPAL</li><li>ACH</li><li>EFT</li><li>BACS</li><li>SEPA</li></ul>|
 |gatewayReconciliationId |string                 |Optional|Transaction identifier that can be used to reconcile this transaction with the provider gateway.<br/><i>Read Only</i>|
 |updatedTime             |datetime               |Optional|ISO 8601 format (UTC) </b>This is the date and time the resource was last updated, for example, `2014-01-26T10:32:28Z`<br/><i>Read Only</i>|
 |statusTime              |datetime               |Optional|ISO 8601 format (UTC) </b>This is the date and time the resource status was last updated, for example, `2014-01-26T10:32:28Z`<br/><i>Read Only</i>|
@@ -1318,7 +1287,7 @@ If you [look up an authorization request](#getauth)  that used the *visaAddition
 |merchantRefNum     |string <br/>`length<=255`              |Mandatory|This is the merchant reference number created by the merchant and submitted as part of the request. It must be unique for each request.|
 |paymentHandleToken |string                                 |Mandatory|This is the payment token generated by Paysafe that will be used by merchants for Standalone Credit requests.|
 |currencyCode       |string<br/>`length=3`                  |Mandatory|This is the currency of the merchant account, for example, USD or CAD, returned in the request response. See [Currency Codes](#currencycodes). <br/>**Note:** The *currencyCode* specified in the Credit request must match the *currencyCode* specified in the Payment Handle request from which the *paymentHandleToken* is taken.|
-|card \| Neteller \| paysafecard \| paysafecash \| sightline \| vippreferred \| skrill \| instant ACH \| Interac \| ACH \|EFT |[card](#cardobject) \|[neteller](#netellerobject) \|  [paysafecard](#paysafecardobject) \| [paysafecash](#paysafecashobject) \|[sightline](#sightlineobject) \| [vippreferred](#vippreferredobject) \| [skrill](#skrillobject) \| [instant ACH](#instantachobject)  \| [ACH](#achobject)    \| [EFT](#eftobject)  |Read Only|These are the details of the payment method used.|
+|card \| Neteller \| paysafecard \| paysafecash \| sightline \| vippreferred \| skrill \| Interac \| ACH \|EFT |[card](#cardobject) \|[neteller](#netellerobject) \|  [paysafecard](#paysafecardobject) \| [paysafecash](#paysafecashobject) \|[sightline](#sightlineobject) \| [vippreferred](#vippreferredobject) \| [skrill](#skrillobject) \| [ACH](#achobject)    \| [EFT](#eftobject)  |Read Only|These are the details of the payment method used.|
 |billingDetails     |[billingDetails](#billingdetailsobject)|Optional|These are the billing details for the request.|
 |customerIp         |string<br/>`length<=39`                |Optional|This is the customer's IP address.|
 |description        |string<br/>`length<=255`               |Optional|This is a description of the transaction, provided by the merchant.|
@@ -1957,7 +1926,6 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
 * A Payment Handle for a Paysafecash payment
 * A Payment Handle for a Play+ payment
 * A Payment Handle for a Skrill payment
-* A Payment Handle for an Instant ACH payment
 * A Payment Handle for a PayPal payment
 * A Payment Handle for an ACH payment
 * A Payment Handle for an EFT payment
@@ -2590,103 +2558,6 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
                 "statusTime": "2019-06-24T14:18:33Z"
             }
 
-+ Request Create Payment Handle for InstantACH (application/json)
-
-    + Headers
-
-            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
-            Simulator: "EXTERNAL"
-            
-    + Body
-
-            {
-                "merchantRefNum": "merchantRefNum-321",
-                "transactionType": "PAYMENT",
-                "paymentType": "INSTANTACH",
-                "amount": 100,
-                "currencyCode": "USD",
-                "customerIp": "172.0.0.1",
-                "billingDetails": {
-                    "nickName": "Home",
-                    "street": "100 Queen",
-                    "street2": "Unit 201",
-                    "city": "Toronto",
-                    "zip": "M5H 2N2",
-                    "country": "CA"
-                },
-                "merchantDescriptor": {
-                    "dynamicDescriptor": "OnlineStore",
-                    "phone": "12345678"
-                },
-                "returnLinks": [{
-                        "rel": "on_completed",
-                        "href": "https://usgaminggamblig/payment/return/success",
-                        "method": "GET"
-                    },
-                    {
-                        "rel": "on_failed",
-                        "href": "https://usgaminggamblig/payment/return/failed",
-                        "method": "GET"
-                    }
-                ]
-            }
-
-
-
-+ Response 200 (application/json)
-
-    + Body
-
-            {
-                "id": "64b614b8-753d-4404-b491-2dd8b817c40b",
-                "paymentType": "INSTANTACH",
-                "paymentHandleToken": "PHsLl14Tfi4l22gs",
-                "merchantRefNum": " merchantRefNum-321",
-                "currencyCode": "USD",
-                "dupCheck": true,
-                "txnTime": "2019-06-24T14:18:33.000+0000",
-                "billingDetails": {
-                    "street": "100 Queen",
-                    "street2": "Unit 201",
-                    "city": "Toronto",
-                    "zip": "M5H 2N2",
-                    "country": "CA"
-                },
-                "customerIp": "172.0.0.1",
-                "status": "INITIATED",
-                "links": [{
-                    "rel": "redirect_payment",
-                    "href": "https://api.qa.paysafe.com/alternatepayments/v1/redirect?accountId=1010608990&paymentHandleId=64b614b8-753d-4404-b491-2dd8b817c40b&token=eyJhbGciOiJIUzI1NiJ9.eyJhY2QiOiIxMDEwNjA4OTkwIiwicHlkIjoiNjRiNjE0YjgtNzUzZC00NDA0LWI0OTEtMmRkOGI4MTdjNDBiIiwiZXhwIjoxNTYxMzg3NzEzfQ.LGZ8K3yYqR0_J7iNicVCfcmZFIo8xkiX0hg4WpnHm_c"
-                }],
-                "liveMode": true,
-                "usage": "SINGLE_USE",
-                "action": "REDIRECT",
-                "executionMode": "SYNCHRONOUS",
-                "amount": 100,
-                "merchantDescriptor": {
-                    "dynamicDescriptor": "OnlineStore",
-                    "phone": "12345678"
-                },
-                "timeToLiveSeconds": 899,
-                "gatewayResponse": {
-                    "sid": "9e55a0ac44474c2d9f3813d7f65b07c4",
-                    "processor": "SKRILL_QCO"
-                },
-                "returnLinks": [{
-                        "rel": "on_completed",
-                        "href": "https://usgaminggamblig/payment/return/success",
-                        "method": "GET"
-                    },
-                    {
-                        "rel": "on_failed",
-                        "href": "https://usgaminggamblig/payment/return/failed",
-                        "method": "GET"
-                    }
-                ],
-                "transactionType": "PAYMENT",
-                "updatedTime": "2019-06-24T14:18:33Z",
-                "statusTime": "2019-06-24T14:18:33Z"
-            }
 
 + Request Create Payment Handle for PayPal (application/json)
 
@@ -7396,7 +7267,6 @@ Use this API to remove an account in the VIP preferred payment method.
         + SKRILL
         + VIPPREFERRED
         + SIGHTLINE
-        + INSTANTACH
         + ACH
         + EFT
         + BACS
@@ -7438,7 +7308,6 @@ Use this API to remove an account in the VIP preferred payment method.
             + PAYSAFECARD
             + SIGHTLINE
             + SKRILL
-            + INSTANTACH
             + VIPPREFERRED
             + ACH
             + EFT
@@ -7485,7 +7354,6 @@ Use this API to remove an account in the VIP preferred payment method.
         + PAYSAFECARD
         + SIGHTLINE
         + SKRILL
-        + INSTANTACH
         + PAYPAL
         + VIPPREFERRED
         + ACH
@@ -7718,7 +7586,6 @@ Use this API to remove an account in the VIP preferred payment method.
             + PAYSAFECARD
             + SIGHTLINE
             + SKRILL
-            + INSTANTACH
             + PAYPAL
             + ACH
             + EFT
@@ -7833,29 +7700,6 @@ Use this API to remove an account in the VIP preferred payment method.
             + `language`:`EN` (string) - This is the 2-character preferred language code for the consumer (for example, EN, FR).
                 _Optional, length=2_
             + `logoUrl`:`http://www.yoursite.com/icon.jpg` (string) - This is the URL of the logo that you would like to appear in the top right of the Skrill page. The logo must be accessible via HTTPS or it will not be shown. The logo will be resized to fit.
-                _Optional_
-            + `detail1Description`: `Details 1 description` (string) - You can show additional details about the product in the More information section in the header of Quick Checkout.
-                _Optional_
-            + `detail1Text`:`Details 1 text` (string) - The detail1Text is shown next to the detail1Description in the More Information section in the header of the payment form with the other payment details. The detail1Description combined with the detail1Text is shown in the more information field of the merchant account history CSV file.
-                _Optional_
-            + `descriptor`:`Merchant's trading name` (string) - This is the merchant descriptor that will be displayed on the consumer's bank statement.
-                _Optional_
-    
-    + instantach (object) - These are the details of the [instantach account](#instantachobject) used for the request. Only one payment instrument object (for example, *card* or *instantach*) can be included in the request. instantach Object is required only for withdrawal request.
-        + Properties
-            + `consumerId`:`john.doe@email.com` (string) - This is the email address of the customer who is receiving the payment. Required for withdrawal request.
-                _Mandatory, length<=50_
-            + `paymentId` :`3aeb9c63-6386-46a3-9f8e-f452e722228a`(string) - This is the ID returned in the response to a prior Payment that the customer made using Instant ACH.
-                _Mandatory_
-            + `emailSubject`:`Instant ACH payment` (string) - This is the Subject line to use in the customer email. Required for withdrawal request.
-                _Mandatory, length<=30_
-            + `emailMessage`:`Email text` (string) - This is the message to use in the customer email. Required for withdrawal request.
-                _Mandatory, length<=50_
-            + `recipientDescription`:`logo_url_alt_text` (string) - This is a description to be shown on the Instant ACH payment page in the logo area if there is no *logo\_url* parameter. If no value is submitted and there is no logo, the *pay\_to\_email* value is shown as the recipient of the payment.
-                _Optional, length<=30_
-            + `language`:`EN` (string) - This is the 2-character preferred language code for the consumer (for example, EN, FR).
-                _Optional, length=2_
-            + `logoUrl`:`http://www.yoursite.com/icon.jpg` (string) - This is the URL of the logo that you would like to appear in the top right of the Instant ACH page. The logo must be accessible via HTTPS or it will not be shown. The logo will be resized to fit.
                 _Optional_
             + `detail1Description`: `Details 1 description` (string) - You can show additional details about the product in the More information section in the header of Quick Checkout.
                 _Optional_
@@ -8088,7 +7932,6 @@ Use this API to remove an account in the VIP preferred payment method.
         + PAYSAFECARD
         + SIGHTLINE
         + SKRILL
-        + INSTANTACH
         + PAYPAL
         + VIPPREFERRED
         + ACH
