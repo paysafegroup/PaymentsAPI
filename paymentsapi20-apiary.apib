@@ -3468,11 +3468,16 @@ Click **Process Payment** above to create a Payment request using a Payment Hand
 
 * A Payment request that will be settled later
 * A Payment request that authorizes and settles the Payment in a single request by setting the *settleWithAuth* parameter to *true*
-* A Payment request using multi-use payment handle token for BACS & SEPA. 
+* A Payment request using multi-use payment handle token for BACS & SEPA.
+* A Payment request with airline travel details for AIRLINE merchants only by setting the settleWithAuth parameter to true. If settleWithAuth parameter to false then airline travel details are ignored.
+* A Payment request with airline travel details for AIRLINE merchants only by setting the settleWithAuth parameter to false. Since settleWithAuth parameter tofalse, you will pass airline travel details in settlement call.
+
 > Once the status of MANDATE is ACTIVE after 7 days, payment status will become COMPLETED and a webhook notification will be sent to merchant. Merchant will receive webhooks for the mandate status changes as well. After setting payment status to COMPLETED, settlement resource will be created in PENDING and respective webhook notification will be sent to merchant. Settlement will batched for the next batch.  After settlement gets batched, it will be set to COMPLETED and respective webhook will be sent to merchant.
 
 + Attributes 
     + Include PaymentsRequest
+    
+You can refer to [Card API](https://developer.paysafe.com/en/cards/api/#/reference/0/authorizations/authorization) to know more on authorization request.
 
 + Request Process a Card Payment Using a Payment Handle Token (application/json)
 
@@ -3693,7 +3698,236 @@ Click **Process Payment** above to create a Payment request using a Payment Hand
                 "description":"Magazine subscription"
             }
             }
+            
++ Request process a payment request with airline travel details for AIRLINE merchants by setting the settleWithAuth parameter to true
 
+
+    + Headers
+
+            Content-Type:application/json
+            Authorization:"Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator:"EXTERNAL"
+
+    + Body
+        
+        {
+        "merchantRefNum": "8602c09ad5d9909b4c25",
+        "amount": 500,
+        "currencyCode": "USD",
+        "dupCheck": true,
+        "settleWithAuth": true,
+        "paymentHandleToken": "SCmd8t1Ycl4qk155",
+        "customerIp": "172.0.0.1",
+        "description": "Magazine subscription",
+        "airlineTravelDetails": {
+            "passengerName": "Joe Smith",
+            "departureDate": "2022-01-26",
+            "origin": "SXF",
+            "computerizedReservationSystem": "DATS",
+        "ticket": {
+              "ticketNumber": 1234567891011,
+              "isRestrictedTicket": false
+                },
+        "customerReferenceNumber": 10987654321,
+        "travelAgency": {
+              "name": "MY AGENT",
+              "code": "AGENT347"
+            },
+        "tripLegs": {
+          "leg1": {
+            "flight": {
+              "carrierCode": "LH",
+              "flightNumber": "0799"
+            },
+            "serviceClass": "F",
+            "isStopOverAllowed": "true",
+            "destination": "ISL",
+            "fareBasis": "VMAY",
+            "departureDate": "2022-01-26"
+          },
+          "leg2": {
+            "flight": {
+              "carrierCode": "TK",
+              "flightNumber": "1385"
+            },
+            "serviceClass": "F",
+            "isStopOverAllowed": "true",
+            "destination": "SOF",
+            "fareBasis": "VMAY",
+            "departureDate": "2022-01-26"
+            }
+        }
+    }
+}
+
++ Response 200 (application/json)
+
+    + Body
+
+        {
+        "id": "6e24b072-a4b2-4be3-bba7-c6b0fdb46a87",
+        "paymentType": "CARD",
+        "paymentHandleToken": "SCF0eZ6nZFCgZnIx",
+        "merchantRefNum": "771881341d1fc4765d5b",
+        "currencyCode": "USD",
+        "settleWithAuth": true,
+        "txnTime": "2021-12-02T13:24:54Z",
+        "billingDetails": {
+            "nickName": "Home",
+            "street": "abcd",
+            "city": "defg",
+            "zip": "32456",
+            "state": "AL",
+            "country": "US"
+        },
+        "customerIp": "172.0.0.1",
+        "status": "COMPLETED",
+        "amount": 500,
+        "preAuth": false,
+        "description": "Magazine subscription",
+        "availableToSettle": 0,
+        "gatewayResponse": {
+            "authCode": "115010",
+            "avsResponse": "UNKNOWN",
+            "cvvVerification": "MATCH",
+            "serializable": true
+        },
+        "merchantDescriptor": {
+            "dynamicDescriptor": "OnlineStoreeeeeeeee",
+            "phone": "1234567899"
+        },
+    "settlements": [
+        {
+            "merchantRefNum": "771881341d1fc4765d5b",
+            "amount": 500,
+            "id": "6e24b072-a4b2-4be3-bba7-c6b0fdb46a87",
+            "availableToRefund": 500,
+            "txnTime": 1638451494000,
+            "status": "PENDING"
+        }
+        ],
+        "card": {
+            "cardExpiry": {
+                "month": "10",
+                "year": "2025"
+            },
+            "holderName": "Dilip",
+            "cardType": "VI",
+            "cardBin": "400000",
+            "lastDigits": "1091",
+            "cardCategory": "DEBIT"
+        },
+        "airlineTravelDetails": {
+            "passengerName": "Joe Smith",
+            "departureDate": "2022-01-26",
+            "origin": "SXF",
+            "computerizedReservationSystem": "DATS",
+            "ticket": {
+                "ticketNumber": "1234567891011",
+                "isRestrictedTicket": false
+            },
+            "customerReferenceNumber": "10987654321",
+            "travelAgency": {
+                "code": "AGENT347",
+                "name": "MY AGENT"
+            },
+            "tripLegs": {
+                "leg1": {
+                    "flight": {
+                        "carrierCode": "LH",
+                        "flightNumber": "0799"
+                    },
+                    "serviceClass": "F",
+                    "isStopOverAllowed": true,
+                    "destination": "ISL",
+                    "fareBasis": "VMAY",
+                    "departureDate": "2022-01-26"
+                },
+                "leg2": {
+                    "flight": {
+                        "carrierCode": "TK",
+                        "flightNumber": "1385"
+                    },
+                    "serviceClass": "F",
+                    "isStopOverAllowed": true,
+                    "destination": "SOF",
+                    "fareBasis": "VMAY",
+                    "departureDate": "2022-01-26"
+                }
+            }
+        }
+    }
+
+
++ Request process a payment request with airline travel details for AIRLINE merchants by setting the settleWithAuth parameter to false
+
+    + Headers
+
+            Content-Type:application/json
+            Authorization:"Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator:"EXTERNAL"
+
+    + Body
+
+        {
+          "merchantRefNum": "423a23bbd70e06dc7c04",
+          "amount": 500,
+          "currencyCode": "USD",
+          "dupCheck": true,
+          "settleWithAuth": false,
+          "paymentHandleToken": "SCbBQggyY9Kin4sO",
+          "customerIp": "172.0.0.1",
+          "description": "Magazine subscription"
+        }
+
++ Response 200 (application/json)
+
+    + Body
+    
+        {
+        "id": "1d1d8556-1039-4c5d-bead-e624fb46b22a",
+        "paymentType": "CARD",
+        "paymentHandleToken": "SCbBQggyY9Kin4sO",
+        "merchantRefNum": "423a23bbd70e06dc7c04",
+        "currencyCode": "USD",
+        "settleWithAuth": false,
+        "txnTime": "2021-12-02T13:32:32Z",
+        "billingDetails": {
+            "nickName": "Home",
+            "street": "abcd",
+            "city": "defg",
+            "zip": "32456",
+            "state": "AL",
+            "country": "US"
+        },
+        "customerIp": "172.0.0.1",
+        "status": "COMPLETED",
+        "amount": 500,
+        "description": "Magazine subscription",
+        "availableToSettle": 500,
+        "gatewayResponse": {
+            "authCode": "188695",
+            "avsResponse": "UNKNOWN",
+            "cvvVerification": "MATCH",
+            "serializable": true
+        },
+        "merchantDescriptor": {
+            "dynamicDescriptor": "OnlineStoreeeeeeeee",
+            "phone": "1234567899"
+        },
+        "card": {
+            "cardExpiry": {
+                "month": "10",
+                "year": "2025"
+            },
+            "holderName": "Dilip",
+            "cardType": "VI",
+            "cardBin": "400000",
+            "lastDigits": "1091",
+            "cardCategory": "DEBIT"
+        }
+    }
+    
 
 ### Get Payments [GET /v1/payments/{payment_id}]
 <a name="getpayment" title="Look Up a Payment"></a>
@@ -3972,6 +4206,7 @@ Click **Process Settlement** above to process a Settlement request for:
 
 * A regular Settlement, where the initial request was an Authorization that is to be settled
 * A Settlement that is split into multiple merchant accounts. This is applicable for those merchants whose accounts are configured to do so
+* A Settlement for the authorization with the full airline travel details for the AIRLINE Merchants
 
 + Attributes
     + Include Settlements
@@ -4040,6 +4275,113 @@ Click **Process Settlement** above to process a Settlement request for:
                     "amount": 500
                 }]
             }
+            
+            
++ Request settlement for AIRLINE Merchants (application/json)
+
+   + Headers
+
+            Content-Type:  application/json
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
+    + Body
+
+        {
+          "merchantRefNum": "9fd96a3b-9b1f-4041-99e5-b1eaf4a70f78",
+          "dupCheck": true,
+          "amount": "500",
+          "airlineTravelDetails": {
+            "passengerName": "Joe Smith",
+            "departureDate": "2022-01-26",
+            "origin": "SXF",
+            "computerizedReservationSystem": "DATS",
+            "ticket": {
+              "ticketNumber": 1234567891011,
+              "isRestrictedTicket": false
+            },
+            "customerReferenceNumber": 10987654321,
+            "travelAgency": {
+              "name": "MY AGENT",
+              "code": "AGENT347"
+            },
+            "tripLegs": {
+              "leg1": {
+                "flight": {
+                  "carrierCode": "LH",
+                  "flightNumber": "0799"
+                },
+                "serviceClass": "F",
+                "isStopOverAllowed": "true",
+                "destination": "ISL",
+                "fareBasis": "VMAY",
+                "departureDate": "2022-01-26"
+              },
+              "leg2": {
+                "flight": {
+                  "carrierCode": "TK",
+                  "flightNumber": "1385"
+                },
+                "serviceClass": "F",
+                "isStopOverAllowed": "true",
+                "destination": "SOF",
+                "fareBasis": "VMAY",
+                "departureDate": "2022-01-26"
+              }
+            }
+    }
+}
+
++ Response 200 (application/json)
+
+    + Body
+    
+        {
+            "id": "b9389990-06c8-4747-8489-18781a71cf04",
+            "merchantRefNum": "b9a9a461-2b49-4751-8e0c-f000a38a3eb1",
+            "txnTime": "2021-12-02T13:36:48Z",
+            "status": "PENDING",
+            "amount": 500,
+            "availableToRefund": 500,
+            "airlineTravelDetails": {
+                "passengerName": "Joe Smith",
+                "departureDate": "2022-01-26",
+                "origin": "SXF",
+                "computerizedReservationSystem": "DATS",
+                "ticket": {
+                    "ticketNumber": "1234567891011",
+                    "isRestrictedTicket": false
+                },
+                "customerReferenceNumber": "10987654321",
+                "travelAgency": {
+                    "code": "AGENT347",
+                    "name": "MY AGENT"
+                },
+                "tripLegs": {
+                    "leg1": {
+                        "flight": {
+                            "carrierCode": "LH",
+                            "flightNumber": "0799"
+                        },
+                        "serviceClass": "F",
+                        "isStopOverAllowed": true,
+                        "destination": "ISL",
+                        "fareBasis": "VMAY",
+                        "departureDate": "2022-01-26"
+                    },
+                    "leg2": {
+                        "flight": {
+                            "carrierCode": "TK",
+                            "flightNumber": "1385"
+                        },
+                        "serviceClass": "F",
+                        "isStopOverAllowed": true,
+                        "destination": "SOF",
+                        "fareBasis": "VMAY",
+                        "departureDate": "2022-01-26"
+                    }
+                }
+            }
+        }
 
 ### Cancel Settlement [PUT /v1/settlements/{settlement_id}]
 <a name="cancelsettlement" title="Cancel a Settlement"></a>
