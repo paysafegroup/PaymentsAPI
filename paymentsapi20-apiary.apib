@@ -345,6 +345,8 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 |signatureStatus        |enum                           |Read Only|This is the 3D Secure signature verification result value.<br/><ul><li>Y &ndash; All transactions and signature checks satisfied.</li><li>N &ndash; At least one transaction or signature check failed.</li></ul>|
 |error                  |[complex](#errorobject)        |Read Only|This is the error details of the authentication. |
 
+* You can refer to [Card API](https://developer.paysafe.com/en/cards/api/#/reference/0/authorizations/authorization) to know more on authorization request.
+
 ```apib
   {
   "authentication":{
@@ -3476,8 +3478,6 @@ Click **Process Payment** above to create a Payment request using a Payment Hand
 
 + Attributes 
     + Include PaymentsRequest
-    
-* You can refer to [Card API](https://developer.paysafe.com/en/cards/api/#/reference/0/authorizations/authorization) to know more on authorization request.
 
 + Request Process a Card Payment Using a Payment Handle Token (application/json)
 
@@ -8305,6 +8305,7 @@ Use this API to remove an account in the VIP preferred payment method.
 + `statusReason` - This is reason for the status. This is present in case of ERROR, FAILURE, HELD status.
     _length<=255_
 + Include Authentications Object
+
 
 ## Profile
 
