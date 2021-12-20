@@ -3474,7 +3474,8 @@ Click **Process Payment** above to create a Payment request using a Payment Hand
 * A Payment request with airline travel details for AIRLINE merchants only by setting the settleWithAuth parameter to false. Since settleWithAuth parameter tofalse, you will pass airline travel details in settlement call.
 
 
-> For additional information on authorization request, [Card API](https://developer.paysafe.com/en/cards/api/#/reference/0/authorizations/authorization).<br>
+> For additional information on authorization request, [Card API](https://developer.paysafe.com/en/cards/api/#/reference/0/authorizations/authorization).<br><br>
+
 > Once the status of MANDATE is ACTIVE after 7 days, payment status will become COMPLETED and a webhook notification will be sent to merchant. Merchant will receive webhooks for the mandate status changes as well. After setting payment status to COMPLETED, settlement resource will be created in PENDING and respective webhook notification will be sent to merchant. Settlement will batched for the next batch.  After settlement gets batched, it will be set to COMPLETED and respective webhook will be sent to merchant.
 
 
