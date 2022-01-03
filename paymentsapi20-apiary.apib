@@ -328,7 +328,6 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
               "defaultShippingAddressIndicator": true
             }
 ```
-
 <a name="authenticationobject" title="Authentications Object"></a>
 ## authentication
 
@@ -3484,6 +3483,7 @@ Click **Process Payment** above to create a Payment request using a Payment Hand
 
 + Attributes 
     + Include PaymentsRequest
+    + Include airlineTravelDetails
 
 + Request Process a Card Payment Using a Payment Handle Token (application/json)
 
@@ -7139,6 +7139,66 @@ Use this API to remove an account in the VIP preferred payment method.
 
 
 # Data Structures
+
+## `airlineTravelDetails`
+
++ `airlineTravelDetails` (object) - This is additional information about your airline travel.
+    _NOTE:This object is only for Airline Merchants_
+    
+    + Properties
+        + passengerName: `John Doe` (string, required) - Name of the passenger to whom the ticket was issued.
+            _min=1 max=20_ 
+        + departureDate: `2014-01-26` (string, required) - Date of passenger’s departure. Date format = YYYY-MM-DD, ISO 8601 expected.
+            _UTC Date Format_
+        + origin: `YUL` (string,required) - Departure Airport Code: IATA Airport Code.
+            _min=3 max=3_
+        + computerizedReservationSystem: `STRT` (enum) - Indicates the computerized reservation system used to make the reservation and purchase the ticket. For tickets purchased in Germany, this field should one of these codes:
+            _Conditional: Required only if the ticket is purchased in Germany_
+            + Members
+                + STRT - Start
+                + PARS - TWA
+                + DATS - Delta
+                + SABR - Sabre
+                + DALA - Covia-Apollo
+                + BLAN - Dr. Blank
+                + DERD - DER
+                + TUID - TUI
+        + `ticket` (object) - Information about the Airline Ticket Number and if the ticket is restricted.
+            _Required_
+            + Properties
+                + ticketNumber: `` (string, required) - Airline Ticket Number.
+                    _min=1 max=20_ 
+                + isRestrictedTicket: `true` (boolean, optional) - ndicates whether this ticket is non-refundable. This entry should be supplied on CPS/Passenger Transport 1 or 2 transactions if the ticket was purchased as a non-refundable ticket. Valid values are: false - No restriction : default, true - Restricted : non-refundable ticket.
+        + customerReferenceNumber: ``  (string, optional) - Contains the code that the cardholder supplied to the card acceptor.
+            _min=1 max=20_ 
+        + `travelAgency` (object) - Information about the travel agency if the ticket was issued by a travel agency.
+            _Optional_
+            + Properties
+                + code: `` (string, optional) - Code identifying travel agency if the ticket was issued by a travel agency.
+                    _min=1 max=8_ 
+                + name: `` (string, optional) - Information about the travel agency if the ticket was issued by a travel agency.
+                    _min=1 max=25_ 
+        + `tripLegs` (object) - A grouping of up to four trip legs. Each leg provides detailed itinerary data.
+            _Optional_
+            + Properties
+                + `leg1, leg2, leg3, leg4` (object) - Description of the various leg of trip.
+                    _Optional_
+                    + Properties
+                        + `flight` (object) - Operating Carrier Code and the Number of the airline flight to be taken on Leg of the trip (excluding the carrier code).
+                            _Optional_
+                            + Properties
+                                + carrierCode: `` (string, optional) - Operating Carrier Code; the standard abbreviation code indicating name of the operating carrier like United Airlines, Jet Blue, etc.
+                                    _min=2 max=2_ 
+                                + flightNumber: `` (string, optional) - Number of the airline flight to be taken on Leg of the trip excluding the carrier code.
+                                      _min=2 max=5_ 
+                        + serviceClass: `` (string, optional) - Indicates service class (first class, business class, etc.). Example values (not limited to):F - first class, J - business class, W - premium economy class, Y - economy class, 
+                            _min=1 max=8_ 
+                        + isStopOverAllowed: `true` (boolean, optional) - Indicates whether a stopover is allowed on this ticket. Valid values are: false - not allowed, true - allowed
+                        + destination: `YUL` (string, optional) - Destination Airport Code : IATA Airport Code.
+                            _min=3 max=3_ 
+                        + fareBasis: `` (string,optional) - Contains a Fare Basis Code for Leg that carriers assign to a particular ticket type, such as business class or discounted/nonrefundable.
+                            _min=1 max=6_ 
+                        + departureDate: `2014-01-26` (string, required) -Date of passenger’s departure for this leg. Date format = YYYY-MM-DD, ISO 8601 expected. UTC date format.
 
 ## accordD
 + accordD (object)
