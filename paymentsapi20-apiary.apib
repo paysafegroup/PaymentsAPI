@@ -412,6 +412,12 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
     }
 }
 ```
+<a name="browserDetailsobject" title="Browser Details Object"></a>
+## browserDetails
+
+|Element            |Type                       |Required|Description                        |
+|---                |---                        |---|---       |
+|userCookie         |string   |Conditional|This is part of Interac eTransfer withdrawal Payment Handle request. This parameter is  mandatory if "deviceDetails" json object is not passed as a part of  Interac eTransfer withdrawal Payment Handle request. It is used by Interac for risk assessment. |
 
 
 <a name="cardobject" title="card Object"></a>
@@ -507,6 +513,12 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
                 }
             }
 ```
+<a name="deviceDetails" title="Device Details"></a>
+## deviceDetails
+|Element               |Type                           |Required|Description    |
+|---                   |---                            |---|---            |
+|deviceId              |string |Conditional|This is part of Interac eTransfer withdrawal Payment Handle request. This parameter is  mandatory if "browserDetails" json object is not passed as a part of  Interac eTransfer withdrawal Payment Handle request. It is used by Interac for risk assessment.|
+
 <a name="eftobject" title="EFT Object"></a>
 ## eft
 |Element            |Type                       |Required|Description                        |
@@ -603,6 +615,29 @@ This is a read-only raw response returned by an acquirer.
 | cvv2Result         | string |Read Only| This is the raw cvv2 result code.                                                                   |
 | orderId            | string |Read Only| Unique reference for the order. `ie: ORD_7915d463-ccc8-4305-9d33-9e5c9310f12e, SUB_c46645ea-b7b0-4a91-87f7-88c00ec0dea1`|
 
+<a name="interacetransferobject" title= "Interac e-transfer Object"></a>
+## interace-transfer
+
+
+| Element            | Type   |Required| Description                                                                                         |
+|--------------------|--------|---------|-----------------------------------------------------------------------------------------------------|
+| consumerId            | string |Mandatory| Customer/end user email id or phone number, from whom money has to be collected. |
+| type                  | string |Optional| Default: EMAIL To pass mobile number we have to specify the type as PHONE. This is needed for deposit flow (not for withdrawal) |
+| question              | string |Conditional| Mandatory in non-autodeposit withdrawal Payment Handle request flow . When customer is not registered for auto-deposit at interac then Merchant has to pass "question" parameter. |
+| answer                | string |Conditional| Mandatory in non-autodeposit withdrawal Payment Handle request flow. When customer is not registered for auto-deposit at interac then Merchant has to pass "answer" parameter.|
+
+```apib
+       "interacEtransfer": {
+        "consumerId": "madhu.baddam@paysafe.com",
+        "type": "EMAIL"
+    }
+
+"interacEtransfer": {
+        "consumerId": "madhu@paysafe.com",
+        "question": "what is your name",
+        "answer": "MadhuBaddam"
+    }
+```
 
 <a name="level2level3object" title="level2level3 Object"></a>
 ## level2level3
@@ -3334,7 +3369,125 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
 }
 
 
++ Request Create Payment Handle for Interac e-transfer (application/json)
 
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Content-Type:application/json
+            
+            
+    + Body
+
+            {
+            "merchantRefNum": "674ab905-78ff-4bde-a19a-25a5ac98f383",
+            "transactionType": "PAYMENT",
+            "paymentType": "INTERAC_ETRANSFER",
+            "amount": "502",
+            "currencyCode": "CAD",
+            "customerIp": "172.0.0.1",
+            "interacEtransfer": {
+            "consumerId": "madhu@paysafe.com",
+            "type": "EMAIL"
+            },
+            "billingDetails": {
+            "street1": "100 Queen",
+            "street2": "Unit 201",
+            "city": "Melbourne",
+            "state": "Victoria",
+            "zip": "3000",
+            "country": "AU"
+            },
+            "profile": {
+            "firstName": "Madhu",
+            "lastName": "Baddam",
+            "email": "madhu@paysafe.com"
+            },
+            "returnLinks": [
+            {
+            "rel": "default",
+            "href": "http://www.amazon.in"
+            },
+            {
+            "rel": "on_failed",
+            "href": "http://www.costco.ca"
+            },
+            {
+            "rel": "on_cancelled",
+            "href": "http://www.bestbuy.ca"
+            }
+]
+}
+
+
+
++ Response 200 (application/json)
+
+    + Body
+
+{
+        "id": "68ab494f-86eb-4cdd-89d5-06f3ba8c0f6c",
+        "paymentType": "INTERAC_ETRANSFER",
+        "paymentHandleToken": "PH0wCV0D2qsjxGQn",
+        "merchantRefNum": "15ddd4ca-2b4d-4ab0-9940-1e38e609d146",
+        "currencyCode": "CAD",
+        "txnTime": "2022-03-03T05:59:44Z",
+        "billingDetails": {
+        "street": "100 Queen",
+        "street2": "Unit 201",
+        "city": "Melbourne",
+        "zip": "3000",
+        "state": "Victoria",
+        "country": "AU"
+        },
+        "customerIp": "172.0.0.1",
+        "status": "INITIATED",
+        "links": [
+        {
+        "rel": "redirect_payment",
+        "href": "https://api.qa.paysafe.com/alternatepayments/v1/redirect?accountId=1019829630&paymentHandleId=68ab494f-86eb-4cdd-89d5-06f3ba8c0f6c&token=eyJhbGciOiJIUzI1NiJ9.eyJhY2QiOiIxMDE5ODI5NjMwIiwicHlkIjoiNjhhYjQ5NGYtODZlYi00Y2RkLTg5ZDUtMDZmM2JhOGMwZjZjIiwiZXhwIjoxNjQ2Mjg4OTg1fQ.6fnQcKs7bpcWpxbhdzw18grIaIcKd2B1NiKuJc3xB98"
+        }
+        ],
+        "liveMode": false,
+        "simulator": "EXTERNAL",
+        "usage": "SINGLE_USE",
+        "action": "REDIRECT",
+        "executionMode": "SYNCHRONOUS",
+        "amount": 502,
+        "timeToLiveSeconds": 899,
+        "gatewayResponse": {
+        "id": "zX27oxf27gxZdKEf",
+        "processor": "PEOPLE_TRUST",
+        "status": "AVAILABLE"
+        },
+        "returnLinks": [
+        {
+        "rel": "on_failed",
+        "href": "http://www.costco.ca"
+        },
+        {
+        "rel": "on_cancelled",
+        "href": "http://www.bestbuy.ca"
+        },
+        {
+        "rel": "default",
+        "href": "http://www.amazon.in"
+        }
+        ],
+        "transactionType": "PAYMENT",
+        "gatewayReconciliationId": "218ccdbc-96ed-46b8-96a4-cbb304bbb8d6",
+        "updatedTime": "2022-03-03T05:59:45Z",
+        "statusTime": "2022-03-03T05:59:45Z",
+        "interacEtransfer": {
+        "consumerId": "madhu@paysafe.com",
+        "type": "EMAIL"
+        },
+        "profile": {
+        "firstName": "Madhu",
+        "lastName": "Baddam",
+        "email": "madhu@paysafe.com"
+}
+}
 
 
 
@@ -7922,6 +8075,7 @@ Use this API to remove an account in the VIP preferred payment method.
         + EFT
         + INTERAC
         + MAZOOMA
+        + INTERAC_ETRANSFER
 + Include Payment Instrument
 + `action`:`NONE` (enum) - This specifies the next step of the user journey once they proceed to the Payment.
     _Read Only_
@@ -8357,7 +8511,16 @@ Use this API to remove an account in the VIP preferred payment method.
             _Mandatory_
         + `ach.paymentHandleToken`:`BAru0JIKuktMcLsy` (string) - This is a unique identifier for each user bank account which is saved at Mazooma end. Conditional , You can pass it if it is received in Verification API response. 
             _Mandatory_
-           
+     
+     + mazooma (object) - These are the details of the [mazooma](#mazoomaobject) used for the request. Only one payment instrument object (for example, *card* or *mazoomad*) can be included in the request. 
+        + `consumerId`:`madhu@abc.com` (string) - This is the merchant's unique identifier of the customer. Customer/end user email id or phone number, from whom money has to be collected. 
+            _Mandatory_
+        + `type`:`EMAIL` (string) - Default: EMAIL To pass mobile number we have to specify the type as PHONE. This is needed for deposit flow (not for withdrawal). 
+            _Optional_
+        + `question`:`what is your name` (string) - When customer is not registered for auto-deposit at interac then Merchant has to pass "question" parameter Mandatory in non-autodeposit withdrawal Payment Handle request flow. 
+            _Length: Between 5 and 64, Mandatory_
+        + `answer`:`john` (string) - When customer is not registered for auto-deposit at interac then Merchant has to pass "answer" parameter Mandatory in non-autodeposit withdrawal Payment Handle request flow. . 
+            _Length: Between 5 and 64, Mandatory_         
 
 ## `Payment Instrument Customer`
 
