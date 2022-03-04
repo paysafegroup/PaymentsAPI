@@ -8506,13 +8506,13 @@ Use this API to remove an account in the VIP preferred payment method.
         + `paymentHandleToken`:`SSx4RtFqzVeoqZqQ` (string) - This is the bank token of the registered bank account. The bank token is returned in the [Verification API](https://developer.paysafe.com/en/paysafe-payments-api/payments/api/#/reference/verifications/verification/verification) response. 
             _Mandatory_
             
-    + mazooma (object) - These are the details of the [mazooma](#mazoomaobject) used for the request. Only one payment instrument object (for example, *card* or *mazoomad*) can be included in the request. 
+    + mazooma (object) - These are the details of the [mazooma](#mazoomaobject) used for the request. Only one payment instrument object (for example, *card* or *mazooma*) can be included in the request. 
         + `consumerId`:`PP_100222` (string) - This is the merchant's unique identifier of the customer. 
             _Mandatory_
         + `ach.paymentHandleToken`:`BAru0JIKuktMcLsy` (string) - This is a unique identifier for each user bank account which is saved at Mazooma end. Conditional , You can pass it if it is received in Verification API response. 
             _Mandatory_
      
-     + mazooma (object) - These are the details of the [mazooma](#mazoomaobject) used for the request. Only one payment instrument object (for example, *card* or *mazoomad*) can be included in the request. 
+     + interac E-transfer (object) - These are the details of the [interac E-transfer](#Interace-transferobject) used for the request. Only one payment instrument object (for example, *card* or *interacE-transfer*) can be included in the request. 
         + `consumerId`:`madhu@abc.com` (string) - This is the merchant's unique identifier of the customer. Customer/end user email id or phone number, from whom money has to be collected. 
             _Mandatory_
         + `type`:`EMAIL` (string) - Default: EMAIL To pass mobile number we have to specify the type as PHONE. This is needed for deposit flow (not for withdrawal). 
