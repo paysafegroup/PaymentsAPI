@@ -1376,13 +1376,27 @@ The *storedCredential* object is used to identify [authorization requests](#auth
 |externalInitialTransactionId        |string length<=256     |Id of the initial Recurring Payment transaction in case this transaction was processed through external PSP. This reference should be provided only when: <ul><li>type=RECURRING and occurrence=SUBSEQUENT</li><li>type=TOPUP and occurrence=SUBSEQUENT</li></ul><br/>**Note:** This reference cannot be provided along with initialTransactionId.|
 
 ```apib
+Example for Initial transaction
+
 {
     "storedCredential": {
         "type": "RECURRING",
-        "occurrence": "SUBSEQUENT"
+        "occurrence": "INITIAL"
     }
 }
 ```
+```apib
+Example for Subsequent transaction
+
+{
+    "storedCredential": {
+        "type": "RECURRING",
+        "occurrence": "SUBSEQUENT",
+        "initialTransactionId": "a02e52c7-c991-4418-966a-b62989cb0eae"
+    }
+}
+```
+
 <a name="threeDsobject" title= "threeDs Object"></a>
 ## threeDs
 
