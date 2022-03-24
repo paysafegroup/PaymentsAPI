@@ -431,8 +431,8 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 |cvv                |string<br/>`length=3-4`    |Conditional|This is the 3- or 4-digit security code that appears on the card following the card number.|
 |holderName         |string<br/>`length<=160`   |Optional|This is the name of the card holder. |
 |nickName           |string<br/>`length<=50`    |Optional|This is the nickname the merchant has for the card holder. |
-|cardType           |enum                       |Read Only|This is the type of card used for the request, returned in the response. Possible values are:<br/><ul><li>AM &ndash; American Express</li><li>DI &ndash; Discover</li><li>JC &ndash; JCB</li><li>MC &ndash; Mastercard</li><li>MD &ndash; Maestro</li><li>SO &ndash; Solo</li><li>VI &ndash; Visa</li><li>VD &ndash; Visa Debit</li><li>VE &ndash; Visa Electron</li></ul>
 |cardBin            |string<br/>`length=6`      |Read Only|These are the first 6 digits of the card's Bank Identification Number (BIN), the first 6 digits of the card number.|
+|cardType           |enum                       |Read Only|This is the type of card used for the request, returned in the response. Possible values are:<br/><ul><li>AM &ndash; American Express</li><li>DI &ndash; Discover</li><li>JC &ndash; JCB</li><li>MC &ndash; Mastercard</li><li>MD &ndash; Maestro</li><li>SO &ndash; Solo</li><li>VI &ndash; Visa</li><li>VD &ndash; Visa Debit</li><li>VE &ndash; Visa Electron</li></ul>
 
 ```apib
     {
