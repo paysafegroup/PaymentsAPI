@@ -394,9 +394,10 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 |id                 |string<br/>`length<=36`    |Read Only|This is the ID of the billing address, returned in the response. |
 |nickName           |string<br/>`length<=50`    |Optional|This is the nickname the merchant has for the billing address. |
 |street             |string<br/>`length<=50`    |Mandatory|This is the first line of the customer's street address.|
+|street1            |string<br/>`length<=50`    |Mandatory for VIPP|This is the first line of the customer's street address for VIPP.|
 |street2            |string<br/>`length<=50`    |Optional|This is the second line of the customer's street address, if required (for example, apartment number).|
 |city               |string<br/>`length<=40`    |Mandatory|This is the city where the address is located.|
-|state              |string<br/>`length<=40`    |Optional|This is the state/province/region in which the customer lives. For Canada, see [Province Codes](#provincecodes). For the United States, see [State Codes](#statecodes). Other countries have no restrictions.|
+|state              |string<br/>`length<=40`    |Optional<br/>`Mandatory for VIPP` |This is the state/province/region in which the customer lives. For Canada, see [Province Codes](#provincecodes). For the United States, see [State Codes](#statecodes). Other countries have no restrictions.|
 |zip                |string<br/>`length<=10`    |Mandatory|This is the zip, postal, or postcode of the customer's address.|
 |country            |string<br/>`length=2`      |Mandatory|This is the country where the address is located. See [Country Codes](#countrycodes).|
 
@@ -741,6 +742,23 @@ Level 2 and Level 3 (L2/L3) credit card processing refers to certain B2B card tr
     ]
 }
 ```
+<a name="identitydocuments" title="Identity Documents"></a>
+## identityDocuments
+
+|Element    |Type           |Required|Description|
+|---        |---            |---|---|
+|identityDocuments                    |JSON Array                         |Mandatory|This is array of 2 JSON objects. <br/>1st object contains SSN <br/>2nd object contains Identity document details.|
+|identityDocuments.type               |string                             |Mandatory|Value will always be "SOCIAL_SECURITY"<br/>This is part of 1st JSON object.|
+|identityDocuments.documentNumber     |string <br/>`length=9`             |Mandatory|The customer’s social security number.|
+|identityDocuments.type               |string                             |Mandatory|Value can be one of the below values:<br/>1. DRIVING_LICENSE<br/>2. STATE_ID<br/>3. MILITARY_ID<br/>4. PASSPORT|
+|identityDocuments.documentNumber     |string<br/>`5<length<31`           |Mandatory|The number associated with ID.|
+|identityDocuments.issuingCountry           |string                       |Mandatory|Value will always be "US".|
+|identityDocuments.issuingCountrySubdvision |string<br/>`length=2`        |Mandatory|Two letter state code.|
+|identityDocuments.expiryDate               |object                       |Mandatory|The expiration date associated with ID.|
+|identityDocuments.expiryDate.year          |string           |Mandatory|Expiry year.|
+|identityDocuments.expiryDate.month         |string           |Mandatory|Expiry month.|
+
+
 <a name="mandateobject" title="mandate Object"></a>
 ## mandate
 
@@ -1094,14 +1112,15 @@ This is an authorization that is approved for an amount lower than the requested
 <a name="profileobject" title="Profile Object"></a>
 ## profile
 
-|Element            |Type                               |Required                                                          |Description    |
-|---                |---                                |---                                                               |---            |
-|locale             |enum                               |Required <br/> **Note:** This is not mandatory for GiroPay. |     |This indicates the language of the profile. Possible values are:<ul><li>en_US</li><li>fr_CA</li><li>en_GB</li></ul>|
-|firstName          |string <br/>`length<=80`           |Required                                                          |This is the customer’s first name. |
-|lastName           |string <br/>`length<=80`           |Required                                                          |This is the customer’s last name. |
-|email              |string<br/>`length<=255`           |Required                                                          |This is the customer's email address.|
-|phone              |string<br/>`length<=40`            |Required <br/> **Note:** This is not mandatory for GiroPay. |     |This is the customer's phone number.|
-|dateOfBirth        |[dateOfBirth](#dateofbirthobject)  |Required <br/> **Note:** This is not mandatory for GiroPay. |     |This is the customer's date of birth.|
+|Element            |Type                               |Required                                                                              |Description    |
+|---                |---                                |---                                                                                   |---            |
+|locale             |enum                               |Required <br/> **Note:** Optional for GiroPay, Vippreferred-Direct-Registration |     |This indicates the language of the profile. Possible values are:<ul><li>en_US</li><li>fr_CA</li><li>en_GB</li></ul>|
+|firstName          |string <br/>`length<=80`<br/>`For VIPP, length<=20`          |Required                                                                              |This is the customer’s first name. |
+|lastName           |string <br/>`length<=80`<br/>`For VIPP-Direct-Registration, length<=20`          |Required                                                                              |This is the customer’s last name. |
+|email              |string<br/>`length<=255`  <br/>`For VIPP-Direct-Registration, length<=20`           |Required                                                                              |This is the customer's email address.|
+|phone              |string<br/>`length<=40`   <br/>`For VIPP, min=10 max=15`         |Required <br/> **Note:** Optional for GiroPay. |                         |This is the customer's phone number.|
+|dateOfBirth        |[dateOfBirth](#dateofbirthobject)  |Required <br/> **Note:** Optional for GiroPay. ||This is the customer's date of birth.|
+|identityDocuments  |object|Required for Vippreferred-Direct-Registration |   
 
 ```apib
             {
@@ -1433,7 +1452,32 @@ Example for Subsequent transaction
 |consumerId         |string <br/>              |Mandatory |This is the consumer social security number (SSN). As it is sensitive data the consumerId will not be passed in the response. Last 4 digits will be passed as lastDigits.|
 |registrationId     |string <br/>              |Optional  |This is the registrationId of the consumer. You can pass the registrationId in place of consumerId in the setup option call. <ul><li>By making a verification request, you can get the registrationId as part of the response.</li><li> If the user is already enrolled, the registrationId will be a part of the payment response.</li>|
 |paymentHandleToken |string <br/>              |Mandatory |This is the bank token of the registered bank account. The bank token is returned in the Verification API response.|
+|ach                |object                    |Mandatory |Bank details of the customer to be added in VIPP during registration.|
+|ach.accountNumber  |string <br/> length<=17   |Mandatory  |Bank account number|
+|ach.routingNumber |string <br/>Length: 9 (US) digits   |Mandatory |Bank routing number.|
 
+```apib
+"vippreferred":{
+       "consumerId": "151510875",
+       "paymentHandleToken": "BA8VUqmgy7ZnInwn"
+   }
+```
+   
+```apib
+ "vippreferred":{
+       "registrationId": "151510875",
+       "paymentHandleToken": "BA8VUqmgy7ZnInwn"
+   }
+```
+
+```apib
+"vippreferred": {
+   "ach": {
+     "routingNumber": "123103729",
+     "accountNumber": "7751151510876"
+   }
+ }
+```
 
 # Error Summary
 
@@ -7132,13 +7176,12 @@ Use this API to register a new customer using the VIP Preferred payment method.
 Enroll a new customer using the VIP Preferred payment method.  
 
 + Parameters
-    + firstName: `John` (string,required) - This contains the profile details of the user.
-    + lastName: `Smith` (string,required) - This contains the profile details of the user.
-    + dateOfBirth: `"day": 15,"month": 4 "year": 1970` (string,required) - This contains the profile details of the user.
-    + phone: `84632876432` (string,required) - This contains the contact details of the user. 
-    + SSN: `` (string,required) - This object contains the consumerID/SSN of the user. 
-    + billingDetails: `` (string,required) - This contains the billing details such as bill unique reference id, merchantRefnum, address and other details. 
-    + vippreferred: `` (string,required) - This contains the transaction details. 
+    + merchantRefNum: `576d95e8-a8e6-48b5-a8a8-11ae8352071q` (string,required) - This is the reference number for the merchant.
+    + paymentType: `VIPPREFERRED` (string,required) - This is the payment type.
+    + profile: `` (object) - This contains the profile details of the user. Refer common object for details.
+    + billingDetails: `` (object) - This contains the billing details of the user. Refer common object for details.
+    + vippreferred: `` (object) - This object contains the bank details of the user which he wants to add in VIP preferred. Refer common object (vippreferred.ach) for details..
+    
 
 + Request Create a Registration Call - Direct Integration (application/json)
 
