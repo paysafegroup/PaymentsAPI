@@ -8587,7 +8587,11 @@ Use this API to remove an account in the VIP preferred payment method.
             _Optional_
         + `paymentHandleToken`:`SSx4RtFqzVeoqZqQ` (string) - This is the bank token of the registered bank account. The bank token is returned in the [Verification API](https://developer.paysafe.com/en/paysafe-payments-api/payments/api/#/reference/verifications/verification/verification) response. 
             _Mandatory_
-            
+    + interchecks (object) - These are the details of the [interchecks](#interchecksobject) used for the request.  
+        + `consumerId`:`SteveSmith@email.com` (string) - Customer/end-user email id which will be the unique identifier of the user at Interchecks end. 
+            _Mandatory_
+        + `paymentHandleToken`:`SSx4RtFqzVeoqZqQ` (string) - Unique card token, which stores the information of card and user and is passed in the request of Payment Handle creation for Standalone/Withdrawal transaction type, received either in response of Verification API or Add Card API. **Note**: Only needed for Standalone Credit Payment Handle not needed in Verification Payment Handle. 
+            _Mandatory_        
     + mazooma (object) - These are the details of the [mazooma](#mazoomaobject) used for the request. Only one payment instrument object (for example, *card* or *mazooma*) can be included in the request. 
         + `consumerId`:`PP_100222` (string) - This is the merchant's unique identifier of the customer. 
             _Mandatory_
