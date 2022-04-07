@@ -6961,6 +6961,58 @@ Use this API to register a new customer in the Interchecks.
                 }
             }
 
+## Interchecks - Add a Card [/v1/interchecks/registration/registrationId/cards]
+
+### Add a Card [POST]
+<a name="addacardtointerchecksuser" title="Add a card to Interchecks User"></a>
+
+This API is used to add a card specifically to Interchecks mapped to a user.
+
++ Parameters
+    + cardNum: `5312600000002169` (string,required) -  Customer/end-user email id which will be the unique identifier of the user at Interchecks end.
+    + cardExpiry.month: `10` (string,required) - The month of the expiry of the card.
+    + cardExpiry.year: `2028` (string,required) - The year of the expiry of the card. 
+    + holderName: `Sandi Smith` (string,required) - Card Holder Name. 
+    + registrationId: `bfb62099-5de2-401f-90d8-40cf5f2d2320` (URL,required) - Registration ID of the user to whom the card has to be mapped to be provided in the target URL.
+    
++ Request Add a Interchecks Card (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            
+    + Body
+
+        {
+            "cardNum": "5312600000002169",
+            "cardExpiry": {
+            "month": 10,
+            "year": 2028
+            },
+            "holderName": "Sandi Smith"
+        }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": "e99b25ba-be0b-4ba4-a478-74ae1908a16e",
+                "bankName": "INTL HDQTRS-CENTER OWNED",
+                "holderName": "Sandi Smith",
+                "cardBin": "451530",
+                "lastDigits": "2169",
+                "cardCategory": "PREPAID",
+                "usage": "MULTI_USE",
+                "cardExpiry": {
+                    "month": 10,
+                    "year": 2028
+                },
+                "paymentHandleToken": "ICbsc0kZFNt4Vkwp"
+            }
+
+
+
 ## Sightline Registration [/v1/sightline/registrations]
 
 ### Create a Partial Registration Call [POST]
