@@ -7011,6 +7011,34 @@ This API is used to add a card specifically to Interchecks mapped to a user.
                 "paymentHandleToken": "ICbsc0kZFNt4Vkwp"
             }
 
+## Interchecks - Delete a Card [/v1/interchecks/registration/registrationId/cards]
+
+### Delete a Card [POST]
+<a name="deleteacardtointerchecksuser" title="Delete a card to Interchecks User"></a>
+
+This API is used to delete the card mapped to a user at Interchecks end.
+
++ Parameters
+    + id: `0e1295e2-cfd8-4315-8760-9006f213bdad` (string,required) -  ID of the user card account created, acting as the unique identifier for Paysafe.
+    + registrationId: `6a7ce91e-0ffd-4ee3-945a-2e87a1496baf` (URL,required) - Registration ID of the user to whom the card has to be mapped to be provided in the target URL.
+
+    
++ Request Delete a Interchecks Card (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            
+    + Body
+
+
+
++ Response 200 (application/json)
+
+    + Body
+
+Status 200 
+
 
 
 ## Sightline Registration [/v1/sightline/registrations]
@@ -8202,6 +8230,7 @@ Use this API to remove an account in the VIP preferred payment method.
     _Read Only_
     + Members
         + CARD
+        + INTERCHECKS
 + `status`: `PENDING` (enum) - This is the status of the transaction request.
     _Read Only_
     + Members
