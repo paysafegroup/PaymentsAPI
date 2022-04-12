@@ -26,6 +26,7 @@ The Payments API currently supports the following payment methods:
 - Paysafecash
 - Mazooma 
 - VIP Preferred
+- [Giropay](#giropayobject)
 - Play+ (Sightline)
 - Skrill
 - Neteller
@@ -589,6 +590,23 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
             "error": "Required field"
         }
 ```
+<a name="giropayobject" title= "Giropay Object"></a>
+## Giropay
+
+This is a read-only raw response returned by an acquirer. 
+
+| Element            | Type   |Required| Description                                                                                         |
+|--------------------|--------|---------|-----------------------------------------------------------------------------------------------------|
+|subMerchantReference| string |Mandatory| This is the unique merchant identifier that allows Paysafe to define the transaction with Giropay.                                   |
+|merchantCategory    | string |Optional| This is the merchant's category of operations, eg. Gaming, Travel, Crypto etc. </br> **Note:** If present and provided with value as I_GAMING, then buyerAccount details will shared in Payment response. For other verticals,it should be either null or shouldn't be provided.                               |
+
+```apib
+        "giropay": {
+        "subMerchantReference": "AirBeg3hIN_SC0yihWNKCzLJ4VPjJOR4RWLZWbIhcUE=",
+        "merchantCategory": "I_GAMING"
+    }
+```
+
 
 <a name="gatewayresponseobject" title= "Gateway Response Object"></a>
 ## gatewayResponse
@@ -2060,6 +2078,7 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
 * A Payment Handle for a Neteller
 * A Payment Handle for a Paysafecard payment
 * A Payment Handle for Mazooma payment
+* A Payment Handle for Giropay payment
 * A Payment Handle for a Paysafecash payment
 * A Payment Handle for a Play+ payment
 * A Payment Handle for a Skrill payment
@@ -2899,6 +2918,63 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
                 }],
                 "timeToLiveSeconds": 899
             }
++ Request Create Payment Handle for Giropay (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+            
+    + Body
+    
+            {
+            "amount": 20000,
+            "currencyCode": "EUR",
+            "merchantRefNum": "{{$guid}}",
+            "transactionType": "PAYMENT",
+            "paymentType": "GIROPAY",
+            "profile": {
+                "firstName": "Joe",
+                "lastName": "Sweet",
+                "email": "joe.sweet@paysafe.com"
+            },
+            "customerIp": "172.0.0.1",
+            "billingDetails": {
+                "street": "100 Queen Street West",
+                "street2": "stree 2",
+                "city": "Toronto",
+                "state": "CA",
+                "country": "NL",
+                "zip": "M5H 2N2"
+            },
+            "giropay": {
+                "subMerchantReference": "AirBeg3hIN_SC0yihWNKCzLJ4VPjJOR4RWLZWbIhcUE=",
+                "merchantCategory": "I_GAMING"
+            },
+            "returnLinks": [
+                {
+                    "rel": "default",
+                    "href": "http://www.amazon.ca"
+                },
+                {
+                    "rel": "on_error",
+                    "href": "http://www.google.ca"
+                },
+                {
+                    "rel": "on_completed",
+                    "href": "http://www.paysafe.com"
+                },
+                {
+                    "rel": "on_failed",
+                    "href": "http://www.costco.ca"
+                },
+                {
+                    "rel": "on_cancelled",
+                    "href": "http://www.bestbuy.ca"
+                }
+            ]
+        }
+
 
 + Request Create Payment Handle for Interac (application/json)
 
@@ -8310,13 +8386,14 @@ Use this API to remove an account in the VIP preferred payment method.
 + `paymentType`: `CARD` (enum) - This is the payment type associated with this Payment Handle. If applicable, you need to pass the corresponding payment type object as listed after this parameter.
     _Mandatory_
     + Members
-         + CARD
+        + CARD
         + PAYSAFECASH
         + PAYSAFECARD
         + SIGHTLINE
         + SKRILL
         + PAYPAL
         + VIPPREFERRED
+        + GIROPAY
         + ACH
         + EFT
         + INTERAC
@@ -8751,6 +8828,13 @@ Use this API to remove an account in the VIP preferred payment method.
             _Optional_
         + `paymentHandleToken`:`SSx4RtFqzVeoqZqQ` (string) - This is the bank token of the registered bank account. The bank token is returned in the [Verification API](https://developer.paysafe.com/en/paysafe-payments-api/payments/api/#/reference/verifications/verification/verification) response. 
             _Mandatory_
+            
+     + giropay (object) - These are the details of the [giropay account](#giropayobject) used for the request.
+        + `subMerchantReference`:`AirBeg3hIN_SC0yihWNKCzLJ4VPjJOR4RWLZWbIhcUE=` (string) - This is the unique merchant identifier that allows Paysafe to define the transaction with Giropay. 
+            _Mandatory_
+        + `merchantCategory`:`I_GAMING` (string) - This is the merchant's category of operations. **Note:** if present and provided with value as I_GAMING, then buyerAccount details will shared in Payment response. For other verticals,it should be either null or shouldn't be provided.
+            _Optional_
+            
     + interchecks (object) - These are the details of the [interchecks](#interchecksobject) used for the request.  
         + `consumerId`:`SteveSmith@email.com` (string) - Customer/end-user email id which will be the unique identifier of the user at Interchecks end. 
             _Mandatory_
@@ -8917,6 +9001,7 @@ Use this API to remove an account in the VIP preferred payment method.
         + SKRILL
         + PAYPAL
         + VIPPREFERRED
+        + GIROPAY
         + ACH
         + EFT
         + BACS
