@@ -8829,7 +8829,7 @@ Use this API to remove an account in the VIP preferred payment method.
         + `paymentHandleToken`:`SSx4RtFqzVeoqZqQ` (string) - This is the bank token of the registered bank account. The bank token is returned in the [Verification API](https://developer.paysafe.com/en/paysafe-payments-api/payments/api/#/reference/verifications/verification/verification) response. 
             _Mandatory_
             
-     + giropay (object) - These are the details of the [giropay account](#giropayobject) used for the request.
+    + giropay (object) - These are the details of the [giropay account](#giropayobject) used for the request.
         + `subMerchantReference`:`AirBeg3hIN_SC0yihWNKCzLJ4VPjJOR4RWLZWbIhcUE=` (string) - This is the unique merchant identifier that allows Paysafe to define the transaction with Giropay. 
             _Mandatory_
         + `merchantCategory`:`I_GAMING` (string) - This is the merchant's category of operations. **Note:** if present and provided with value as I_GAMING, then buyerAccount details will shared in Payment response. For other verticals,it should be either null or shouldn't be provided.
