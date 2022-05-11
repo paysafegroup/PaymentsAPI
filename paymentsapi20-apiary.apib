@@ -1,12 +1,12 @@
 FORMAT: 1A
 HOST: https://api.test.paysafe.com/paymenthub/
 
-# Paysafe Payments API
+# Paysafe Payments API 
 
 >**IMPORTANT:**  Because the Paysafe Payments API uses its [own unique API keys for request authentication](#apikey) and provides its own [Test and Production accounts](#goinglive), you should never click the **SIGN UP** or **LOGIN** buttons at the top right of the 
 Developer Center navigation, as these are used strictly for the other APIs on the Developer Center. Please contact your business relationship manager or reach out to <integrations@paysafe.com> for API keys and Test/Production accounts.
 
-<a name="paymentsoverview" title="Payments API Overview"></a>
+<a name="paymentsoverview" title="Payments API Overview"></a> 
 # Overview
 
 You can easily and securely process payments from your customers using one single API – The **Payments API**.   
@@ -14,7 +14,6 @@ You can easily and securely process payments from your customers using one singl
 The Paysafe Payments API helps you to process payments of your customers using a variety of payment methods and a single API Endpoint.
 
 Paysafe also enables you to access your transaction analytics and manage accounts with our all-in-one [Business Portal](https://merchant.paysafe.com/portal). 
-
 
 ## Payment Methods
 
@@ -335,6 +334,66 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
               "defaultShippingAddressIndicator": true
             }
 ```
+<a name="airlineTravelDetailsobject" title="airlineTravelDetails Object"></a>
+## airlineTravelDetails
+
+|Element                |Type                           |Description|
+|---                    |---                            |---       |
+|passengerNameRecord    |string<br/>max=10              |The airline company uses the passengerNameRecord as a reservation number.|
+|passengerName          |string<br/>max=1 max=20        |Name of the passenger to whom the ticket was issued.|
+|departureDate          |string<br/>`UTC date format`   |Date of passenger’s departure. Date format = YYYY-MM-DD, ISO 8601 expected. For example, 2014-01-26.|
+|origin                 |string<br/>min=3 max=3         |Departure Airport Code (IATA Airport Code). Example “YUL”|
+|computerizedReservationSystem |enum                    |Indicates the computerized reservation system used to make the reservation and purchase the ticket. Possible values for tickets purchased in Germany are:STRT - Start<br/>PARS - TWA<br/>DATS - Delta<br/>SABR - Sabre<br/>DALA - Covia-Apollo<br/>BLAN - Dr. Blank<br/>BLAN - Dr. Blank<br/>TUID - TUI|
+|ticket                 |object                         |Information about the Airline Ticket Number and if the ticket is restricted.|
+|customerReferenceNumber|string<br/>min=1 max=20        |Contains the code that the cardholder supplied to the card acceptor.|
+|travelAgency            |object                        |Information about the travel agency if the ticket was issued by a travel agency.|
+|tripLegs                |object                        |A grouping of up to four trip legs. Each leg provides detailed itinerary data.|
+
+**Note** - Only Airline Merchants have access to this object.
+
+```apib
+  "airlineTravelDetails": {
+    "passengerNameRecord": "ABCDE12345",
+    "passengerName": "Joe Smith",
+    "departureDate": "2021-01-26",
+    "origin": "SXF",
+    "computerizedReservationSystem": "DATS",
+    "ticket": {
+        "ticketNumber": 1234567891011,
+        "isRestrictedTicket": false
+    },
+    "customerReferenceNumber": 10987654321,
+    "travelAgency": {
+      "name": "MY AGENT",
+      "code": "MYAGENT3"
+    },
+    "tripLegs": {
+      "leg1": {
+        "flight": {
+          "carrierCode": "LH",
+          "flightNumber": "0799"
+        },
+        "serviceClass": "F",
+        "isStopOverAllowed": "true",
+        "destination": "ISL",
+        "fareBasis": "VMAY",
+        "departureDate": "2021-01-26"
+      },
+      "leg2": {
+        "flight": {
+          "carrierCode": "TK",
+          "flightNumber": "1385"
+        },
+        "serviceClass": "F",
+        "isStopOverAllowed": "true",
+        "destination": "SOF",
+        "fareBasis": "VMAY",
+        "departureDate": "2021-01-26"
+      }
+    }
+  }
+```
+
 <a name="authenticationobject" title="Authentications Object"></a>
 ## authentication
 
@@ -590,6 +649,17 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
             "error": "Required field"
         }
 ```
+
+<a name="flightobject" title= "Flight Object"></a>
+## flight
+
+| Element            | Type                          |Description                 |
+|--------------------|--------                       |-----------------------------|
+|carrierCode         |string</br>min=2 max=2         |The standard code which specifies the name of the operating carrier is the Operating Carrier Code (United Airlines, Jet Blue, etc.).|
+|flightNumber        |string</br>min=1 max=5         |The number of the airline flights that will be taken on this leg of the journey (excluding the carrier code).|
+
+**Note** - Only Airline Merchants have access to this object.
+
 <a name="giropayobject" title= "Giropay Object"></a>
 ## Giropay
 
@@ -802,6 +872,36 @@ Level 2 and Level 3 (L2/L3) credit card processing refers to certain B2B card tr
 |identityDocuments.expiryDate.year          |string           |Mandatory|Expiry year.|
 |identityDocuments.expiryDate.month         |string           |Mandatory|Expiry month.|
 
+<a name="legobject" title="leg Object"></a>
+## leg
+
+|Element                |Type                                  |Description|
+|---                    |---                                   |---        |
+|flight                 |object                                |Operating Carrier Code and the Number of the airline flight to be taken on Leg of the trip (excluding the carrier code).|
+|serviceClass           |string <br/>  min=1 max=1             |Indicates service class (first class, business class, etc.). Example values (not limited to): F - first class<br/>J - business class<br/>W - premium economy class<br/>Y - economy class|
+|isStopOverAllowed      |boolean                               |Indicates whether a stopover is allowed on this ticket. Following are the valid values:false - not allowed<br/>true - allowed|
+|destination           |string  <br/> min=3 max=3              |Destination Airport Code (IATA Airport Code).<br/>Example “YUL”|
+|fareBasis             |string  <br/> min=1 max=6              |Contains a Fare Basis Code for Leg that carriers assign to a particular ticket type, such as business class or discounted/nonrefundable.|
+|departureDate         |date   <br/>UTC date format            |Date of passenger’s departure for this leg. Date format = YYYY-MM-DD, ISO 8601 expected. For example, 2014-01-26|
+
+
+**Note** - Only Airline Merchants have access to this object.
+
+```apib
+{
+    "leg": {
+        "flight": {
+          "carrierCode": "TK",
+          "flightNumber": "1385"
+        },
+        "serviceClass": "F",
+        "isStopOverAllowed": "true",
+        "destination": "SOF",
+        "fareBasis": "VMAY",
+        "departureDate": "2021-01-26"
+      }
+}
+```
 
 <a name="mandateobject" title="mandate Object"></a>
 ## mandate
@@ -1476,6 +1576,85 @@ Example for Subsequent transaction
      },
 }
 ```
+<a name="ticketobject" title= "ticket Object"></a>
+## ticket
+
+|Element            |Type                      | Description                       |
+|---                |---                       |---                                |
+|ticketNumber       |string <br/> min=1 max=15 |Airline Ticket Number              |
+|isRestrictedTicket |boolean                   |If this ticket is non-refundable, it will be specified. If the ticket was purchased as a non-refundable ticket, this entry should be supplied on CPS/Passenger Transport 1 or 2 transactions. The following are valid values: false - No restriction (default)<br/>true - Restricted (non-refundable) ticket|
+
+**Note** - Only Airline Merchants have access to this object.
+
+```apib
+{
+    "ticket": {
+        "ticketNumber": 1234567891011,
+        "isRestrictedTicket": false
+    }
+}
+```
+<a name="travelAgency" title= "travelAgency Object"></a>
+## travelAgency
+
+|Element            |Type                      |Description                                                   |
+|---                |---                       |---                                                           |
+|code            |string <br/>  min=1 max=8    |Code to identify travel agency, if the ticket was issued by a travel agency.|
+|name            |string <br/> min=1 max=25    |Name of the travel agency, if the ticket was issued by a travel agency.|
+
+**Note** - Only Airline Merchants have access to this object.
+
+```apib
+{
+    "travelAgency": {
+      "name": "MY AGENT",
+      "code": "MYAGENT347"
+    }
+}
+```
+<a name="tripLegsobject" title= "tripLegs Object"></a>
+## tripLegs
+
+A grouping of four separate trip segments. Each leg contains detailed itinerary information.
+
+|Element        |Type                      | Description                       |
+|---            |---                       |---                                |
+|leg1           |object                    |Description of first leg of trip..|
+|leg2           |object                    |Description of second leg of trip.|
+|leg3           |object                    |Description of third leg of trip.|
+|leg4           |object                    |Description of fourth leg of trip.|
+
+**Note** - Only Airline Merchants have access to this object.
+
+```apib
+{
+   "tripLegs": {
+      "leg1": {
+        "flight": {
+          "carrierCode": "LH",
+          "flightNumber": "0799"
+        },
+        "serviceClass": "F",
+        "isStopOverAllowed": "true",
+        "destination": "ISL",
+        "fareBasis": "VMAY",
+        "departureDate": "2021-01-26"
+      },
+      "leg2": {
+        "flight": {
+          "carrierCode": "TK",
+          "flightNumber": "1385"
+        },
+        "serviceClass": "F",
+        "isStopOverAllowed": "true",
+        "destination": "SOF",
+        "fareBasis": "VMAY",
+        "departureDate": "2021-01-26"
+      }
+    }
+}
+```
+
 <a name="voidauthsobject" title="Void Authorizations Object"></a>
 ## Void Authorizations
 
