@@ -341,7 +341,7 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 |---                    |---                            |---       |
 |passengerNameRecord    |string<br/>max=10              |The airline company uses the passengerNameRecord as a reservation number.|
 |passengerName          |string<br/>max=1 max=20        |The name of the passenger.|
-|departureDate          |string<br/>`UTC date format`   |Date of passenger’s departure. Date format = YYYY-MM-DD, ISO 8601 expected. For example, 2014-01-26.|
+|departureDate          |string<br/>UTC date format   |Date of passenger’s departure. Date format = YYYY-MM-DD, ISO 8601 expected. For example, 2014-01-26.|
 |origin                 |string<br/>min=3 max=3         |Departure Airport Code (IATA Airport Code). Example “YUL”|
 |computerizedReservationSystem |enum                    |Indicates the computerized reservation system used to make the reservation and purchase the ticket. Possible values for tickets purchased in Germany are:<ul><li>STRT - Start</li><li>PARS - TWA</li><li>DATS - Delta</li><li>SABR - Sabre</li><li>DALA - Covia-Apollo</li><li>BLAN - Dr. Blank</li><li>>BLAN - Dr. Blank</li><li>TUID - TUI</li></ul>|
 |[ticket](https://developer.paysafe.com/en/cards/api/#/ticket)                 |object                         |Information about the Airline Ticket Number and if the ticket is restricted.|
