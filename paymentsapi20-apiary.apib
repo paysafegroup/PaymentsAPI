@@ -343,7 +343,7 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 |passengerName          |string<br/>max=1 max=20        |The name of the passenger.|
 |departureDate          |string<br/>UTC date format   |Date of passenger’s departure. Date format = YYYY-MM-DD, ISO 8601 expected. For example, 2014-01-26.|
 |origin                 |string<br/>min=3 max=3         |Departure Airport Code (IATA Airport Code). Example “YUL”|
-|computerizedReservationSystem |enum                    |Indicates the computerized reservation system used to make the reservation and purchase the ticket. Possible values for tickets purchased in Germany are:<ul><li>STRT - Start</li><li>PARS - TWA</li><li>DATS - Delta</li><li>SABR - Sabre</li><li>DALA - Covia-Apollo</li><li>BLAN - Dr. Blank</li><li>>BLAN - Dr. Blank</li><li>TUID - TUI</li></ul>|
+|computerizedReservationSystem |enum                    |Indicates the computerized reservation system used to make the reservation and purchase the ticket. Possible values for tickets purchased in Germany are:<ul><li>STRT - Start</li><li>PARS - TWA</li><li>DATS - Delta</li><li>SABR - Sabre</li><li>DALA - Covia-Apollo</li><li>BLAN - Dr. Blank</li><li>DERD - DER</li><li>TUID - TUI</li></ul>|
 |[ticket](https://developer.paysafe.com/en/cards/api/#/ticket)                 |object                         |Information about the Airline Ticket Number and if the ticket is restricted.|
 |customerReferenceNumber|string<br/>min=1 max=20        |Contains the code that the cardholder supplied to the card acceptor.|
 |[travelAgency](https://developer.paysafe.com/en/cards/api/#/travelAgency)            |object                        |Information about the travel agency if the ticket was issued by a travel agency.|
@@ -655,7 +655,7 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 
 | Element            | Type                          |Description                 |
 |--------------------|--------                       |-----------------------------|
-|carrierCode         |string <br/> length=2         |The airline carrier code.<br/>i.e (AA) for American Airlines.|
+|carrierCode         |string <br/> length=2         |The airline carrier code.<br/>i.e American Airlines (AA).|
 |flightNumber        |string <br/> min=1 max=5         |The flight number for this leg of the journey (excluding the carrier code).|
 
 **Note** - Only Airline Merchants have access to this object.
@@ -877,7 +877,7 @@ Level 2 and Level 3 (L2/L3) credit card processing refers to certain B2B card tr
 
 |Element                |Type                                  |Description|
 |---                    |---                                   |---        |
-|[flight](https://developer.paysafe.com/en/cards/api/#/flights)                 |object                                |Operating Carrier Code and the Number of the airline flight to be taken on Leg of the trip (excluding the carrier code).|
+|[flight](https://developer.paysafe.com/en/cards/api/#/introduction/complex-json-objects/flight)                 |object                                |Operating Carrier Code and the Number of the airline flight to be taken on Leg of the trip (excluding the carrier code).|
 |serviceClass           |string <br/>  min=1 max=1             |Indicates service class (first class, business class, etc.). Example values (not limited to): <ul><li>F - first class</li><li>J - business class</li><li>W - premium economy class</li><li>Y - economy class</li></ul>|
 |isStopOverAllowed      |boolean                               |Indicates whether a stopover is allowed on this ticket. Following are the valid values:<ul><li>false - not allowed</li><li>true - allowed</li></ul>|
 |destination           |string  <br/> min=3 max=3              |Destination Airport Code (IATA Airport Code).<br/>Example “YUL”|
