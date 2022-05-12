@@ -655,8 +655,8 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 
 | Element            | Type                          |Description                 |
 |--------------------|--------                       |-----------------------------|
-|carrierCode         |string</br>min=2 max=2         |The standard code which specifies the name of the operating carrier is the Operating Carrier Code (United Airlines, Jet Blue, etc.).|
-|flightNumber        |string</br>min=1 max=5         |The number of the airline flights that will be taken on this leg of the journey (excluding the carrier code).|
+|carrierCode         |string </br>length=2         |The airline carrier code.</br>i.e (AA) for American Airlines.|
+|flightNumber        |string </br>min=1 max=5         |The flight number for this leg of the journey (excluding the carrier code).|
 
 **Note** - Only Airline Merchants have access to this object.
 
