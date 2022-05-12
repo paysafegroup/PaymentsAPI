@@ -878,11 +878,11 @@ Level 2 and Level 3 (L2/L3) credit card processing refers to certain B2B card tr
 |Element                |Type                                  |Description|
 |---                    |---                                   |---        |
 |[flight](https://developer.paysafe.com/en/cards/api/#/introduction/complex-json-objects/flight)                 |object                                |Operating Carrier Code and the Number of the airline flight to be taken on Leg of the trip (excluding the carrier code).|
-|serviceClass           |string <br/>  min=1 max=1             |Indicates service class (first class, business class, etc.). Example values (not limited to): <ul><li>F - first class</li><li>J - business class</li><li>W - premium economy class</li><li>Y - economy class</li></ul>|
+|serviceClass           |string <br/>  min=1 max=1             |Indicates service class (first class, business class, etc.). <br/>Example values (not limited to): <ul><li>F - first class</li><li>J - business class</li><li>W - premium economy class</li><li>Y - economy class</li></ul>|
 |isStopOverAllowed      |boolean                               |Indicates whether a stopover is allowed on this ticket. Following are the valid values:<ul><li>false - not allowed</li><li>true - allowed</li></ul>|
 |destination           |string  <br/> min=3 max=3              |Destination Airport Code (IATA Airport Code).<br/>Example “YUL”|
 |fareBasis             |string  <br/> min=1 max=6              |Contains a Fare Basis Code for Leg that carriers assign to a particular ticket type, such as business class or discounted/nonrefundable.|
-|departureDate         |date   <br/> UTC date format            |Date of passenger’s departure for this leg. Date format = YYYY-MM-DD, ISO 8601 expected. For example, 2014-01-26|
+|departureDate         |date   <br/> UTC date format            |Date of passenger’s departure for this leg. Date format = YYYY-MM-DD, ISO 8601 expected. <br/>For example, 2014-01-26|
 
 
 **Note** - Only Airline Merchants have access to this object.
@@ -1619,7 +1619,7 @@ A grouping of four separate trip segments. Each leg contains detailed itinerary
 
 |Element        |Type                      | Description                       |
 |---            |---                       |---                                |
-|[leg1](https://developer.paysafe.com/en/cards/api/#/leg)           |object                    |Description of first leg of trip..|
+|[leg1](https://developer.paysafe.com/en/cards/api/#/leg)           |object                    |Description of first leg of trip.|
 |[leg2](https://developer.paysafe.com/en/cards/api/#/leg)           |object                    |Description of second leg of trip.|
 |[leg3](https://developer.paysafe.com/en/cards/api/#/leg)           |object                    |Description of third leg of trip.|
 |[leg4](https://developer.paysafe.com/en/cards/api/#/leg)           |object                    |Description of fourth leg of trip.|
