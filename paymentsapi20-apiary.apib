@@ -349,7 +349,7 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 |[travelAgency](https://developer.paysafe.com/en/cards/api/#/travelAgency)            |object                        |Information about the travel agency if the ticket was issued by a travel agency.|
 |[tripLegs](https://developer.paysafe.com/en/cards/api/#/tripLegs)                |object                        |A grouping of up to four trip legs. Each leg provides detailed itinerary data.|
 
-**Note** - Only Airline Merchants have access to this object.
+**Note** - Only airline merchants have access to this object.
 
 ```apib
   "airlineTravelDetails": {
@@ -655,10 +655,10 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 
 | Element            | Type                          |Description                 |
 |--------------------|--------                       |-----------------------------|
-|carrierCode         |string <br/> length=2         |The airline carrier code.<br/>i.e American Airlines (AA).|
+|carrierCode         |string <br/> length=2         |The airline carrier code.<br/>For example: American Airlines (AA).|
 |flightNumber        |string <br/> min=1 max=5         |The flight number for this leg of the journey (excluding the carrier code).|
 
-**Note** - Only Airline Merchants have access to this object.
+**Note** - Only airline merchants have access to this object.
 
 <a name="giropayobject" title= "Giropay Object"></a>
 ## Giropay
@@ -885,7 +885,7 @@ Level 2 and Level 3 (L2/L3) credit card processing refers to certain B2B card tr
 |departureDate         |date   <br/> UTC date format            |Date of passenger’s departure for this leg. Date format = YYYY-MM-DD, ISO 8601 expected. <br/>For example, 2014-01-26|
 
 
-**Note** - Only Airline Merchants have access to this object.
+**Note** - Only airline merchants have access to this object.
 
 ```apib
 {
@@ -1584,7 +1584,7 @@ Example for Subsequent transaction
 |ticketNumber       |string <br/> min=1 max=15 |Airline ticket number              |
 |isRestrictedTicket |boolean                   |If this ticket is non-refundable, it will be specified. If the ticket was purchased as a non-refundable ticket, this entry should be supplied on CPS/Passenger Transport 1 or 2 transactions. The following are valid values: <ul><li> false - No restriction (default)</li><li>true - Restricted (non-refundable) ticket</li></ul>|
 
-**Note** - Only Airline Merchants have access to this object.
+**Note** - Only airline merchants have access to this object.
 
 ```apib
 {
@@ -1624,7 +1624,7 @@ A grouping of four separate trip segments. Each leg contains detailed itinerary
 |[leg3](https://developer.paysafe.com/en/cards/api/#/leg)           |object                    |Description of third leg of trip.|
 |[leg4](https://developer.paysafe.com/en/cards/api/#/leg)           |object                    |Description of fourth leg of trip.|
 
-**Note** - Only Airline Merchants have access to this object.
+**Note** - Only airline merchants have access to this object.
 
 ```apib
 {
@@ -4857,7 +4857,7 @@ Click **Get Void Authorization Using Merchant Reference Number** above to look u
 
 ## Settlements [/v1/payments/{payment_id}/settlements]
 
-A Settlement request allows you to settle a previous authorization that was not settled in the original Purchase request (i.e., where *settleWithAuth* was set to *false*). 
+A Settlement request allows you to settle a previous authorization that was not settled in the original Purchase request (For example: where *settleWithAuth* was set to *false*). 
 
 + Parameter
 
@@ -8212,7 +8212,7 @@ Use this API to remove an account in the VIP preferred payment method.
             _Read Only_
         + nickName:`Jane's Card` (string) - This is the nickname the merchant has for the card holder.
             _Optional, length<=50_
-        + cardBin:`411111` (string) - These are the first 6 digits of the card Bank Identification Number (BIN), i.e. the first 6 digits of the card number.
+        + cardBin:`411111` (string) - These are the first 6 digits of the card Bank Identification Number (BIN), For example: the first 6 digits of the card number.
             _Read Only, length=6_
         + cardType: `AM` (enum) - This is the type of card used for the request, returned in the response.
             _Read Only_
@@ -8261,7 +8261,7 @@ Use this API to remove an account in the VIP preferred payment method.
                 _length=4_
         + lastDigits:`1111` (string) - These are the last four digits of the card used for the request.
             _Read Only, length=4_
-        + cardBin:`411111` (string) - These are the first 6 digits of the card Bank Identification Number (BIN), i.e. the first 6 digits of the card number.
+        + cardBin:`411111` (string) - These are the first 6 digits of the card Bank Identification Number (BIN), For example: the first 6 digits of the card number.
             _Read Only, length=6_
 
 ## Customer Base
@@ -8880,7 +8880,7 @@ Use this API to remove an account in the VIP preferred payment method.
                 _Read Only, length=4_
             + nickName:`Jane's Card` (string) - This is the nickname the merchant has for the card holder.
                 _Optional, length<=50_
-            + cardBin:`411111` (string) - These are the first 6 digits of the card Bank Identification Number (BIN), i.e. the first 6 digits of the card number.
+            + cardBin:`411111` (string) - These are the first 6 digits of the card Bank Identification Number (BIN), for example: the first 6 digits of the card number.
                 _Read Only, length=6_
             + threeDs: (string) - Indicates the threeDs object.
                 _Optional_
