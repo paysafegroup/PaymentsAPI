@@ -349,7 +349,7 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 |[travelAgency](https://developer.paysafe.com/en/cards/api/#/travelAgency)            |object                        |Information about the travel agency if the ticket was issued by a travel agency.|
 |[tripLegs](https://developer.paysafe.com/en/cards/api/#/tripLegs)                |object                        |A grouping of up to four trip legs. Each leg provides detailed itinerary data.|
 
-**Note** - Only Airline Merchants have access to this object.
+**Note** - Only airline merchants have access to this object.
 
 ```apib
   "airlineTravelDetails": {
@@ -658,7 +658,7 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 |carrierCode         |string <br/> length=2         |The airline carrier code.<br/>i.e American Airlines (AA).|
 |flightNumber        |string <br/> min=1 max=5         |The flight number for this leg of the journey (excluding the carrier code).|
 
-**Note** - Only Airline Merchants have access to this object.
+**Note** - Only airline merchants have access to this object.
 
 <a name="giropayobject" title= "Giropay Object"></a>
 ## Giropay
@@ -885,7 +885,7 @@ Level 2 and Level 3 (L2/L3) credit card processing refers to certain B2B card tr
 |departureDate         |date   <br/> UTC date format            |Date of passenger’s departure for this leg. Date format = YYYY-MM-DD, ISO 8601 expected. <br/>For example, 2014-01-26|
 
 
-**Note** - Only Airline Merchants have access to this object.
+**Note** - Only airline merchants have access to this object.
 
 ```apib
 {
@@ -1584,7 +1584,7 @@ Example for Subsequent transaction
 |ticketNumber       |string <br/> min=1 max=15 |Airline ticket number              |
 |isRestrictedTicket |boolean                   |If this ticket is non-refundable, it will be specified. If the ticket was purchased as a non-refundable ticket, this entry should be supplied on CPS/Passenger Transport 1 or 2 transactions. The following are valid values: <ul><li> false - No restriction (default)</li><li>true - Restricted (non-refundable) ticket</li></ul>|
 
-**Note** - Only Airline Merchants have access to this object.
+**Note** - Only airline merchants have access to this object.
 
 ```apib
 {
@@ -1624,7 +1624,7 @@ A grouping of four separate trip segments. Each leg contains detailed itinerary
 |[leg3](https://developer.paysafe.com/en/cards/api/#/leg)           |object                    |Description of third leg of trip.|
 |[leg4](https://developer.paysafe.com/en/cards/api/#/leg)           |object                    |Description of fourth leg of trip.|
 
-**Note** - Only Airline Merchants have access to this object.
+**Note** - Only airline merchants have access to this object.
 
 ```apib
 {
