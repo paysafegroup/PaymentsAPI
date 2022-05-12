@@ -343,11 +343,11 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 |passengerName          |string<br/>max=1 max=20        |The name of the passenger.|
 |departureDate          |string<br/>`UTC date format`   |Date of passenger’s departure. Date format = YYYY-MM-DD, ISO 8601 expected. For example, 2014-01-26.|
 |origin                 |string<br/>min=3 max=3         |Departure Airport Code (IATA Airport Code). Example “YUL”|
-|computerizedReservationSystem |enum                    |Indicates the computerized reservation system used to make the reservation and purchase the ticket. Possible values for tickets purchased in Germany are:<br/>STRT - Start<br/>PARS - TWA<br/>DATS - Delta<br/>SABR - Sabre<br/>DALA - Covia-Apollo<br/>BLAN - Dr. Blank<br/>BLAN - Dr. Blank<br/>TUID - TUI|
-|ticket                 |object                         |Information about the Airline Ticket Number and if the ticket is restricted.|
+|computerizedReservationSystem |enum                    |Indicates the computerized reservation system used to make the reservation and purchase the ticket. Possible values for tickets purchased in Germany are:<ul><li>STRT - Start</li><li>PARS - TWA</li><li>DATS - Delta</li><li>SABR - Sabre</li><li>DALA - Covia-Apollo</li><li>BLAN - Dr. Blank</li><li>>BLAN - Dr. Blank</li><li>TUID - TUI</li></ul>|
+|[ticket](https://developer.paysafe.com/en/cards/api/#/ticket)                 |object                         |Information about the Airline Ticket Number and if the ticket is restricted.|
 |customerReferenceNumber|string<br/>min=1 max=20        |Contains the code that the cardholder supplied to the card acceptor.|
-|travelAgency            |object                        |Information about the travel agency if the ticket was issued by a travel agency.|
-|tripLegs                |object                        |A grouping of up to four trip legs. Each leg provides detailed itinerary data.|
+|[travelAgency](https://developer.paysafe.com/en/cards/api/#/travelAgency)            |object                        |Information about the travel agency if the ticket was issued by a travel agency.|
+|[tripLegs](https://developer.paysafe.com/en/cards/api/#/tripLegs)                |object                        |A grouping of up to four trip legs. Each leg provides detailed itinerary data.|
 
 **Note** - Only Airline Merchants have access to this object.
 
@@ -655,8 +655,8 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 
 | Element            | Type                          |Description                 |
 |--------------------|--------                       |-----------------------------|
-|carrierCode         |string </br>length=2         |The airline carrier code.</br>i.e (AA) for American Airlines.|
-|flightNumber        |string </br>min=1 max=5         |The flight number for this leg of the journey (excluding the carrier code).|
+|carrierCode         |string </br> length=2         |The airline carrier code.</br>i.e (AA) for American Airlines.|
+|flightNumber        |string </br> min=1 max=5         |The flight number for this leg of the journey (excluding the carrier code).|
 
 **Note** - Only Airline Merchants have access to this object.
 
@@ -877,12 +877,12 @@ Level 2 and Level 3 (L2/L3) credit card processing refers to certain B2B card tr
 
 |Element                |Type                                  |Description|
 |---                    |---                                   |---        |
-|flight                 |object                                |Operating Carrier Code and the Number of the airline flight to be taken on Leg of the trip (excluding the carrier code).|
+|[flight](https://developer.paysafe.com/en/cards/api/#/flights)                 |object                                |Operating Carrier Code and the Number of the airline flight to be taken on Leg of the trip (excluding the carrier code).|
 |serviceClass           |string <br/>  min=1 max=1             |Indicates service class (first class, business class, etc.). Example values (not limited to): <br/>F - first class<br/>J - business class<br/>W - premium economy class<br/>Y - economy class|
-|isStopOverAllowed      |boolean                               |Indicates whether a stopover is allowed on this ticket. Following are the valid values:<br/>false - not allowed<br/>true - allowed|
+|isStopOverAllowed      |boolean                               |Indicates whether a stopover is allowed on this ticket. Following are the valid values:<ul><li>false - not allowed</li><li>true - allowed</ul>|
 |destination           |string  <br/> min=3 max=3              |Destination Airport Code (IATA Airport Code).<br/>Example “YUL”|
 |fareBasis             |string  <br/> min=1 max=6              |Contains a Fare Basis Code for Leg that carriers assign to a particular ticket type, such as business class or discounted/nonrefundable.|
-|departureDate         |date   <br/>UTC date format            |Date of passenger’s departure for this leg. Date format = YYYY-MM-DD, ISO 8601 expected. For example, 2014-01-26|
+|departureDate         |date   <br/> UTC date format            |Date of passenger’s departure for this leg. Date format = YYYY-MM-DD, ISO 8601 expected. For example, 2014-01-26|
 
 
 **Note** - Only Airline Merchants have access to this object.
@@ -1581,8 +1581,8 @@ Example for Subsequent transaction
 
 |Element            |Type                      | Description                       |
 |---                |---                       |---                                |
-|ticketNumber       |string <br/> min=1 max=15 |Airline Ticket Number              |
-|isRestrictedTicket |boolean                   |If this ticket is non-refundable, it will be specified. If the ticket was purchased as a non-refundable ticket, this entry should be supplied on CPS/Passenger Transport 1 or 2 transactions. The following are valid values: false - No restriction (default)<br/>true - Restricted (non-refundable) ticket|
+|ticketNumber       |string <br/> min=1 max=15 |Airline ticket number              |
+|isRestrictedTicket |boolean                   |If this ticket is non-refundable, it will be specified. If the ticket was purchased as a non-refundable ticket, this entry should be supplied on CPS/Passenger Transport 1 or 2 transactions. The following are valid values: <ul><li> false - No restriction (default)</li><li>true - Restricted (non-refundable) ticket</li></ul>|
 
 **Note** - Only Airline Merchants have access to this object.
 
@@ -1619,10 +1619,10 @@ A grouping of four separate trip segments. Each leg contains detailed itinerary
 
 |Element        |Type                      | Description                       |
 |---            |---                       |---                                |
-|leg1           |object                    |Description of first leg of trip..|
-|leg2           |object                    |Description of second leg of trip.|
-|leg3           |object                    |Description of third leg of trip.|
-|leg4           |object                    |Description of fourth leg of trip.|
+|[leg1](https://developer.paysafe.com/en/cards/api/#/leg)           |object                    |Description of first leg of trip..|
+|[leg2](https://developer.paysafe.com/en/cards/api/#/leg)           |object                    |Description of second leg of trip.|
+|[leg3](https://developer.paysafe.com/en/cards/api/#/leg)           |object                    |Description of third leg of trip.|
+|[leg4](https://developer.paysafe.com/en/cards/api/#/leg)           |object                    |Description of fourth leg of trip.|
 
 **Note** - Only Airline Merchants have access to this object.
 
