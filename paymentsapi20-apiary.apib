@@ -2533,62 +2533,70 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
 
     + Body
 
-            {
-                "id": "82d57742-e2db-48ea-a726-a60e6f8265a3",
-                "paymentType": "PAYSAFECARD",
-                "paymentHandleToken": "PHQhlWpTRKzBXubN",
-                "merchantRefNum": "5493aaf1a1d6dd13d2b53412f0ec",
-                "currencyCode": "USD",
-                "dupCheck": true,
-                "status": "INITIATED",
-                "liveMode": true,
-                "usage": "SINGLE_USE",
-                "action": "REDIRECT",
-                "executionMode": "SYNCHRONOUS",
-                "amount": 500,
-                "merchantDescriptor": {
-                    "dynamicDescriptor": "OnlineStore",
-                    "phone": "12345678"
-                },
-                "billingDetails": {
-                    "street2": "Unit 201",
-                    "zip": "M5H 2N2",
-                    "city": "Toronto",
-                    "country": "CA"
-                },
-                "customerIp": "172.0.0.1",
-                "timeToLiveSeconds": 899,
-                "gatewayResponse": {
-                    "id": "11822017-3701-41df-aab5-2d24a28ac5e0",
-                    "processor": "PAYSAFECARD"
-                },
-                "paysafecard": {
-                    "consumerId": "merchantclientid",
-                    "minAgeRestriction": 18,
-                    "kycLevelRestriction": "SIMPLE",
-                    "countryRestriction": "DE"
-                },
-                "returnLinks": [{
-                        "rel": "default",
-                        "href": "https://usgaminggambling.com/payment/"
-                    },
-                    {
-                        "rel": "on_completed",
-                        "href": "https://usgaminggambling.com/payment/return/success"
-                    },
-                    {
-                        "rel": "on_failed",
-                        "href": "https://usgaminggambling.com/payment/return/failed"
-                    }
-                ],
-                "txnTime": "2019-01-24T10:39:50Z",
-                "updatedTime": "2019-01-24T10:39:50Z",
-                "statusTime": "2019-01-24T10:39:50Z",
-                "links": [{
-                    "rel": "redirect_payment",
-                    "href": "https://customer.at.paysafecard.com/rest/payment/panel?mid=1090001806&mtid=pay_1090001806_00LwEhZ8WtIy8PmIhRCUi3JScUti6jKi_EUR&amount=0.01&currency=EUR&customerHash=741e624cf6ae4fbca4338cb5597fe531"
-                }]
-            }
+            {  
+  "id": "e5e2c8ec-e0a4-4c01-b4fa-9e16045d30f3",
+  "status": "COMPLETED",
+  "paymentType": "PAYSAFECARD",
+  "paymentHandleToken": "PHIM5Ckjxr2KjrpB",
+  "merchantRefNum": "merchantRefNum-201",
+  "currencyCode": "USD",
+  "txnTime": "2022-05-11T11:19:46Z",
+    "billingDetails": {
+    "street": "12 Round Crescent",
+    "city": "Hamburg",
+    "zip": "200095",
+    "country": "DE"
+  },
+  "merchantDescriptor": {
+    "dynamicDescriptor": "OnlineStore",
+    "phone": "12345678"
+  },
+  "liveMode": true,
+  "amount": 500,
+  "merchantDescriptor": {
+    "dynamicDescriptor": "Test Description",
+    "phone": "5555345456"
+  },
+  "gatewayResponse": {
+    "processor": "PAYSAFECARD",
+    "id": "pay_1020012899_ndY2BLwUmp2SmXLYc1DAhR2ykYkbsXEw_USD",
+    "profile" : {
+        "firstName" : "John",
+        "lastName" : "Deo",
+        "dateOfBirth" : {
+           "date" : 21,
+           "month" : 8,
+           "year" : 1984
+          }
+         }
+         },
+       "returnLinks": [
+       {
+           "rel": "on_failed",
+        "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-error.html"
+    },
+    {
+      "rel": "default",
+      "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-success.html"
+    },
+    {
+      "rel": "on_completed",
+      "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-success.html"
+    }
+  ],
+  "transactionType": "PAYMENT",
+  "gatewayReconciliationId": "pay_1020012899_ndY2BLwUmp2SmXLYc1DAhR2ykYkbsXEw_USD",
+  "updatedTime": "2022-05-11T11:19:47Z",
+  "statusTime": "2022-05-11T11:19:47Z",
+  "profile": {
+    "firstName": "John",
+    "lastName": "Deo"
+  },
+  "paysafecard": {
+    "consumerId": "consumerid001"
+    }
+  }
+  
 
 + Request Create Payment Handle for Paysafecash (application/json)
 
@@ -3852,49 +3860,80 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
 
     + Body
 
-            {
-              "id": "26359efd-7cfb-4014-a13d-1724e3ff17fa",
-              "amount": 1900,
-              "merchantRefNum": "merchantRefNum-115",
-              "action": "NONE",
-              "currencyCode": "GBP",
-              "usage": "SINGLE_USE",
-              "status": "EXPIRED",
-              "timeToLiveSeconds": 0,
-              "transactionType": "PAYMENT",
-              "paymentType": "CARD",
-              "executionMode": "SYNCHRONOUS",
-              "customerIp": "172.0.0.1",
-              "paymentHandleToken": "SC0YsGIIgFksiOsQ",
-              "billingDetails": {
-                "street": "100 Queen",
-                "street2": "Unit 201",
-                "city": "Toronto",
-                "country": "CA",
-                "zip": "M5H 2N2"
-              },
-              "card": {
-                "cardExpiry": {
-                  "month": "12",
-                  "year": "2034"
-                },
-                "holderName": "poorna",
-                "cardType": "MC",
-                "cardBin": "519133",
-                "lastDigits": "4415"
-              },
-              "returnLinks": [{
-                        "rel": "on_completed",
-                        "href": "https://US_commerce_site/payment/return/success"
-                        "method": "GET"
-                    },
-                    {
-                        "rel": "on_failed",
-                        "href": "https://US_commerce_site/payment/return/failed"
-                        "method": "GET"
-                    }
-                ]
-            }
+           {
+  "id": "ae6390df-6cc3-4e5d-82b1-e651422017e8",
+  "paymentType": "PAYSAFECARD",
+  "paymentHandleToken": "PHIM5Ckjxr2KjrpB",
+  "merchantRefNum": "merchantRefNum-201",
+  "currencyCode": "USD",
+  "txnTime": "2022-05-11T11:19:46Z",
+   "billingDetails": {
+    "street": "12 Round Crescent",
+    "city": "Hamburg",
+    "zip": "200095",
+    "country": "DE"
+  },
+  "merchantDescriptor": {
+    "dynamicDescriptor": "OnlineStore",
+    "phone": "12345678"
+  },
+  "customerIp": "10.195.94.224",
+  "status": "PAYABLE",
+  "links": [
+    {
+      "rel": "redirect_payment",
+      "href": "https://api.dev.paysafe.com/alternatepayments/v1/redirect?accountId=1001570980&paymentHandleId=ae6390df-6cc3-4e5d-82b1-e651422017e8&token=eyJhbGciOiJIUzI1NiJ9.eyJhY2QiOiIxMDAxNTcwOTgwIiwicHlkIjoiYWU2MzkwZGYtNmNjMy00ZTVkLTgyYjEtZTY1MTQyMjAxN2U4IiwiZXhwIjoxNjUyMjY5Nzg3fQ.I2DhC3KqevG5YDe8PrEaqjZ79tQFcQ0P2ZXJTEK9O-M"
+    }
+  ],
+  "liveMode": true,
+  "usage": "SINGLE_USE",
+  "action": "REDIRECT",
+  "executionMode": "SYNCHRONOUS",
+  "amount": 500,
+  "merchantDescriptor": {
+    "dynamicDescriptor": "Test Description",
+    "phone": "5555345456"
+  },
+  "timeToLiveSeconds": 599,
+  "gatewayResponse": {
+    "processor": "PAYSAFECARD",
+    "id": "pay_1020012899_ndY2BLwUmp2SmXLYc1DAhR2ykYkbsXEw_USD",
+    "profile" : {
+        "firstName" : "John",
+        "lastName" : "Deo",
+        "dateOfBirth" : {
+           "date" : 21,
+           "month" : 8,
+           "year" : 1984
+         }
+        }
+     },
+           "returnLinks": [
+       {
+           "rel": "on_failed",
+           "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-error.html"
+        },
+     {
+      "rel": "default",
+      "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-success.html"
+    },
+    {
+      "rel": "on_completed",
+      "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-success.html"
+    }
+  ],
+  "transactionType": "PAYMENT",
+  "gatewayReconciliationId": "pay_1020012899_ndY2BLwUmp2SmXLYc1DAhR2ykYkbsXEw_USD",
+  "updatedTime": "2022-05-11T11:19:47Z",
+  "statusTime": "2022-05-11T11:19:47Z",
+  "profile": {
+    "firstName": "John",
+    "lastName": "Deo"
+  },
+  "paysafecard": {
+    "consumerId": "consumerid001"
+    }
+  }
 
 ### Get Payment Handle Using Merchant Reference Number [GET /v1/paymenthandles?merchantRefNum={merchant_ref_num}]
 <a name="getpaymenthandlemerchantrefnum" title="Look Up a Payment Handle Using a Merchant Reference Number"></a>
@@ -5389,17 +5428,27 @@ Click **Process Standalone Credit** above to see how to process a Standalone Cre
 
     + Body
 
-            {
-              "id": "e075f2ae-dfc4-4f6d-8d89-61158367b6a6",
-              "amount": 40,
-              "merchantRefNum": "merchantRefNum-151",
-              "paymentHandleToken": "SC9mbfZSITB5OwDJ",
-              "customerIp": "204.91.0.12",
-              "currencyCode": "GBP",
-              "paymentType": "CARD",
-              "status": "PENDING",
-              "description": "Pay surplus"
-            }
+             {
+               "merchantRefNum": "merchantRefNum-201",
+               "transactionType": "STANDALONE_CREDIT",
+               "paymentType": "PAYSAFECARD",  
+               "paysafecard": {
+               "consumerId": "consumerid001"  
+               },
+               "profile" : {
+               "email" : "john.deo@gmail.com",
+               "firstName" : "John",
+               "lastName" : "Deo",
+               "dateOfBirth" : {
+               "date" : 21,
+               "month" : 8,
+               "year" : 1984
+     }  
+       },
+               "amount": 500,
+               "currencyCode": "USD",
+              "customerIp": "172.0.0.1"
+ }
             
 ### Cancel Standalone Credit [PUT /v1/standalonecredits/{standalone_credit_id}]
 <a name="cancelstandalonecredit" title="Cancel a Standalone Credit"></a>
