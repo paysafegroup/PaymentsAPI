@@ -660,6 +660,28 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 
 **Note** - Only airline merchants have access to this object.
 
+<a name="fundingTransactionobject" title= "fundingTransaction Object"></a>
+## fundingTransaction
+
+The fundingTransaction object is used to identify authorization requests that are categorized as funding transactions by the merchant in order to provide information for their purpose.
+
+It can be used by merchants registered with MCC 4829, 6012, 6051 or 6540. The merchant needs to add in the authorization request fundingTransaction object with property type and applicable value as shown in the example below.
+
+Options: 
+
++ SVDW_FUNDS_TRANSFER - Applicable for 4829, 6012 and 6540.
++ SDW_WALLET_TRANSFER - Applicable for 6051 only.
+
+
+
+| Element            | Type                          |Description                 |
+|--------------------|--------                       |-----------------------------|
+|fundingTransaction         |fundingTransaction         |The fundingTransaction object is used to identify authorization requests that are categorized as funding transactions by the merchant in order to provide information for their purpose.<br/>It can be used by merchants registered with MCC 4829, 6012, 6051 or 6540. The merchant needs to add in the authorization request fundingTransaction object with property type and applicable value as shown in the example below.<br/> Options:<ul><li>SVDW_FUNDS_TRANSFER - Applicable for 4829, 6012 and 6540.</li><li>SDW_WALLET_TRANSFER - Applicable for 6051 only.</li></ul> |
+
+**Note:**
++ Not all processing gateways support this parameter.
++ To use the fundingTransaction object your account  must be properly configured by Paysafe.
+
 <a name="giropayobject" title= "Giropay Object"></a>
 ## Giropay
 
@@ -2597,6 +2619,30 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
     }
   }
   
+  
++ Request for fundingTransaction
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+            
+            
+     + Body
+
+             "fundingTransaction" :{
+             "type" : "SVDW_FUNDS_TRANSFER"
+             }
+             
+             
+    + Response 200 (application/json)
+
+    + Body
+    
+            "fundingTransaction" :{
+            "type" : "SVDW_FUNDS_TRANSFER",
+            "processorAppliedType": "NOT_APPLIED"
+            }
 
 + Request Create Payment Handle for Paysafecash (application/json)
 
@@ -4766,6 +4812,8 @@ Click **Cancel Payments** above to see how to cancel a Payment using the ID retu
                 "txnTime": "2020-03-30T06:31:23.000+0000",
                 "status": "CANCELLED"
              }
+
+
 
 # Group Void Authorizations 
 
