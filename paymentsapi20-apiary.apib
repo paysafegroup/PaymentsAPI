@@ -707,6 +707,9 @@ This is a read-only raw response returned by an acquirer.
 
 | Element            | Type   |Required| Description                                                                                         |
 |--------------------|--------|---------|-----------------------------------------------------------------------------------------------------|
+| id                 | string |Read Only| This is the response id returned by the processor                                                     |
+| processor          | string |Read Only| This is the processor code of the transaction at Paysafe side                                
+| status             | string |Read Only| This is the status of the transaction at the processor side.                                    |
 | code               | string |Read Only| This is the acquirer identification code, such as DJN, CRX, etc.                                    |
 | responseCode       | string |Read Only| This is the raw response returned by the acquirer.                                                  |
 | avsResponse        | enum   |Read Only| This is the AVS response returned from the card issuer. Possible values are:<ul><li>MATCH</li><li>MATCH_ADDRESS_ONLY</li><li>MATCH_ZIP_ONLY</li><li>NO_MATCH</li><li>NOT_PROCESSED</li><li>UNKNOWN</li></ul> |
@@ -731,6 +734,8 @@ This is a read-only raw response returned by an acquirer.
 | cvvVerification    | enum   |Read Only| This is the response to the cvv submitted with the transaction request. Possible values are:<ul><li>MATCH</li><li>NO_MATCH</li><li>NO_MATCH</li><li>NOT_PROCESSED</li><li>UNKNOWN</li></ul> |
 | cvv2Result         | string |Read Only| This is the raw cvv2 result code.                                                                   |
 | orderId            | string |Read Only| Unique reference for the order. `ie: ORD_7915d463-ccc8-4305-9d33-9e5c9310f12e, SUB_c46645ea-b7b0-4a91-87f7-88c00ec0dea1`|
+| profile            | [profile](#profileobject) |Read Only| This contains the customer details shared by the processor.                      |
+
 
 <a name="interacetransfer" title= "Interac e-Transfer Object"></a>
 ## interac e-Transfer
@@ -8436,6 +8441,12 @@ Use this API to remove an account in the VIP preferred payment method.
     _Read Only_
 
     + Properties
+        + id (string) - This is the response id returned by the processor
+            _Read Only_
+        + processor (string) - This is the processor code of the transaction at Paysafe side
+            _Read Only_
+        + status (string) - This is the status of the transaction at the processor side.
+            _Read Only_
         + code (string) - This is acquirer identification code, such as DJN, CRX, etc.
             _Read Only_
         + responseCode (string) - This is the raw response returned by the acquirer.
@@ -8481,6 +8492,8 @@ Use this API to remove an account in the VIP preferred payment method.
         + cvvVerification (string) - This is the response to the cvv submitted with the transaction request.
             _Read Only_
         + cvv2Result (string) - This is the raw cvv2 result code.
+            _Read Only_
+        + status (string) - This is the customer profile info at the processor side.
             _Read Only_
 
 ## Level2Level3
