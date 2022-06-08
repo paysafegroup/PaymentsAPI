@@ -423,6 +423,12 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
   }
   }
 ```
+<a name="authobject" title="Auth Object"></a>
+## auth
+| Element            | Type                          |Description                  |
+|--------------------|--------                       |-----------------------------|
+|fundingTransaction  |fundingTransaction             |The fundingTransaction object is used to identify authorization requests that are categorized as funding transactions by the merchant in order to provide information for their purpose.<br/>It can be used by merchants registered with MCC 4829, 6012, 6051 or 6540. The merchant needs to add in the authorization request fundingTransaction object with property type and applicable value as shown in the example below.<br/> Options:<ul><li>SVDW_FUNDS_TRANSFER - Applicable for 4829, 6012 and 6540.</li><li>SDW_WALLET_TRANSFER - Applicable for 6051 only.</li></ul></br>**Note:** Not all processing gateways support this parameter. To use the fundingTransaction object your account  must be properly configured by Paysafe. |
+
 <a name="bacsobject" title="BACS Object"></a>
 ## bacs
 |Element            |Type                       |Required |Description                        |
@@ -663,24 +669,36 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 <a name="fundingTransactionobject" title= "fundingTransaction Object"></a>
 ## fundingTransaction
 
-The fundingTransaction object is used to identify authorization requests that are categorized as funding transactions by the merchant in order to provide information for their purpose.
+The fundingTransaction object is used to identify authorization requests that are categorized as funding transactions by the merchant in order to provide information for their purpose.  It can be used by merchants registered with MCC 4829, 6012, 6051 or 6540.
 
-It can be used by merchants registered with MCC 4829, 6012, 6051 or 6540. The merchant needs to add in the authorization request fundingTransaction object with property type and applicable value as shown in the example below.
-
-Options: 
-
-+ SVDW_FUNDS_TRANSFER - Applicable for 4829, 6012 and 6540.
-+ SDW_WALLET_TRANSFER - Applicable for 6051 only.
-
-
+**Notes:**
++ If you send fundingTransaction type value in the authorization request, but your acquirer doesn't support funding transactions or your account is not configured, the transaction will be declined with error: 5040.
++ If you send fundingTransaction type in the authorization request with value not applicable for your MCC, the transaction will be declined with error: 3068.
++ If you send fundingTransaction type in the authorization request with value not part of the list below, the transaction will be declined with error: 5068.
++ If you send fundingTransaction type value in the authorization request and your account is configured to process funding transactions, but you are not registered to process funding transactions to specific card brand, the transaction will be successfully processed and the processorAppliedType in the response will be "NOT_APPLIED".
++ If you send fundingTransaction type value in the authorization request and your account is configured to process funding transactions and you are registered to process funding transactions to the respective card brand, the transaction will be successfully processed and the processorAppliedType will be equal to the fundingTransaction type, provided in the request.
 
 | Element            | Type                          |Description                 |
 |--------------------|--------                       |-----------------------------|
-|fundingTransaction         |fundingTransaction         |The fundingTransaction object is used to identify authorization requests that are categorized as funding transactions by the merchant in order to provide information for their purpose.<br/>It can be used by merchants registered with MCC 4829, 6012, 6051 or 6540. The merchant needs to add in the authorization request fundingTransaction object with property type and applicable value as shown in the example below.<br/> Options:<ul><li>SVDW_FUNDS_TRANSFER - Applicable for 4829, 6012 and 6540.</li><li>SDW_WALLET_TRANSFER - Applicable for 6051 only.</li></ul> |
+|Type                |enum                           |The fundingTransaction type is included in the request and set by the merchant.</br>Supported funding transaction type values: <ul><li>SVDW_FUNDS_TRANSFER</li><li>SDW_WALLET_TRANSFER</li></ul>|
+|processorAppliedType   |enum           |The fundingTransaction processorAppliedType value is chosen by Paysafe based on the merchant configuration. It is either equal to the funding transaction type sent by the merchant or "NOT_APPLIED" in case the merchant is not registered in the relevant card scheme system. The processorAppliedType can be seen in the auth response.</br>Supported funding transaction processorAppliedType values: <ul><li>SVDW_FUNDS_TRANSFER</li><li>SDW_WALLET_TRANSFER</li><li>NOT_APLLIED</li></ul>|
 
-**Note:**
-+ Not all processing gateways support this parameter.
-+ To use the fundingTransaction object your account  must be properly configured by Paysafe.
+**Example for the Request**
+
+```apib
+         "fundingTransaction" :{
+    "type" : "SVDW_FUNDS_TRANSFER"
+  }
+```
+
+**Example for the Response**
+
+```apib
+         "fundingTransaction" :{
+    "type" : "SVDW_FUNDS_TRANSFER",
+    "processorAppliedType": "NOT_APPLIED"
+  }
+```
 
 <a name="giropayobject" title= "Giropay Object"></a>
 ## Giropay
