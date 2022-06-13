@@ -427,9 +427,9 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 ## auths
 | Element            | Type                          |Description                  |
 |--------------------|--------                       |-----------------------------|
-|fundingTransaction  |[fundingTransaction](#fundingTransactionobject) |The fundingTransaction object is used to identify authorization requests that are categorized as funding transactions by the merchant in order to provide information for their purpose.</br>It can be used by merchants registered with MCC 4829, 6012, 6051 or 6540. The merchant needs to add in the authorization request fundingTransaction object with property type and applicable value as shown in the example below. </br>**Options:**<ul><li>SVDW_FUNDS_TRANSFER - Applicable for 4829, 6012 and 6540.</li><li>SDW_WALLET_TRANSFER - Applicable for 6051 only.</li></ul>|
+|fundingTransaction  |[fundingTransaction](#fundingTransactionobject) |The fundingTransaction object is used to identify authorization requests that are categorized as funding transactions by the merchant in order to provide information for their purpose.</br>It can be used by merchants registered with MCC 4829, 6012, 6051 or 6540. The merchant needs to add the authorization request fundingTransaction object with property type and applicable value as shown in the example below. </br>**Options:**<ul><li>SVDW_FUNDS_TRANSFER - Applicable for 4829, 6012 and 6540.</li><li>SDW_WALLET_TRANSFER - Applicable for 6051 only.</li></ul>|
 
-**Note:**<ul><li>Not all processing gateways support this parameter.</li><li>To use the fundingTransaction object your account  must be properly configured by Paysafe.</li></ul>
+**Note:**<ul><li>Not all processing gateways support this parameter.</li><li>To use the fundingTransaction object your account  must be configured by Paysafe.</li></ul>
 
 <a name="bacsobject" title="BACS Object"></a>
 ## bacs
@@ -671,7 +671,7 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 <a name="fundingTransactionobject" title= "fundingTransaction Object"></a>
 ## fundingTransaction
 
-The fundingTransaction object is used to identify authorization requests that are categorized as funding transactions by the merchant in order to provide information for their purpose.  It can be used by merchants registered with MCC 4829, 6012, 6051 or 6540.
+The fundingTransaction object is used to identify authorization requests that are categorized as funding transactions by the merchant in order to provide information. It can be used by merchants registered with MCC 4829, 6012, 6051 or 6540.
 
 **Notes:**
 + If you send fundingTransaction type value in the authorization request, but your acquirer doesn't support funding transactions or your account is not configured, the transaction will be declined with error: 5040.
@@ -689,17 +689,17 @@ The fundingTransaction object is used to identify authorization requests that ar
 
 ```apib
     "fundingTransaction" :{
-    "type" : "SVDW_FUNDS_TRANSFER"
-    }
+                           "type" : "SVDW_FUNDS_TRANSFER"
+                          }
 ```
 
 **Example for the Response**
 
 ```apib
     "fundingTransaction" :{
-    "type" : "SVDW_FUNDS_TRANSFER",
-    "processorAppliedType": "NOT_APPLIED"
-    }
+                            "type" : "SVDW_FUNDS_TRANSFER",
+                            "processorAppliedType": "NOT_APPLIED"
+                          }
 ```
 
 <a name="giropayobject" title= "Giropay Object"></a>
