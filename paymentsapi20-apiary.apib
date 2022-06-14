@@ -2625,30 +2625,6 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
   }
   
   
-+ Request for fundingTransaction
-
-    + Headers
-
-            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
-            Simulator: "EXTERNAL"
-            
-            
-     + Body
-
-             "fundingTransaction" :{
-             "type" : "SVDW_FUNDS_TRANSFER"
-             }
-             
-             
-    + Response 200 (application/json)
-
-    + Body
-    
-            "fundingTransaction" :{
-            "type" : "SVDW_FUNDS_TRANSFER",
-            "processorAppliedType": "NOT_APPLIED"
-            }
-
 + Request Create Payment Handle for Paysafecash (application/json)
 
     + Headers
