@@ -1323,7 +1323,7 @@ This is an authorization that is approved for an amount lower than the requested
              }
 ```
 
-Example for Profile.
+Example of Profile for Paysafecard Payout.
 
 ```apib
             "profile": {
@@ -2659,7 +2659,7 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
                     }
   }
   
-+ Request Create Payment Handle for Standalone Credit
++ Request Create Payment Handle for Paysafe Card Standalone Credit
 
     + Headers
 
@@ -9116,7 +9116,7 @@ Use this API to remove an account in the VIP preferred payment method.
             + `countryRestriction`:`DE` (string) - This is the code of the country to which the transaction will be restricted. See [Country Codes](#countrycodes).
                 _Optional, length=2_
                 
-    + paysafecard payouts (object) - These are the details of the [paysafecard payouts](#paysafecardpayoutsobject) used for the request. Only one payment instrument object (for example, *card* or *paysafecard* or *payouts*) can be included in the request.   
+    + paysafecard payouts (object) - These are the details of the [paysafecard payouts](#paysafecard payoutsobject) used for the request. Only one payment instrument object (for example, *card* or *paysafecard* or *payouts*) can be included in the request.   
         + Properties
             + `consumerId`:`merchantclientid` (string) - This is the merchant's unique identifier of the customer. For security purposes, if any personal data is used (for example, customer's user name, email address, etc.), it has to be encrypted or hashed.
                 _Mandatory_
