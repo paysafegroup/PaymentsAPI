@@ -9123,7 +9123,7 @@ Use this API to remove an account in the VIP preferred payment method.
             + `transactionType`:`PAYMENT` - This specifies the transaction type for which the Payment Handle is created. Possible values are: PAYMENT - Payment Handle is created to continue the Payment. STANDALONE_CREDIT - Payment Handle is created to continue the standalone credit. ORIGINAL_CREDIT - Payment Handle is created to continue the original credit.VERIFICATION - Payment Handle is created to continue the verification request.
             + `amount`:`6500` (number) - float or integer [max length: 11 digits before, optionally 2 digits after decimal point].
             + `currencyCode`:`EUR` (string) - ISO 4217 (3 letter ISO currency code).
-            + `profile`: `See profile table` - [Paysafe Developer: Payments API Reference](https://developer.paysafe.com/en/paysafe-payments-api/payments/api/#/introduction/common-objects/profile).
+            + `profile`: `See profile table` - [Paysafe Developer: Payments API Reference](#profileobject).
 
     + paysafecash (object) - These are the details of the [paysafecash account](#paysafecashobject) used for the request. Only one payment instrument object (for example, *card* or *paysafecash* or *sightline*) can be included in the request.
         + Properties
