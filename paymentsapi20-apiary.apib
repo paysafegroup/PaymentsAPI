@@ -1304,11 +1304,11 @@ This is an authorization that is approved for an amount lower than the requested
 
 |Element            |Type                               |Required                                                                              |Description    |
 |---                |---                                |---                                                                                   |---            |
-|locale             |enum                               |Required <br/> **Note:** Optional for GiroPay, Vippreferred-Direct-Registration |     |This indicates the language of the profile. Possible values are:<ul><li>en_US</li><li>fr_CA</li><li>en_GB</li></ul>|
+|locale             |enum                               |Required <br/> **Note:** Optional for GiroPay, Vippreferred-Direct-Registration. Not required for Paysafe Card Payouts.|     |This indicates the language of the profile. Possible values are:<ul><li>en_US</li><li>fr_CA</li><li>en_GB</li></ul>|
 |firstName          |string <br/>`length<=80`<br/>`For VIPP, length<=20`          |Required                                                                              |This is the customer’s first name. |
 |lastName           |string <br/>`length<=80`<br/>`For VIPP-Direct-Registration, length<=20`          |Required                                                                              |This is the customer’s last name. |
 |email              |string<br/>`length<=255`  <br/>`For VIPP-Direct-Registration, length<=20`           |Required                                                                              |This is the customer's email address.|
-|phone              |string<br/>`length<=40`   <br/>`For VIPP, min=10 max=15`         |Required <br/> **Note:** Optional for GiroPay. |                         |This is the customer's phone number.|
+|phone              |string<br/>`length<=40`   <br/>`For VIPP, min=10 max=15`         |Required <br/> **Note:** Optional for GiroPay. Not required for Paysafe Card Payouts.|                         |This is the customer's phone number.|
 |dateOfBirth        |[dateOfBirth](#dateofbirthobject)  |Required <br/> **Note:** Optional for GiroPay. ||This is the customer's date of birth.|
 |identityDocuments  |object|Required for Vippreferred-Direct-Registration |   
 
@@ -1322,7 +1322,17 @@ This is an authorization that is approved for an amount lower than the requested
               "dateOfBirth" : "04-25-1987"
              }
 ```
-
+```apib
+            "profile": {
+                "firstName": "ALBERTA",
+                "lastName": "BOBBETHCHARLESON",
+                "email": "accountholder0@example.com",
+                "dateOfBirth": {
+                  "day": 23,
+                  "month": 12,
+                  "year": 1990
+                }
+```
 <a name="recipientobject" title="recipient Object"></a>
 ## recipient 
 
@@ -2302,6 +2312,7 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
 * A Payment Handle for a credit card that is registered for 3D Secure - the response for this request will contain a redirect to present to the customer so they can validate their 3D Secure credentials
 * A Payment Handle for a Neteller
 * A Payment Handle for a Paysafecard payment
+* A payment handle for Paysafe Card Payouts 
 * A Payment Handle for Mazooma payment
 * A Payment Handle for Giropay payment
 * A Payment Handle for a Paysafecash payment
@@ -9000,6 +9011,15 @@ Use this API to remove an account in the VIP preferred payment method.
                 _Optional_
             + `countryRestriction`:`DE` (string) - This is the code of the country to which the transaction will be restricted. See [Country Codes](#countrycodes).
                 _Optional, length=2_
+                
+    + paysafecard payouts (object) - These are the details of the [paysafecard payouts](#paysafecardpayoutsobject) used for the request. Only one payment instrument object (for example, *card* or *paysafecard* or *payouts*) can be included in the request.   
+        + Properties
+            + `consumerId`:`merchantclientid` (string) - This is the merchant's unique identifier of the customer. For security purposes, if any personal data is used (for example, customer's user name, email address, etc.), it has to be encrypted or hashed.
+                _Mandatory_
+            + `transactionType`:`PAYMENT` - This specifies the transaction type for which the Payment Handle is created. Possible values are: PAYMENT - Payment Handle is created to continue the Payment. STANDALONE_CREDIT - Payment Handle is created to continue the standalone credit. ORIGINAL_CREDIT - Payment Handle is created to continue the original credit.VERIFICATION - Payment Handle is created to continue the verification request.
+            + `amount`:`6500` (number) - float or integer [max length: 11 digits before, optionally 2 digits after decimal point].
+            + `currencyCode`:`EUR` (string) - ISO 4217 (3 letter ISO currency code).
+            + `profile`: `See profile table` - [Paysafe Developer: Payments API Reference](https://developer.paysafe.com/en/paysafe-payments-api/payments/api/#/introduction/common-objects/profile).
 
     + paysafecash (object) - These are the details of the [paysafecash account](#paysafecashobject) used for the request. Only one payment instrument object (for example, *card* or *paysafecash* or *sightline*) can be included in the request.
         + Properties
