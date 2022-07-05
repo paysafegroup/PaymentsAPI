@@ -2328,11 +2328,13 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
 * A Payment Handle for a [Interac e-Transfer](#interacetransfer)
 * A Payment Handle for a [Interchecks](#interchecksobject) 
 
-
- > **Note:** The *status* of Payment Handles will remain INITIATED  for the following cases:
+ > 
+**Note:** - Profile object & DOB is mandatory for Paysafe Card Payouts.
+**Note:** The *status* of Payment Handles will remain INITIATED  for the following cases:
 * When the customer is redirected to a *redirect_payment* URL until the customer verifies the payment instrument.
 * When the requested amount is more than the maximum amount configured in the Business Portal.
 * When Alternate Payment Methods like Paysafecash, Paysafecards are selected by the customer.
+
 
 + Attributes 
     + Include PaymentHandleRequest
@@ -2591,70 +2593,169 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
     + Body
 
             {  
-  "id": "e5e2c8ec-e0a4-4c01-b4fa-9e16045d30f3",
-  "status": "COMPLETED",
-  "paymentType": "PAYSAFECARD",
-  "paymentHandleToken": "PHIM5Ckjxr2KjrpB",
-  "merchantRefNum": "merchantRefNum-201",
-  "currencyCode": "USD",
-  "txnTime": "2022-05-11T11:19:46Z",
-    "billingDetails": {
-    "street": "12 Round Crescent",
-    "city": "Hamburg",
-    "zip": "200095",
-    "country": "DE"
-  },
-  "merchantDescriptor": {
-    "dynamicDescriptor": "OnlineStore",
-    "phone": "12345678"
-  },
-  "liveMode": true,
-  "amount": 500,
-  "merchantDescriptor": {
-    "dynamicDescriptor": "Test Description",
-    "phone": "5555345456"
-  },
-  "gatewayResponse": {
-    "processor": "PAYSAFECARD",
-    "id": "pay_1020012899_ndY2BLwUmp2SmXLYc1DAhR2ykYkbsXEw_USD",
-    "profile" : {
-        "firstName" : "John",
-        "lastName" : "Deo",
-        "dateOfBirth" : {
-           "date" : 21,
-           "month" : 8,
-           "year" : 1984
-          }
-         }
-         },
-       "returnLinks": [
-       {
-           "rel": "on_failed",
-        "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-error.html"
-    },
-    {
-      "rel": "default",
-      "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-success.html"
-    },
-    {
-      "rel": "on_completed",
-      "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-success.html"
-    }
-  ],
-  "transactionType": "PAYMENT",
-  "gatewayReconciliationId": "pay_1020012899_ndY2BLwUmp2SmXLYc1DAhR2ykYkbsXEw_USD",
-  "updatedTime": "2022-05-11T11:19:47Z",
-  "statusTime": "2022-05-11T11:19:47Z",
-  "profile": {
-    "firstName": "John",
-    "lastName": "Deo"
-  },
-  "paysafecard": {
-    "consumerId": "consumerid001"
-    }
+              "id": "e5e2c8ec-e0a4-4c01-b4fa-9e16045d30f3",
+              "status": "COMPLETED",
+              "paymentType": "PAYSAFECARD",
+              "paymentHandleToken": "PHIM5Ckjxr2KjrpB",
+              "merchantRefNum": "merchantRefNum-201",
+              "currencyCode": "USD",
+              "txnTime": "2022-05-11T11:19:46Z",
+                "billingDetails": {
+                "street": "12 Round Crescent",
+                "city": "Hamburg",
+                "zip": "200095",
+                "country": "DE"
+              },
+              "merchantDescriptor": {
+                "dynamicDescriptor": "OnlineStore",
+                "phone": "12345678"
+              },
+              "liveMode": true,
+              "amount": 500,
+              "merchantDescriptor": {
+                "dynamicDescriptor": "Test Description",
+                "phone": "5555345456"
+              },
+              "gatewayResponse": {
+                "processor": "PAYSAFECARD",
+                "id": "pay_1020012899_ndY2BLwUmp2SmXLYc1DAhR2ykYkbsXEw_USD",
+                "profile" : {
+                    "firstName" : "John",
+                    "lastName" : "Deo",
+                    "dateOfBirth" : {
+                       "date" : 21,
+                       "month" : 8,
+                       "year" : 1984
+                      }
+                     }
+                     },
+                   "returnLinks": [
+                       {
+                           "rel": "on_failed",
+                        "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-error.html"
+                       },
+                      {
+                      "rel": "default",
+                      "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-success.html"
+                      },
+                      {
+                      "rel": "on_completed",
+                      "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-success.html"
+                      }
+                  ],
+                  "transactionType": "PAYMENT",
+                  "gatewayReconciliationId": "pay_1020012899_ndY2BLwUmp2SmXLYc1DAhR2ykYkbsXEw_USD",
+                  "updatedTime": "2022-05-11T11:19:47Z",
+                  "statusTime": "2022-05-11T11:19:47Z",
+                  "profile": {
+                    "firstName": "John",
+                    "lastName": "Deo"
+                  },
+                  "paysafecard": {
+                    "consumerId": "consumerid001"
+                    }
   }
   
-  
++ Request Create Payment Handle for Standalone Credit
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+            
+    + Body 
+    
+        {
+          "paymentType": "PAYSAFECARD",
+          "paysafecard": {
+            "consumerId": "merchantclientid5HzDvoZSodKDJ7X7VQ"
+          },
+          "transactionType": "STANDALONE_CREDIT",
+          "amount": 100,
+          "currencyCode": "GBP",
+          "profile": {
+            "firstName": "ALBERTA",
+            "lastName": "BOBBETHCHARLESON",
+            "email": "accountholder0@example.com",
+            "dateOfBirth": {
+              "day": 23,
+              "month": 12,
+              "year": 1990
+            }
+          },
+          "billingDetails": {
+            "nickName": "John Dee",
+            "street": "100",
+            "street2": "Queen Street",
+            "city": "Cupertino",
+            "zip": "14236",
+            "country": "US",
+            "state": "NY"
+          },
+          "merchantRefNum": "16521351115151488",
+          "merchantDescriptor": {
+            "dynamicDescriptor": "Test Description",
+            "phone": "5555345456"
+          }
+        }
+
++ Response 200 (application/json)
+
+    + Body
+    
+        {
+          "id": "844d1241-cb37-490f-8968-623bd56db197",
+          "paymentType": "PAYSAFECARD",
+          "paymentHandleToken": "PHQjiDncS63sIe8g",
+          "transactionType": "STANDALONE_CREDIT",
+          "merchantRefNum": "16521351115151488",
+          "currencyCode": "GBP",
+          "txnTime": "2022-05-12T10:51:50Z",
+          "billingDetails": {
+            "street": "100",
+            "street2": "Queen Street",
+            "city": "Cupertino",
+            "zip": "14236",
+            "state": "NY",
+            "country": "US"
+          },
+          "customerIp": "115.114.129.142",
+          "status": "PAYABLE",
+          "liveMode": false,
+          "simulator": "EXTERNAL",
+          "usage": "SINGLE_USE",
+          "action": "NONE",
+          "executionMode": "SYNCHRONOUS",
+          "amount": 100,
+          "merchantDescriptor": {
+            "dynamicDescriptor": "Test Description",
+            "phone": "5555345456"
+          },
+          "timeToLiveSeconds": 0,
+          "gatewayResponse": {
+            "processor": "PAYSAFECARD",
+            "id": "31001059-5f3d-46b8-bea0-e2a9582f7308",
+            "status": "VALIDATION_SUCCESSFUL"
+          },
+          "gatewayReconciliationId": "31001059-5f3d-46b8-bea0-e2a9582f7308",
+          "updatedTime": "2022-05-12T10:53:15Z",
+          "statusTime": "2022-05-12T10:53:15Z",
+          "profile": {
+            "firstName": "ALBERTA",
+            "lastName": "BOBBETHCHARLESON",
+            "email": "accountholder0@example.com",
+            "dateOfBirth": {
+              "day": 23,
+              "month": 12,
+              "year": 1990
+            }
+          },
+          "paysafecard": {
+            "consumerId": "merchantclientid5HzDvoZSodKDJ7X7VQ"
+          }
+        }
+
+
 + Request Create Payment Handle for Paysafecash (application/json)
 
     + Headers
