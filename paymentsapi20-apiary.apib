@@ -4928,7 +4928,118 @@ Click **Cancel Payments** above to see how to cancel a Payment using the ID retu
                 "status": "CANCELLED"
              }
 
+# Group Venmo Payments 
 
+## Venmo Payments [/v1/payments]
+
+### Create Payment [POST /v1/payments]
+<a name="createpaymentrequest" title="Create Payment"></a>
+
++ Request to Create Payment (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+            {
+                "merchantRefNum": "test1234",
+                "amount": 500,
+                "currencyCode": "USD",
+                "paymentHandleToken": "CNjEzMTM4NDg1",
+                "settleWithAuth": true
+            }
+                        
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "id" : "e50e19a6-8edd-44ec-abc4-18d0a97d51d8"
+                "merchantRefNum":"test1234",
+                "settleWithAuth": "true",
+                "paymentHandleToken":"CNjEzMTM4NDg1",
+                "amount": 500,
+                "currencyCode": "USD",
+                "status": "COMPLETED",
+                "paymentType": "VENMO",
+                "gatewayReconciliationId" : "e50e19a6-8edd-44ec-abc4-18d0a97d51d8",
+                "profile": {
+                            "firstName": "John",
+                            "lastName": "Deo"
+                            },
+                "venmo" :  {
+                            "consumerId" : "customer1234"
+                            },
+                "billingDetails": {
+                                    "country": "US",
+                                    "zip": "05713570"
+                                },     
+                mo"gatewayResponse": {
+                    "id" : "1231766837264",
+                    "processor": "BRAINTREE",
+                    "profile": {
+                    "firstName": "John",
+                    "lastName": "Deo",
+                    "email" : "john.deo@gmail.com",
+                    "phone" : "1478987632822"
+                    },
+                    "userName" : "johndeo1234"
+                    },
+                    "txnTime": "2019-01-04T20:16:36Z",
+                    "settlements" : [
+                    {
+                    "id" : "e50e19a6-8edd-44ec-abc4-18d0a97d51d8"
+                    "merchantRefNum":"test1234",
+                    "amount": 500,
+                    "currencyCode" : "USD",
+                    "txnTime": "2014-04-11T14:04:36Z",
+                    "status": "PROCESSING"
+                  }
+                ]
+            }
+
+
+### Create Refund [POST /v1/settlements/{settlementId}/refunds]
+<a name="createrefundrequest" title="Create Refund"></a>
+
++ Parameter
+
+    + settlementId : `c7ef07b2-0069-4f58-b9e2-0f4cdbc6c725` - This is the ID returned in the response of the Refund request.
+
++ Request to Create Refund (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+            {
+            "merchantRefNum": "test1234",
+            "amount": 500,
+            "currencyCode": "USD"
+            }
+                        
++ Response 200 (application/json)
+
+    + Body
+    
+        {
+            "id": "c7ef07b2-0069-4f58-b9e2-0f4cdbc6c725",
+            "merchantRefNum": "test1234",
+            "amount": USD,
+            "txnTime": "2018-12-11T16:33:49Z",
+            "gatewayReconciliationId" : "c7ef07b2-0069-4f58-b9e2-0f4cdbc6c725", 
+            "status": "PENDING",
+            "gatewayResponse": {
+            "id" : "123176683109",
+            "processor": "BRAINTREE"
+            }
+        }
 
 # Group Void Authorizations 
 
