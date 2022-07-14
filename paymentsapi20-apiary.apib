@@ -4022,79 +4022,79 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
     + Body
 
            {
-  "id": "ae6390df-6cc3-4e5d-82b1-e651422017e8",
-  "paymentType": "PAYSAFECARD",
-  "paymentHandleToken": "PHIM5Ckjxr2KjrpB",
-  "merchantRefNum": "merchantRefNum-201",
-  "currencyCode": "USD",
-  "txnTime": "2022-05-11T11:19:46Z",
-   "billingDetails": {
-    "street": "12 Round Crescent",
-    "city": "Hamburg",
-    "zip": "200095",
-    "country": "DE"
-  },
-  "merchantDescriptor": {
-    "dynamicDescriptor": "OnlineStore",
-    "phone": "12345678"
-  },
-  "customerIp": "10.195.94.224",
-  "status": "PAYABLE",
-  "links": [
-    {
-      "rel": "redirect_payment",
-      "href": "https://api.dev.paysafe.com/alternatepayments/v1/redirect?accountId=1001570980&paymentHandleId=ae6390df-6cc3-4e5d-82b1-e651422017e8&token=eyJhbGciOiJIUzI1NiJ9.eyJhY2QiOiIxMDAxNTcwOTgwIiwicHlkIjoiYWU2MzkwZGYtNmNjMy00ZTVkLTgyYjEtZTY1MTQyMjAxN2U4IiwiZXhwIjoxNjUyMjY5Nzg3fQ.I2DhC3KqevG5YDe8PrEaqjZ79tQFcQ0P2ZXJTEK9O-M"
-    }
-  ],
-  "liveMode": true,
-  "usage": "SINGLE_USE",
-  "action": "REDIRECT",
-  "executionMode": "SYNCHRONOUS",
-  "amount": 500,
-  "merchantDescriptor": {
-    "dynamicDescriptor": "Test Description",
-    "phone": "5555345456"
-  },
-  "timeToLiveSeconds": 599,
-  "gatewayResponse": {
-    "processor": "PAYSAFECARD",
-    "id": "pay_1020012899_ndY2BLwUmp2SmXLYc1DAhR2ykYkbsXEw_USD",
-    "profile" : {
-        "firstName" : "John",
-        "lastName" : "Deo",
-        "dateOfBirth" : {
-           "date" : 21,
-           "month" : 8,
-           "year" : 1984
-         }
-        }
-     },
-           "returnLinks": [
-       {
-           "rel": "on_failed",
-           "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-error.html"
-        },
-     {
-      "rel": "default",
-      "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-success.html"
-    },
-    {
-      "rel": "on_completed",
-      "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-success.html"
-    }
-  ],
-  "transactionType": "PAYMENT",
-  "gatewayReconciliationId": "pay_1020012899_ndY2BLwUmp2SmXLYc1DAhR2ykYkbsXEw_USD",
-  "updatedTime": "2022-05-11T11:19:47Z",
-  "statusTime": "2022-05-11T11:19:47Z",
-  "profile": {
-    "firstName": "John",
-    "lastName": "Deo"
-  },
-  "paysafecard": {
-    "consumerId": "consumerid001"
-    }
-  }
+              "id": "ae6390df-6cc3-4e5d-82b1-e651422017e8",
+              "paymentType": "PAYSAFECARD",
+              "paymentHandleToken": "PHIM5Ckjxr2KjrpB",
+              "merchantRefNum": "merchantRefNum-201",
+              "currencyCode": "USD",
+              "txnTime": "2022-05-11T11:19:46Z",
+               "billingDetails": {
+                "street": "12 Round Crescent",
+                "city": "Hamburg",
+                "zip": "200095",
+                "country": "DE"
+              },
+              "merchantDescriptor": {
+                "dynamicDescriptor": "OnlineStore",
+                "phone": "12345678"
+              },
+              "customerIp": "10.195.94.224",
+              "status": "PAYABLE",
+              "links": [
+                {
+                  "rel": "redirect_payment",
+                  "href": "https://api.dev.paysafe.com/alternatepayments/v1/redirect?accountId=1001570980&paymentHandleId=ae6390df-6cc3-4e5d-82b1-e651422017e8&token=eyJhbGciOiJIUzI1NiJ9.eyJhY2QiOiIxMDAxNTcwOTgwIiwicHlkIjoiYWU2MzkwZGYtNmNjMy00ZTVkLTgyYjEtZTY1MTQyMjAxN2U4IiwiZXhwIjoxNjUyMjY5Nzg3fQ.I2DhC3KqevG5YDe8PrEaqjZ79tQFcQ0P2ZXJTEK9O-M"
+                }
+              ],
+              "liveMode": true,
+              "usage": "SINGLE_USE",
+              "action": "REDIRECT",
+              "executionMode": "SYNCHRONOUS",
+              "amount": 500,
+              "merchantDescriptor": {
+                "dynamicDescriptor": "Test Description",
+                "phone": "5555345456"
+              },
+              "timeToLiveSeconds": 599,
+              "gatewayResponse": {
+                "processor": "PAYSAFECARD",
+                "id": "pay_1020012899_ndY2BLwUmp2SmXLYc1DAhR2ykYkbsXEw_USD",
+                "profile" : {
+                    "firstName" : "John",
+                    "lastName" : "Deo",
+                    "dateOfBirth" : {
+                       "date" : 21,
+                       "month" : 8,
+                       "year" : 1984
+                     }
+                    }
+                 },
+                       "returnLinks": [
+                   {
+                       "rel": "on_failed",
+                       "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-error.html"
+                    },
+                 {
+                  "rel": "default",
+                  "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-success.html"
+                },
+                {
+                  "rel": "on_completed",
+                  "href": "https://api.dev.paysafe.com/checkout/v2/pages/redirect-success.html"
+                }
+              ],
+              "transactionType": "PAYMENT",
+              "gatewayReconciliationId": "pay_1020012899_ndY2BLwUmp2SmXLYc1DAhR2ykYkbsXEw_USD",
+              "updatedTime": "2022-05-11T11:19:47Z",
+              "statusTime": "2022-05-11T11:19:47Z",
+              "profile": {
+                "firstName": "John",
+                "lastName": "Deo"
+              },
+              "paysafecard": {
+                "consumerId": "consumerid001"
+                }
+              }
 
 ### Get Payment Handle Using Merchant Reference Number [GET /v1/paymenthandles?merchantRefNum={merchant_ref_num}]
 <a name="getpaymenthandlemerchantrefnum" title="Look Up a Payment Handle Using a Merchant Reference Number"></a>
@@ -4937,7 +4937,25 @@ Venmo is an American mobile payment service which allows customers to make purch
 ### Create Payment Handle [POST /paymenthub/v1/paymenthandles]
 <a name="createpaymenthandlerequest" title="Create Payment Handle"></a>
 
-+ Request to Create Payment.
++ Attributes
+        + `merchantRefNum`:`P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
+        _length<=255_
+        + `amount`:`500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
+        _max=99999999999_
+        + currencyCode:`USD` (string) - This is the [currency of the merchant account](#currencycodes), for example, USD or CAD.
+        _Read Only, max=3_
+        + paymentTypes: `VENMO` (array, required) - This specifies the payment type for which you are creating the single-use token.
+        + firstName: `John` (string) - This is the customer's first name.
+        _Optional, length<=80_
+        + lastName:`Smith` (string) - This is the customer's last name.
+        _Optional, length<=80_
+        + country:`US` (string) - This is the country where the address is located. See [Country Codes](#countrycodes).
+        _Mandatory, length=2_
+        + zip:`05713570` (string) - This is the zip, postal, or post code of the customer address.
+        _Mandatory, length<=10_
+        + consumer Id: `customer1234` (string) - This is the unique Id number assigned to Venmo customer.
+
++ Request to Create Payment Handle.
 
     + Headers
 
@@ -5042,8 +5060,30 @@ Venmo is an American mobile payment service which allows customers to make purch
         }
 
 
-### Create Payment Handle by Id [GET /paymenthub/v1/paymenthandles/{{phid}}]
+### Create Payment Handle by Id for user authentication [GET /paymenthub/v1/paymenthandles/{{phid}}]
 <a name="createpaymenthandlebyIdrequest" title="Create Payment Handle by Id"></a>
+
++ Parameter
+        + `id`:`ac4d5515-d458-4628-948a-e89129fe3004` (string) This is the ID returned in the response. This ID can be used to authenticate the On Venmo app for the payment.
+        _Read Only, length<=36_
+        
++ Attributes
+        + `merchantRefNum`:`P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
+        _length<=255_
+        + `amount`:`500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
+        _max=99999999999_
+        + currencyCode:`USD` (string) - This is the [currency of the merchant account](#currencycodes), for example, USD or CAD.
+        _Read Only, max=3_
+        + paymentTypes: `VENMO` (array, required) - This specifies the payment type for which you are creating the single-use token.
+        + firstName: `John` (string) - This is the customer's first name.
+        _Optional, length<=80_
+        + lastName:`Smith` (string) - This is the customer's last name.
+        _Optional, length<=80_
+        + country:`US` (string) - This is the country where the address is located. See [Country Codes](#countrycodes).
+        _Mandatory, length=2_
+        + zip:`05713570` (string) - This is the zip, postal, or post code of the customer address.
+        _Mandatory, length<=10_
+        + consumer Id: `customer1234` (string) - This is the unique Id number assigned to Venmo customer.
 
 + Request to create payment handle by Id
 
@@ -5118,6 +5158,39 @@ Venmo is an American mobile payment service which allows customers to make purch
             ]
         }
 
+
+### Create Payment Handle by Id for sub-sequent transactions [GET /paymenthub/v1/paymenthandles/{{phid}}]
+<a name="createpaymenthandlebyIdrequest" title="Create Payment Handle by Id"></a>
+
++ Parameter
+        + `id`:`ac4d5515-d458-4628-948a-e89129fe3004` (string) This is the ID returned in the Payment Handle response. This ID can be used to fetch the subsequent transactions of the same user.
+        _Read Only, length<=36_
+
++ Attributes
+        + `merchantRefNum`:`P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
+        _length<=255_
+        + `amount`:`500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
+        _max=99999999999_
+        + currencyCode:`USD` (string) - This is the [currency of the merchant account](#currencycodes), for example, USD or CAD.
+        _Read Only, max=3_
+        + paymentTypes: `VENMO` (array, required) - This specifies the payment type for which you are creating the single-use token.
+        + firstName: `John` (string) - This is the customer's first name.
+        _Optional, length<=80_
+        + lastName:`Smith` (string) - This is the customer's last name.
+        _Optional, length<=80_
+        + country:`US` (string) - This is the country where the address is located. See [Country Codes](#countrycodes).
+        _Mandatory, length=2_
+        + zip:`05713570` (string) - This is the zip, postal, or post code of the customer address.
+        _Mandatory, length<=10_
+        + consumer Id: `customer1234` (string) - This is the unique Id number assigned to Venmo customer.
+
++ Request to create payment handle by Id
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+            
 + Response 200 - Payment Handle Response for the same user for sub sequent transactions. (application/json) 
    
     + Body
@@ -5127,9 +5200,9 @@ Venmo is an American mobile payment service which allows customers to make purch
                 "paymentHandleToken":"CNjEzMTM4NDg1",
                 "amount": 500,
                 "currencyCode": "USD",
-                 "status": "PAYABLE",
+                "status": "PAYABLE",
                 "action" :  "NONE",
-                 "dupCheck": true,
+                "dupCheck": true,
                 "liveMode": true,
                 "merchantRefNum": "test1234",
                 "transactionType": "PAYMENT",
@@ -5180,6 +5253,24 @@ Venmo is an American mobile payment service which allows customers to make purch
 
 ### Create Payment [POST /v1/payments]
 <a name="createpaymentrequest" title="Create Payment"></a>
+
++ Attributes
+        + `merchantRefNum`:`P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
+        _length<=255_
+        + `amount`:`500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
+        _max=99999999999_
+        + currencyCode:`USD` (string) - This is the [currency of the merchant account](#currencycodes), for example, USD or CAD.
+        _Read Only, max=3_
+        + paymentTypes: `VENMO` (array, required) - This specifies the payment type for which you are creating the single-use token.
+        + firstName: `John` (string) - This is the customer's first name.
+        _Optional, length<=80_
+        + lastName:`Smith` (string) - This is the customer's last name.
+        _Optional, length<=80_
+        + country:`US` (string) - This is the country where the address is located. See [Country Codes](#countrycodes).
+        _Mandatory, length=2_
+        + zip:`05713570` (string) - This is the zip, postal, or post code of the customer address.
+        _Mandatory, length<=10_
+        + consumer Id: `customer1234` (string) - This is the unique Id number assigned to Venmo customer.
 
 + Request to Create Payment (application/json)
 
