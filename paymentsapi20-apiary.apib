@@ -4938,8 +4938,12 @@ Venmo is an American mobile payment platform that enables customers to use their
 <a name="createpaymenthandlerequest" title="Create Payment Handle"></a>
 
 + Attributes
+        + status : `CANCELLED` - This is the status sent to cancel the Payments request.
+        + merchantRefNum: `P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
+        _length<=255_
+        + amount: `500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
         
-    +   Include VenmoPaymentHandleRequest
+         
 
 + Request to Create Payment Handle.
 
