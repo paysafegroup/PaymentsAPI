@@ -4937,7 +4937,7 @@ Venmo is an American mobile payment service which allows customers to make purch
 ### Create Payment Handle [POST /paymenthub/v1/paymenthandles]
 <a name="createpaymenthandlerequest" title="Create Payment Handle"></a>
 
-+ Request to Create Payment. (application/json)
++ Request to Create Payment.
 
     + Headers
 
@@ -5045,14 +5045,14 @@ Venmo is an American mobile payment service which allows customers to make purch
 ### Create Payment Handle by Id [GET /paymenthub/v1/paymenthandles/{{phid}}]
 <a name="createpaymenthandlebyIdrequest" title="Create Payment Handle by Id"></a>
 
-+ Request - This is a get method. (application/json) 
++ Request to create payment handle by Id
 
     + Headers
 
             Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
             Simulator: "EXTERNAL"
             
- + Response 200 - Payment Handle response once the user authenticates the payment through his/her Venmo APP. (application/json)
+ + Response 200 Payment Handle response once the user authenticates the payment through his/her Venmo APP. (application/json)
    
     + Body
 
@@ -5118,7 +5118,7 @@ Venmo is an American mobile payment service which allows customers to make purch
             ]
         }
 
-+ Response 200 (application/json) - Payment Handle Response for the same user for sub sequent transactions. 
++ Response 200 - Payment Handle Response for the same user for sub sequent transactions. (application/json) 
    
     + Body
 
