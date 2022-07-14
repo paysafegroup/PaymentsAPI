@@ -9431,6 +9431,22 @@ Use this API to remove an account in the VIP preferred payment method.
         + `answer`:`john` (string) - When customer is not registered for auto-deposit at interac online then Merchant has to pass "answer" parameter Mandatory in non-autodeposit withdrawal Payment Handle request flow. . 
             _Length: Between 5 and 64, Mandatory_         
 
+    + venmo (object) - These are the details of the venmo used for the request. Only one payment instrument object (for example, *venmo* or *card*) can be included in the request. 
+        + `consumerId`:`customer1234` (string) - This is the merchant's unique identifier of the customer. Customer/end user unique identification number, from whom money has to be collected. 
+            _Mandatory_
+        + `merchantRefNum`:`P1234` (string) - This is the merchant reference number for the authentication request.
+        _Read Only, length<=255_
+        + `id`:`ac4d5515-d458-4628-948a-e89129fe3004` (string) - This is the ID of authentication, returned in the response.
+        _Read Only, length<=36_
+        + zip:`05713570` (string) - This is the zip, postal, or post code of the customer's address.
+        _Mandatory, length<=10_
+        + country:`US` (string) - This is the country where the address is located. See [Country Codes](#countrycodes).
+        _Mandatory, length=2_
+        + firstName:`John` (string) - This is the customer's first name.
+        _Optional, length<=80_
+        + lastName:`Smith` (string) - This is the customer's last name.
+        _Optional, length<=80_
+
 ## `Payment Instrument Customer`
 
 + One of
