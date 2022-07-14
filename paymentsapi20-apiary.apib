@@ -4934,6 +4934,250 @@ Click **Cancel Payments** above to see how to cancel a Payment using the ID retu
 
 Venmo is an American mobile payment service which allows customers to make purchases on iOS and Android devices or on the desktop site using their Venmo account. Customers can connect their Venmo wallet to merchant’s mobile app, mobile website, or desktop website, and then seamlessly pay for all future transactions via Venmo without having to reauthorize in the Venmo app.
 
+### Create Payment Handle [POST /paymenthub/v1/paymenthandles]
+<a name="createpaymenthandlerequest" title="Create Payment Handle"></a>
+
++ Request to Create Payment (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+        {
+            "amount": 500,
+            "currencyCode": "USD",
+            "merchantRefNum": "test1234​​​",
+            "transactionType": "PAYMENT",
+            "paymentType": "VENMO",
+            "profile": {
+                "firstName": "John",
+                "lastName": "Deo"
+            },
+            "billingDetails": {
+                "country": "US",
+                "zip": "05713570"
+            },
+            "venmo" : {
+                "consumerId" : "customer1234"
+            },
+            "returnLinks": [{
+                    "rel": "default",
+                    "href": "http://www.amazon.ca"
+                }, {
+                    "rel": "on_error",
+                    "href": "http://www.google.ca"
+                }, {
+                    "rel": "on_completed",
+                    "href": "http://www.paysafe.com"
+                }, {
+                    "rel": "on_failed",
+                    "href": "http://www.costco.ca"
+                }, {
+                    "rel": "on_cancelled",
+                    "href": "http://www.bestbuy.ca"
+                }
+             ]
+        }
+                        
++ Response 200 (application/json) - Payment Handle response for the first time user
+
+    + Body
+    
+        {
+            "id": "ac4d5515-d458-4628-948a-e89129fe3004",
+            "paymentHandleToken":"CNjEzMTM4NDg1",
+            "amount": 500,
+            "currencyCode": "USD",
+            "dupCheck": true,
+            "liveMode": true,
+            "merchantRefNum": "test1234",
+            "transactionType": "PAYMENT",
+            "paymentType": "VENMO",
+            "executionMode": "SYNCHRONOUS",
+            "action": "REDIRECT",
+            "profile": {
+                "firstName": "John",
+                "lastName": "Deo"
+            },
+            "venmo" : {
+                "consumerId" : "customer1234"
+            },
+            "billingDetails": {
+                "country": "US",
+                "zip": "05713570"
+            },     
+            "gatewayResponse": {
+                "processor": "BRAINTREE"
+            },
+             "returnLinks": [{
+                    "rel": "default",
+                    "href": "http://www.amazon.ca"
+                }, {
+                    "rel": "on_error",
+                    "href": "http://www.google.ca"
+                }, {
+                    "rel": "on_completed",
+                    "href": "http://www.paysafe.com"
+                }, {
+                    "rel": "on_failed",
+                    "href": "http://www.costco.ca"
+                }, {
+                    "rel": "on_cancelled",
+                    "href": "http://www.bestbuy.ca"
+                }
+            ],
+            "txnTime": "2019-01-04T20:16:36Z",
+            "status": "INITIATED",
+            "usage" : "SINGLE_USE",
+            "links": [
+                 
+                {
+                    "rel": "redirect_payment",
+                    "href": "https://api.test.paysafe.com/alternatepayments/v1/redirect?accountId=1001176970&paymentId=ac4d5515-d458-4628-948a-e89129fe3004&token=eyJhbGciOiJIUzI1NiJ9.eyJhY2QiOiIxMDAxMTc2OTcwIiwicHlkIjoiYWM0ZDU1MTUtZDQ1OC00NjI4LTk0OGEtZTg5MTI5ZmUzMDA0IiwiZXhwIjoxNTQ2NjM0Nzk2fQ.ftk2rrS2Q9lC28Ds5x5_vAHAdsLmaFcs4bdJ031dN1o"
+                }
+            ]
+        }
+
+
+### Create Payment Handle by Id [GET /paymenthub/v1/paymenthandles/{{phid}}]
+<a name="createpaymenthandlebyIdrequest" title="Create Payment Handle by Id"></a>
+
++ Request (application/json) - This is a get method
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+            
+ + Response 200 (application/json) - Payment Handle Response once the user authenticates the payment through his/her Venmo APP. 
+   
+    + Body
+
+            {
+            "id": "ac4d5515-d458-4628-948a-e89129fe3004",
+            "paymentHandleToken":"CNjEzMTM4NDg1",
+            "amount": 500,
+            "currencyCode": "USD",
+             "status": "PAYABLE",
+            "action" :  "NONE",
+             "dupCheck": true,
+            "liveMode": true,
+            "merchantRefNum": "test1234",
+            "transactionType": "PAYMENT",
+            "paymentType": "VENMO",
+            "executionMode": "SYNCHRONOUS",
+            "profile": {
+                "firstName": "John",
+                "lastName": "Deo"
+            },
+            "venmo" : {
+                "consumerId" : "customer1234"
+            },
+            "billingDetails": {
+                "country": "US",
+                "zip": "05713570"
+            },     
+            "gatewayResponse": {
+                "processor": "BRAINTREE",
+                 "profile": {
+                    "firstName": "John",
+                    "lastName": "Deo",
+                    "email" : "john.deo@gmail.com",
+                    "phone" : "1478987632822"
+                 },
+                 "userName" : "johndeo1234"
+            },
+             "returnLinks": [{
+                    "rel": "default",
+                    "href": "http://www.amazon.ca"
+                }, {
+                    "rel": "on_error",
+                    "href": "http://www.google.ca"
+                }, {
+                    "rel": "on_completed",
+                    "href": "http://www.paysafe.com"
+                }, {
+                    "rel": "on_failed",
+                    "href": "http://www.costco.ca"
+                }, {
+                    "rel": "on_cancelled",
+                    "href": "http://www.bestbuy.ca"
+                }
+            ],
+            "txnTime": "2019-01-04T20:16:36Z",
+            "usage" : "SINGLE_USE",
+            "links": [
+                 
+                {
+                    "rel": "redirect_payment",
+                    "href": "https://api.test.paysafe.com/alternatepayments/v1/redirect?accountId=1001176970&paymentId=ac4d5515-d458-4628-948a-e89129fe3004&token=eyJhbGciOiJIUzI1NiJ9.eyJhY2QiOiIxMDAxMTc2OTcwIiwicHlkIjoiYWM0ZDU1MTUtZDQ1OC00NjI4LTk0OGEtZTg5MTI5ZmUzMDA0IiwiZXhwIjoxNTQ2NjM0Nzk2fQ.ftk2rrS2Q9lC28Ds5x5_vAHAdsLmaFcs4bdJ031dN1o"
+                }
+            ]
+        }
+
++ Response 200 (application/json) - Payment Handle Response for the same user for sub sequent transactions. 
+   
+    + Body
+
+            {
+                "id": "ac4d5515-d458-4628-948a-e89129fe3004",
+                "paymentHandleToken":"CNjEzMTM4NDg1",
+                "amount": 500,
+                "currencyCode": "USD",
+                 "status": "PAYABLE",
+                "action" :  "NONE",
+                 "dupCheck": true,
+                "liveMode": true,
+                "merchantRefNum": "test1234",
+                "transactionType": "PAYMENT",
+                "paymentType": "VENMO",
+                "executionMode": "SYNCHRONOUS",
+                "profile": {
+                    "firstName": "John",
+                    "lastName": "Deo"
+                },
+                "venmo" : {
+                    "consumerId" : "customer1234"
+                },
+                "billingDetails": {
+                    "country": "US",
+                    "zip": "05713570"
+                },     
+                "gatewayResponse": {
+                    "processor": "BRAINTREE",
+                     "profile": {
+                        "firstName": "John",
+                        "lastName": "Deo",
+                        "email" : "john.deo@gmail.com",
+                        "phone" : "1478987632822"
+                     },
+                     "userName" : "johndeo1234"
+                },
+                 "returnLinks": [{
+                        "rel": "default",
+                        "href": "http://www.amazon.ca"
+                    }, {
+                        "rel": "on_error",
+                        "href": "http://www.google.ca"
+                    }, {
+                        "rel": "on_completed",
+                        "href": "http://www.paysafe.com"
+                    }, {
+                        "rel": "on_failed",
+                        "href": "http://www.costco.ca"
+                    }, {
+                        "rel": "on_cancelled",
+                        "href": "http://www.bestbuy.ca"
+                    }
+                ],
+                "txnTime": "2019-01-04T20:16:36Z",
+                "usage" : "SINGLE_USE"
+            }
+
+
 ### Create Payment [POST /v1/payments]
 <a name="createpaymentrequest" title="Create Payment"></a>
 
@@ -4942,7 +5186,7 @@ Venmo is an American mobile payment service which allows customers to make purch
     + Headers
 
             Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
-            Simulator: "EXTERNAL"
+            Simultor: "EXTERNAL"
     
     + Body
 
@@ -5003,45 +5247,6 @@ Venmo is an American mobile payment service which allows customers to make purch
                 ]
             }
 
-
-### Create Refund [POST /v1/settlements/{settlementId}/refunds]
-<a name="createrefundrequest" title="Create Refund"></a>
-
-+ Parameter
-
-    + settlementId : `c7ef07b2-0069-4f58-b9e2-0f4cdbc6c725` - This is the ID returned in the response of the Refund request.
-
-+ Request to Create Refund (application/json)
-
-    + Headers
-
-            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
-            Simulator: "EXTERNAL"
-    
-    + Body
-
-            {
-            "merchantRefNum": "test1234",
-            "amount": 500,
-            "currencyCode": "USD"
-            }
-                        
-+ Response 200 (application/json)
-
-    + Body
-    
-        {
-            "id": "c7ef07b2-0069-4f58-b9e2-0f4cdbc6c725",
-            "merchantRefNum": "test1234",
-            "amount": USD,
-            "txnTime": "2018-12-11T16:33:49Z",
-            "gatewayReconciliationId" : "c7ef07b2-0069-4f58-b9e2-0f4cdbc6c725", 
-            "status": "PENDING",
-            "gatewayResponse": {
-            "id" : "123176683109",
-            "processor": "BRAINTREE"
-            }
-        }
 
 # Group Void Authorizations 
 
