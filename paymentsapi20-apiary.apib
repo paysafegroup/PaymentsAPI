@@ -4841,7 +4841,7 @@ Click **Get Payment Using Merchant Reference Number** above to look up a Payment
 
 + Parameter
 
-   + merchant_ref_num : `merchantRefNum-145` - This is the merchant reference number created by the merchant and submitted as part of the Payments request.
+    + merchant_ref_num : `merchantRefNum-145` - This is the merchant reference number created by the merchant and submitted as part of the Payments request.
     _Mandatory_
     + limit : `32` (number) - This is the total number of records to return. Default = 10.
         _Optional_ _Max=50_
@@ -4938,9 +4938,10 @@ Venmo is an American mobile payment platform that enables customers to use their
 <a name="createpaymenthandlerequest" title="Create Payment Handle"></a>
 
 + Attributes
-        + `merchantRefNum`:`P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
+        
+        + merchantRefNum:`P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
         _length<=255_
-        + `amount`:`500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
+        + amount:`500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
         _max=99999999999_
         + currencyCode:`USD` (string) - This is the [currency of the merchant account](#currencycodes), for example, USD or CAD.
         _Read Only, max=3_
@@ -5068,9 +5069,10 @@ Venmo is an American mobile payment platform that enables customers to use their
         _Read Only, length<=36_
         
 + Attributes
-        + `merchantRefNum`:`P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
+        
+        + merchantRefNum:`P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
         _length<=255_
-        + `amount`:`500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
+        + amount:`500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
         _max=99999999999_
         + currencyCode:`USD` (string) - This is the [currency of the merchant account](#currencycodes), for example, USD or CAD.
         _Read Only, max=3_
@@ -5159,7 +5161,7 @@ Venmo is an American mobile payment platform that enables customers to use their
         }
 
 
-### Create Payment Handle by Id for sub-sequent transactions [GET /paymenthub/v1/paymenthandles/{{phid}}]
+### Create Payment Handle by Id for subsequent transactions [GET /paymenthub/v1/paymenthandles/{{phid}}]
 <a name="createpaymenthandlebyIdrequest" title="Create Payment Handle by Id"></a>
 
 + Parameter
@@ -5167,9 +5169,9 @@ Venmo is an American mobile payment platform that enables customers to use their
         _Read Only, length<=36_
 
 + Attributes
-        + `merchantRefNum`:`P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
+        + merchantRefNum:`P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
         _length<=255_
-        + `amount`:`500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
+        + amount:`500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
         _max=99999999999_
         + currencyCode:`USD` (string) - This is the [currency of the merchant account](#currencycodes), for example, USD or CAD.
         _Read Only, max=3_
@@ -5255,9 +5257,9 @@ Venmo is an American mobile payment platform that enables customers to use their
 <a name="createpaymentrequest" title="Create Payment"></a>
 
 + Attributes
-        + `merchantRefNum`:`P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
+        + merchantRefNum:`P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
         _length<=255_
-        + `amount`:`500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
+        + amount:`500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
         _max=99999999999_
         + currencyCode:`USD` (string) - This is the [currency of the merchant account](#currencycodes), for example, USD or CAD.
         _Read Only, max=3_
