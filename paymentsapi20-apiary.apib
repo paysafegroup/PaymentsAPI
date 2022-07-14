@@ -4667,7 +4667,73 @@ Click **Process Payment** above to create a Payment request using a Payment Hand
                 "description":"Magazine subscription"
             }
             }
+
++ Request Create or process Venmo payment (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+            {
+            "merchantRefNum": "test1234",
+            "amount": 500,
+            "currencyCode": "USD",
+            "paymentHandleToken": "CNjEzMTM4NDg1",
+            "settleWithAuth": true
+            }
             
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "id" : "e50e19a6-8edd-44ec-abc4-18d0a97d51d8"
+              "merchantRefNum":"test1234",
+              "settleWithAuth": "true",
+              "paymentHandleToken":"CNjEzMTM4NDg1",
+              "amount": 500,
+              "currencyCode": "USD",
+              "status": "COMPLETED",
+              "paymentType": "VENMO",
+              "gatewayReconciliationId" : "e50e19a6-8edd-44ec-abc4-18d0a97d51d8",
+              "profile": {
+                    "firstName": "John",
+                    "lastName": "Deo"
+                },
+                "venmo" : {
+                    "consumerId" : "customer1234"
+                },
+                "billingDetails": {
+                    "country": "US",
+                    "zip": "05713570"
+                },     
+                "gatewayResponse": {
+                    "id" : "1231766837264",
+                    "processor": "BRAINTREE",
+                     "profile": {
+                        "firstName": "John",
+                        "lastName": "Deo",
+                        "email" : "john.deo@gmail.com",
+                        "phone" : "1478987632822"
+                     },
+                     "userName" : "johndeo1234"
+                },
+                "txnTime": "2019-01-04T20:16:36Z",
+                "settlements" : [
+                  {
+                    "id" : "e50e19a6-8edd-44ec-abc4-18d0a97d51d8"
+                    "merchantRefNum":"test1234",
+                    "amount": 500,
+                   "currencyCode" : "USD",
+                   "txnTime": "2014-04-11T14:04:36Z",
+                    "status": "PROCESSING"
+                  }
+                ]
+            }
+
 + Request process a payment request with airline travel details for AIRLINE merchants by setting the settleWithAuth parameter to true
 
 
