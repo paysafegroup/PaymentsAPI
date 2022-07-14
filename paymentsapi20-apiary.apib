@@ -4938,12 +4938,18 @@ Venmo is an American mobile payment platform that enables customers to use their
 <a name="createpaymenthandlerequest" title="Create Payment Handle"></a>
 
 + Attributes
-        + status : `CANCELLED` - This is the status sent to cancel the Payments request.
         + merchantRefNum : `P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
         _length<=255_
         + amount : `500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
-        
-         
+        + paymentTypes : `VENMO` (array, required) - This specifies the payment type for which you are creating the single-use token.
+        + firstName : `John` (string) - This is the customer's first name.
+        _Optional, length<=80_
+        + lastName : `Smith` (string) - This is the customer's last name.
+        _Optional, length<=80_
+        + country : `US` (string) - This is the country where the address is located. See [Country Codes](#countrycodes).
+        _Mandatory, length=2_
+        + zip:`05713570` (string) - This is the zip, postal, or post code of the customer's address.
+        _Mandatory, length<=10_
 
 + Request to Create Payment Handle.
 
@@ -5055,12 +5061,22 @@ Venmo is an American mobile payment platform that enables customers to use their
 
 + Parameter
     
-    + id : `ac4d5515-d458-4628-948a-e89129fe3004` (string) - This is the ID returned in the response. This ID can be used to authenticate the user on Venmo app for the payment.
-        _Read Only, length<=36_
+        + id : `ac4d5515-d458-4628-948a-e89129fe3004` (string) - This is the ID returned in the response. This ID can be used to authenticate the user on Venmo app for the payment.
+            _Read Only, length<=36_
         
 + Attributes
-        
-        +   Include VenmoPaymentHandleRequest
+        + merchantRefNum : `P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
+        _length<=255_
+        + amount : `500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
+        + paymentTypes : `VENMO` (array, required) - This specifies the payment type for which you are creating the single-use token.
+        + firstName : `John` (string) - This is the customer's first name.
+        _Optional, length<=80_
+        + lastName : `Smith` (string) - This is the customer's last name.
+        _Optional, length<=80_
+        + country : `US` (string) - This is the country where the address is located. See [Country Codes](#countrycodes).
+        _Mandatory, length=2_
+        + zip:`05713570` (string) - This is the zip, postal, or post code of the customer's address.
+        _Mandatory, length<=10_
         
 + Request to create payment handle by Id for user authentication 
 
@@ -5140,12 +5156,22 @@ Venmo is an American mobile payment platform that enables customers to use their
 <a name="createpaymenthandlebyIdrequest" title="Create Payment Handle by Id"></a>
 
 + Parameter
-    +   id:`ac4d5515-d458-4628-948a-e89129fe3004` (string) This is the ID returned in the Payment Handle response. This ID can be used to fetch the subsequent transactions of the same user.
-        _Read Only, length<=36_
+        +   id:`ac4d5515-d458-4628-948a-e89129fe3004` (string) This is the ID returned in the Payment Handle response. This ID can be used to fetch the subsequent transactions of the same user.
+            _Read Only, length<=36_
 
 + Attributes
-        
-    +   Include VenmoPaymentHandleRequest
+        + merchantRefNum : `P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
+        _length<=255_
+        + amount : `500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
+        + paymentTypes : `VENMO` (array, required) - This specifies the payment type for which you are creating the single-use token.
+        + firstName : `John` (string) - This is the customer's first name.
+        _Optional, length<=80_
+        + lastName : `Smith` (string) - This is the customer's last name.
+        _Optional, length<=80_
+        + country : `US` (string) - This is the country where the address is located. See [Country Codes](#countrycodes).
+        _Mandatory, length=2_
+        + zip:`05713570` (string) - This is the zip, postal, or post code of the customer's address.
+        _Mandatory, length<=10_
 
 + Request to create payment handle by Id for subsequent transactions 
 
@@ -5218,8 +5244,18 @@ Venmo is an American mobile payment platform that enables customers to use their
 <a name="createpaymentrequest" title="Create Payment"></a>
 
 + Attributes
-        
-    +   Include VenmoPaymentHandleRequest
+        + merchantRefNum : `P1234` (string, required) - This is the merchant reference number created by the merchant and submitted as part of the request.
+        _length<=255_
+        + amount : `500` (number) - This is the amount of the request, in minor units. *Note*: This will be a required field for partial void auth.
+        + paymentTypes : `VENMO` (array, required) - This specifies the payment type for which you are creating the single-use token.
+        + firstName : `John` (string) - This is the customer's first name.
+        _Optional, length<=80_
+        + lastName : `Smith` (string) - This is the customer's last name.
+        _Optional, length<=80_
+        + country : `US` (string) - This is the country where the address is located. See [Country Codes](#countrycodes).
+        _Mandatory, length=2_
+        + zip:`05713570` (string) - This is the zip, postal, or post code of the customer's address.
+        _Mandatory, length<=10_
 
 + Request to Create Payment (application/json)
 
