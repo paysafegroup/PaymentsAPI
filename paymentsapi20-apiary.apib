@@ -349,7 +349,7 @@ Please refer [Miscellaneous](https://developer.paysafe.com/en/rest-apis/paysafe-
 |totalFee    |number          |Total fee for all legs on the ticket. If multiple tickets are purchased, this is the total fee for all tickets.|Optional | | Request|No|
 |totalTaxes   |number              |Total taxes for all legs on the ticket. If multiple tickets are purchased, this is the total taxes for all tickets.|Optional | | Request|No|
 |[ticket](https://developer.paysafe.com/en/cards/api/#/ticket)                 |object                         |Information about the Airline Ticket Number and if the ticket is restricted.|Optional | | Request|No|
-|passengers   |complex            |Information about the passengers reserved tickets with the same transaction.|Optional | | Request|No|
+|passengers   |object           |Information about the passengers reserved tickets with the same transaction.|Optional | | Request|No|
 |customerReferenceNumber|string<br/>min=1 max=20        |Contains the code that the cardholder supplied to the card acceptor.|Optional | | Request|No|
 |[travelAgency](https://developer.paysafe.com/en/cards/api/#/travelAgency)            |object                        |Information about the travel agency if the ticket was issued by a travel agency.|Optional | | Request|No|
 |[tripLegs](https://developer.paysafe.com/en/cards/api/#/tripLegs)                |object                        |A grouping of up to four trip legs. Each leg provides detailed itinerary data.|Optional | | Request|No|
