@@ -5735,7 +5735,6 @@ Standalone Credits allow merchants to issue credits to cardholders without requi
 
 **Note:** If your merchant category code (MCC) is listed to [process Original Credits](#originalcreditrequest), you must not use Standalone Credits.
 
-
 ### Process Standalone Credit [POST]
 <a name="standalonecreditrequest" title="Process Standalone Credit"></a>
 
@@ -5909,7 +5908,91 @@ Click **Process Standalone Credit** above to see how to process a Standalone Cre
         }
     }
 
-           
+### Create Standalone Credit for Venmo [POST]
+<a name="createstandalonecreditrequest" title="Create Standalone Credit"></a>
+
++ Request to process a Standalone Credit for Venmo (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+            
+    + Body
+
+            {
+            "merchantRefNum": "{{guid}}",
+            "amount": 100,
+            "currencyCode": "USD",
+            "dupCheck": true,
+            "paymentHandleToken": "{{paymentHandleToken}}",
+            "customerIp": "172.0.0.1",
+            "description": "Magazine subscription"
+            }    
+            
++ Response 200 (application/json)
+
+    + Body
+
+        {
+            "id": "c18ed3d0-4787-4e38-bf1c-6b70c3bd34b7",
+            "merchantRefNum": "ac799d431ba9f12ae675",
+            "dupCheck": true,
+            "amount": 100,
+            "currencyCode": "USD",
+            "paymentType": "VENMO",
+            "billingDetails": {
+                "street1": "Sakinaka Mumbai",
+                "zip": "4703301",
+                "city": "Mumbai",
+                "country": "US",
+                "state": "Maharashtra"
+            },
+            "returnLinks": [
+                {
+                    "rel": "on_cancelled",
+                    "href": "http://www.google.ca"
+                },
+                {
+                    "rel": "default",
+                    "href": "http://www.amazon.ca"
+                }
+            ],
+            "customerIp": "172.0.0.1",
+            "paymentHandleToken": "PH39sMENHcMar2oY",
+            "liveMode": false,
+            "txnTime": "2022-07-13T19:31:54Z",
+            "updatedTime": "2022-07-13T19:31:54Z",
+            "statusTime": "2022-07-13T19:31:54Z",
+            "status": "PROCESSING",
+            "links": [
+                {
+                    "rel": "self",
+                    "href": "https://api.dev.paysafe.com/alternatepayments/v1/accounts/1005731030/standalonecredits/c18ed3d0-4787-4e38-bf1c-6b70c3bd34b7"
+                }
+            ],    
+            "venmo": {
+                "consumerId": "customer1234",
+                "recipientDescription": "My store description",
+                "language": "US",
+                "shippingPreference": "NO_SHIPPING",
+                "consumerMessage": "My note to payer",
+                "orderDescription": "My order description"
+              
+            },
+            "profile": {
+                "firstName": "Rohan",
+                "lastName": "Singh",
+                "email": "rohansingh1992@gmail.com",
+                "dateOfBirth": {
+                    "day": 23,
+                    "month": 12,
+                    "year": 1990
+                },
+                "phone": "1234567890"
+            }
+        }
+ 
 ### Cancel Standalone Credit [PUT /v1/standalonecredits/{standalone_credit_id}]
 <a name="cancelstandalonecredit" title="Cancel a Standalone Credit"></a>
 
