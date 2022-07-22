@@ -5786,7 +5786,130 @@ Click **Process Standalone Credit** above to see how to process a Standalone Cre
                "currencyCode": "USD",
               "customerIp": "172.0.0.1"
  }
+
++ Request to process a Standalone Credit Using a Payment Handle Token for Venmo. (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
             
+    + Body
+
+        {
+            "amount": 100,
+            "currencyCode": "USD",
+            "dupCheck": true,
+            "merchantRefNum": "{{$timestamp}}",
+            "accountId":"{{accountId}}", //optional field
+            "paymentType": "VENMO",
+            "transactionType": "STANDALONE_CREDIT",
+            "consumerIp": "127.0.0.1",
+            "venmo": {
+                "consumerId": "customer1234",
+                "recipientDescription": "My store description",
+                "language": "US",
+                "shippingPreference": "NO_SHIPPING",
+                "consumerMessage": "My note to payer",
+                "orderDescription": "My order description"
+              
+            },
+            "profile": {
+                "firstName": "Rohan",
+                "lastName": "Singh",
+                "phone": "1234567890",
+                "email": "rohansingh1992@gmail.com",
+                "dateOfBirth": {
+                    "day": "23",
+                    "month": "12",
+                    "year": "1990"
+                }
+            },
+            "billingDetails": {
+                "street1": "Sakinaka Mumbai",
+                "city": "Mumbai",
+                "state": "Maharashtra",
+                "country": "US",
+                "zip": "4703301"
+            },
+            "returnLinks": [
+                {
+                    "href": "http://www.amazon.ca",
+                    "rel": "default"
+                },
+                {
+                    "href": "http://www.google.ca",
+                    "rel": "on_cancelled"
+                }
+            ]
+        }   
+            
++ Response 200 (application/json)
+
+    + Body
+
+        {
+            "id": "5ba9f0ba-2854-46bf-9b46-dd8b60736126",
+            "paymentType": "VENMO",
+            "paymentHandleToken": "PH39sMENHcMar2oY",
+            "merchantRefNum": "1657740707",
+            "currencyCode": "USD",
+            "txnTime": "2022-07-13T19:31:47Z",
+            "billingDetails": {
+                "street": "Sakinaka Mumbai",
+                "city": "Mumbai",
+                "zip": "4703301",
+                "state": "Maharashtra",
+                "country": "US"
+            },
+            "customerIp": "10.195.188.177",
+            "status": "PAYABLE",
+            "liveMode": false,
+            "usage": "SINGLE_USE",
+            "action": "NONE",
+            "executionMode": "SYNCHRONOUS",
+            "amount": 100,
+            "timeToLiveSeconds": 899,
+            "gatewayResponse": {
+                "processor": "PAYPAL"
+            },
+            "returnLinks": [
+                {
+                    "rel": "default",
+                    "href": "http://www.amazon.ca"
+                },
+                {
+                    "rel": "on_cancelled",
+                    "href": "http://www.google.ca"
+                }
+            ],
+            "transactionType": "STANDALONE_CREDIT",
+            "gatewayReconciliationId": "4083c1ee-60cd-423c-bc25-27862beb4fd2",
+            "updatedTime": "2022-07-13T19:31:47Z",
+            "statusTime": "2022-07-13T19:31:47Z",      
+           "venmo": {
+                "consumerId": "customer1234",
+                "recipientDescription": "My store description",
+                "language": "US",
+                "shippingPreference": "NO_SHIPPING",
+                "consumerMessage": "My note to payer",
+                "orderDescription": "My order description"
+              
+            },     
+             "profile": {
+                "firstName": "Rohan",
+                "lastName": "Singh",
+                "email": "rohansingh1992@gmail.com",
+                "dateOfBirth": {
+                    "day": 23,
+                    "month": 12,
+                    "year": 1990
+                },
+                "phone": "1234567890"
+        }
+    }
+
+           
 ### Cancel Standalone Credit [PUT /v1/standalonecredits/{standalone_credit_id}]
 <a name="cancelstandalonecredit" title="Cancel a Standalone Credit"></a>
 
