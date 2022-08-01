@@ -1558,7 +1558,7 @@ If you [look up an authorization request](#getauth)  that used the *visaAddition
 ```
 
 <a name="standalonecreditsobject" title="standalonecredits Object"></a>
-## standalonecredits
+## standalonecredit
 
 |Element            |Type                                   |Required|Description                        |
 |---                |---                                    |---|---                                |
@@ -1571,7 +1571,7 @@ If you [look up an authorization request](#getauth)  that used the *visaAddition
 |billingDetails     |[billingDetails](#billingdetailsobject)|Optional|These are the billing details for the request.|
 |customerIp         |string<br/>`length<=39`                |Optional|This is the customer's IP address.|
 |description        |string<br/>`length<=255`               |Optional|This is a description of the transaction, provided by the merchant.|
-
+|Status             |string                                 |Optional|INITIATED - The transaction was initiated with the downstream provider.<br/>PENDING - The transaction awaiting payment service provider's response.<br/>The transaction failed, due to either an error or being declined.<br/>CANCELLED - The authorization request has been fully reversed.<br/>EXPIRED - The request expired.<br/>COMPLETED - The request was completed.<br/>RECEIVED - Our system has received the request and is waiting for the downstream processor’s response.|
 ```apib
 {
   "merchantRefNum":"merchant ABC-444",
