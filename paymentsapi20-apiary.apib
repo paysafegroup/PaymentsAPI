@@ -1341,6 +1341,23 @@ Example of Profile for Paysafecard Payout.
                   "year": 1990
                 }
 ```
+<a name="rapidTransferobject" title="rapidTransfer Object"></a>
+## rapidTransfer
+
+|Parameter                   |Type                       |Mandatory                       |Description                        |
+|---                        |---                         |---                              |---                               |
+|rapidTransfer.consumerId                        |string                         |true                              |Customer/end-user email id which will be the unique identifier of the user at Skrill end                                |
+|rapidTransfer.countryCode                        |string                        |false                             |Two-digit unique country code to identify the area of operation of bank account and currency.                               |
+
+Interchecks and Profile Object
+
+```apib
+"rapidTransfer": {
+   "consumerId": "useremail@skrill.com",
+   "countryCode": "DE"
+ }
+```
+
 <a name="recipientobject" title="recipient Object"></a>
 ## recipient 
 
@@ -3272,6 +3289,126 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
                 }],
                 "timeToLiveSeconds": 899
             }
+            
++ Request Create Payment Handle for Rapid Transfer (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+            
+    + Body
+
+            {
+              "merchantRefNum": "381513ee-f5d9-4553-8422-cbc83174bc52",
+              "transactionType": "STANDALONE_CREDIT",
+              "accountId":"1020259990",
+              "profile": {
+                "firstName": "John",
+                "lastName": "Doe"
+              },
+              "rapidTransfer": {
+                "consumerId": "userenamil@skrill.com",
+                "countryCode": "IE",
+                "emailMessage":"This is to inform you that amount 300 EUR has been transfered from you bank account to Skrill wallet via Rapid Transfer.",
+                "emailSubject":"Rapid Tranfer Transaction",
+                "paymentId":"bf3093b9-92aa-4f09-94a0-2d46598c7fc8"
+              },
+              "paymentType": "RAPID_TRANSFER",
+              "amount": 3000,
+              "currencyCode": "EUR",
+              "customerIp": "73.82.192.17",
+              "billingDetails": {
+                "street": "71 Cherry Court ",
+                "city": "Southhampton",
+                "zip": "SO53 5PD",
+                "country": "GB"
+              },
+              "returnLinks": [
+                {
+                  "rel": "on_completed",
+                  "href": "http://www.merchant.ca",
+                  "method": "GET"
+                },
+                {
+                  "rel": "on_failed",
+                  "href": "http://www.merchant.ca",
+                  "method": "GET"
+                },
+                {
+             
+                    "rel": "default",
+             
+                    "href": "http://www.merchant.ca"
+             
+                }
+             ]
+        }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": "4cc2a7d7-c6b5-4c01-91f2-494847036140",
+                "paymentType": "RAPID_TRANSFER",
+                "paymentHandleToken": "PHenRMwiUs7Az7v9",
+                "merchantRefNum": "5a9908e6-f780-4c97-b610-eb40c58cfb5e",
+                "currencyCode": "EUR",
+                "txnTime": "2022-07-04T10:39:33Z",
+                "billingDetails": {
+                    "street": "71 Cherry Court ",
+                    "city": "Southhampton",
+                    "zip": "SO53 5PD",
+                    "country": "GB"
+                },
+                "customerIp": "73.82.192.17",
+                "status": "INITIATED",
+                "links": [
+                    {
+                        "rel": "redirect_payment",
+                        "href": "https://api.qa.paysafe.com/alternatepayments/v1/redirect?accountId=1020259990&paymentHandleId=4cc2a7d7-c6b5-4c01-91f2-494847036140&token=eyJhbGciOiJIUzI1NiJ9."
+                    }
+                ],
+                "liveMode": false,
+                "simulator": "EXTERNAL",
+                "usage": "SINGLE_USE",
+                "action": "REDIRECT",
+                "executionMode": "SYNCHRONOUS",
+                "amount": 3000,
+                "timeToLiveSeconds": 899,
+                "gatewayResponse": {
+                    "processor": "SKRILL_QCO",
+                    "sid": "ecfcdae02ec33f59dff06050a15c11ae"
+                },
+                "returnLinks": [
+                    {
+                        "rel": "on_completed",
+                        "href": "http://www.amazon.ca"
+                    },
+                    {
+                        "rel": "default",
+                        "href": "http://www.amazon.ca"
+                    },
+                    {
+                        "rel": "on_failed",
+                        "href": "http://www.amazon.ca"
+                    }
+                ],
+                "transactionType": "PAYMENT",
+                "gatewayReconciliationId": "836aef89-0470-4aea-85ec-8518214e6d1c",
+                "updatedTime": "2022-07-04T10:39:34Z",
+                "statusTime": "2022-07-04T10:39:34Z",
+                "rapidTransfer": {
+                    "consumerId": "useremail@skrill.com",
+                    "countryCode": "DE"
+                },
+                "profile": {
+                    "firstName": "John",
+                    "lastName": "Doe"
+                }
+            }        
+            
 + Request Create Payment Handle for Giropay (application/json)
 
     + Headers
@@ -9532,6 +9669,10 @@ Use this API to remove an account in the VIP preferred payment method.
         + `paymentHandleToken`:`SSx4RtFqzVeoqZqQ` (string) - This is the bank token of the registered bank account. The bank token is returned in the [Verification API](https://developer.paysafe.com/en/paysafe-payments-api/payments/api/#/reference/verifications/verification/verification) response. 
             _Mandatory_
             
+    + rapidtransfer (object) - These are the details of the [rapid transfer](#rapidTransferobject) used for the request. Only one payment instrument object (for example, *card* or *rapidtransfer*) can be included in the request.         
+        + `consumerId`:`useremail@skrill.com` (string) - Customer/end-user email id which will be the unique identifier of the user at Skrill's end. 
+            _Mandatory_
+    
     + giropay (object) - These are the details of the [giropay account](#giropayobject) used for the request.
         + `subMerchantReference`:`AirBeg3hIN_SC0yihWNKCzLJ4VPjJOR4RWLZWbIhcUE=` (string) - This is the unique merchant identifier that allows Paysafe to define the transaction with Giropay. 
             _Mandatory_
@@ -9726,6 +9867,7 @@ Use this API to remove an account in the VIP preferred payment method.
         + BACS
         + SEPA
         + INTERAC ONLINE
+        + RAPID
 + `status`: `HELD`(enum) - This is the status of the transaction request.
     _Read Only_
     + Members
@@ -9949,6 +10091,7 @@ Use this API to remove an account in the VIP preferred payment method.
     + Members
         + CARD
         + INTERCHECKS
+        + RAPID TRANSFER
 + `status` (enum) - This is the status of the transaction request.
     _Read Only_
     + Members
