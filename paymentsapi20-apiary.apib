@@ -1887,6 +1887,29 @@ A grouping of four separate trip segments. Each leg contains detailed itinerary
 |400|5304|Expired card. |
 |403|5309|The maximum amount of money allowed for the requested operation is exceeded.|
 
+## Card Errors
+|HTTP Status Code|Error Code|AVS Code | Description|
+|---------|---------|---------------|
+|402|3007| A |Address matches - ZIP Code does not match |
+|402|3007| B |Street address match, Postal code in wrong format (international user) |
+|402|3007| C |Street address and postal code in wrong formats |
+|402|3007| D |Street address and postal code match (international issuer) |
+|402|3007| E |AVS Error |
+|402|3007| F |Address does compare and five-digit ZIP code does compare (UK only) |
+|402|3007| G |Service not supported by non-US issuer |
+|402|3007| I |Address information not verified by international issuer |
+|402|3007| M |Street address and postal code match (international issuer) |
+|402|3007| N |No Match on Address (street) or ZIP|
+|402|3007| O |No response sent |
+|402|3007| P |Postal codes match, street address nor verified due to incompatible formats |
+|402|3007| R |Retry, system unavailable or timed out |
+|402|3007| S |Service not supported by issuer |
+|402|3007| U |Address information is unavailable|
+|402|3007| W |9-digit ZIP matches, Address (street) does not match |
+|402|3007| X |Exact AVS match |
+|402|3007| Y |Address (street) and 5-digit ZIP match |
+|403|3007| Z |5-digit ZIP matches, address (street) does not match |
+
 ## Void Authorization Errors
 |HTTP Status Code|Error Code|Description|
 |---------|---------|---------------|
