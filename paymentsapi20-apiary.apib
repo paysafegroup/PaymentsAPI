@@ -28,6 +28,7 @@ The Payments API currently supports the following payment methods:
 - [Giropay](#giropayobject)
 - Play+ (Sightline)
 - Skrill
+- Skrill 1-Tap(#skrill1tapobject)
 - Neteller
 - ACH
 - EFT
@@ -1550,7 +1551,20 @@ If you [look up an authorization request](#getauth)  that used the *visaAddition
          "descriptor": "My company name"
      }
 ```
+<a name="skrill1tapobject" title="skrill 1-Tap"></a>
+## skrill 1-Tap
 
+|Element                        |Type   |Required|Description|
+|---                            |---    |---           |---|
+|srkrill1tap.consumerId         |string |Mandatory|Unique ID of the user which is used to identify to account and user in subsequent calls.|
+|skrill1.tap.maxAmount          |string |Mandatory|This acts as an upper limit, any subsequent transactions for this subscription cannot be more than the maxAmount set.|
+
+```
+     "skrill1tap": {
+       "consumerId": "102932",
+       "maxAmount": 1000
+   },
+```
 
 <a name="splitpayobject" title="splitpay Object"></a>
 ## splitpay
@@ -7021,6 +7035,132 @@ If you do not include it when creating the customer Payment Handle, you should t
                      }
                  }
              }
+             
+             
++ Request Create a Payment Handle for Skrill 1-Tap (application/json)
+
+    + Headers
+
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+            Simulator: "EXTERNAL"
+        
+    + Body
+
+            {
+                "merchantRefNum": "e926b809-9517-48bd-8600-dfd2599737cf",
+                "transactionType": "PAYMENT",
+                "paymentType": "SKRILL1TAP",
+                "amount": 100,
+                "currencyCode": "USD",
+                "customerIp": "172.0.0.1",
+                "skrill1tap": {
+                    "consumerId": "1234898",
+                    "maxAmount": 500
+                },
+                "billingDetails": {
+                    "nickName": "Home",
+                    "street": "100 Queen",
+                    "street2": "Unit 201",
+                    "city": "Toronto",
+                    "zip": "M5H 2N2",
+                    "country": "CA"
+                },
+                "merchantDescriptor": {
+                    "dynamicDescriptor": "OnlineStore",
+                    "phone": "12345678"
+                },
+                "profile": {
+                    "firstName": "pawan",
+                    "lastName": "Kalyan",
+                    "email": "test@paysafe.com",
+                    "phone": "1234567890"
+                },
+                "returnLinks": [
+                    {
+                        "rel": "default",
+                        "href": "https://usgaminggamblig.com/payment/return/success"
+                    },
+                    {
+                        "rel": "on_failed",
+                        "href": "https://usgaminggamblig.com/payment/return/failed"
+                    },
+                    {
+                        "rel": "on_cancelled",
+                        "href": "https://usgaminggamblig.com/payment/return/cancelled"
+                    }
+                ]
+            }
+
++ Response 200 (application/json)
+    
+    + Body
+
+        {
+            "id": "63e61505-50e3-4d74-bec8-0d2d6e269be2",
+            "paymentType": "SKRILL1TAP",
+            "paymentHandleToken": "PHvneWQj2Ol0BQca",
+            "merchantRefNum": "6e957c4e-a102-4e80-b271-f2ead2d515df",
+            "currencyCode": "USD",
+            "txnTime": "2022-09-21T07:59:03Z",
+            "billingDetails": {
+                "street": "100 Queen",
+                "street2": "Unit 201",
+                "city": "Toronto",
+                "zip": "M5H 2N2",
+                "country": "CA"
+            },
+            "customerIp": "172.0.0.1",
+            "status": "PAYABLE",
+            "liveMode": false,
+            "simulator": "EXTERNAL",
+            "usage": "SINGLE_USE",
+            "action": "NONE",
+            "executionMode": "SYNCHRONOUS",
+            "amount": 10,
+            "merchantDescriptor": {
+                "dynamicDescriptor": "OnlineStore",
+                "phone": "12345678"
+            },
+            "timeToLiveSeconds": 899,
+            "gatewayResponse": {
+                "processor": "SKRILL_QCO",
+                "status": "2",
+                "sid": "c04b3713e0719f250ed17ae39cd771dd"
+            },
+            "returnLinks": [
+                {
+                    "rel": "default",
+                    "href": "https://usgaminggamblig.com/payment/return/success"
+                },
+                {
+                    "rel": "on_failed",
+                    "href": "https://usgaminggamblig.com/payment/return/failed"
+                },
+                {
+                    "rel": "on_cancelled",
+                    "href": "https://usgaminggamblig.com/payment/return/cancelled"
+                }
+            ],
+            "transactionType": "PAYMENT",
+            "gatewayReconciliationId": "b03497b5-a50a-48f7-84b3-7cc410abe630",
+            "updatedTime": "2022-09-21T07:59:03Z",
+            "statusTime": "2022-09-21T07:59:03Z",
+            "skrill1tap": {
+                "language": "EN",
+                "logoUrl": "http://www.paysafe.com/icon.jpg",
+                "recipientDescription": "Recipient Description",
+                "consumerId": "2",
+                "detail1Description": "Detail 1 description",
+                "detail1Text": "Detail 1 text",
+                "maxAmount": 1000000
+            },
+            "profile": {
+                "firstName": "pawan",
+                "lastName": "Kalyan",
+                "email": "test@paysafe.com",
+                "phone": "1234567890"
+            }
+        }
 
 + Request Create a Multi-Use Payment Handle for a BACS Payment (application/json)
 
@@ -9006,6 +9146,8 @@ Use this API to remove an account in the VIP preferred payment method.
     + Members
         + CARD
         + INTERCHECKS
+        + SKRILL 1-TAP
+
 + `status`: `PENDING` (enum) - This is the status of the transaction request.
     _Read Only_
     + Members
@@ -9087,6 +9229,7 @@ Use this API to remove an account in the VIP preferred payment method.
         + PAYSAFECARD
         + SIGHTLINE
         + SKRILL
+        + SKRILL 1-TAP
         + PAYPAL
         + VIPPREFERRED
         + GIROPAY
@@ -9321,6 +9464,7 @@ Use this API to remove an account in the VIP preferred payment method.
             + PAYSAFECARD
             + SIGHTLINE
             + SKRILL
+            + SKRILL 1-TAP
             + PAYPAL
             + ACH
             + EFT
@@ -9453,7 +9597,7 @@ Use this API to remove an account in the VIP preferred payment method.
             + `descriptor`:`Merchant's trading name` (string) - This is the merchant descriptor that will be displayed on the consumer's bank statement.
                 _Optional_
         
-        + paypal (object) - These are the details of the [PayPal account](#paypalobject) used for the request.
+    + paypal (object) - These are the details of the [PayPal account](#paypalobject) used for the request.
             + Properties
                 + `consumerId`:`john.doe@email.com` (string) - The source of funds for this payment, the email address of the consumer or payer.
                     _Mandatory, length<=50_
@@ -9532,6 +9676,13 @@ Use this API to remove an account in the VIP preferred payment method.
             _Optional_
         + `paymentHandleToken`:`SSx4RtFqzVeoqZqQ` (string) - This is the bank token of the registered bank account. The bank token is returned in the [Verification API](https://developer.paysafe.com/en/paysafe-payments-api/payments/api/#/reference/verifications/verification/verification) response. 
             _Mandatory_
+            
+    + skrill 1-Tap (object) - These are the details of the [skrill 1-Tap account](#skrill1tapobject) used for the request.
+        + Properties
+            + `consumerId`:`12345` (string) - Unique ID of the user which is used to identify to account and user in subsequent calls.
+                _Mandatory, length<=50_
+            + `maxAmount`:`1000` (string) - This acts as an upper limit, any subsequent transactions for this subscription cannot be more than the maxAmount set.
+                _Mandatory, length<=30_
             
     + rapidtransfer (object) - These are the details of the [rapid transfer](#rapidTransferobject) used for the request. Only one payment instrument object (for example, *card* or *rapidtransfer*) can be included in the request.         
         + `consumerId`:`useremail@skrill.com` (string) - Customer/end-user email id which will be the unique identifier of the user at Skrill's end. 
@@ -9723,6 +9874,7 @@ Use this API to remove an account in the VIP preferred payment method.
         + PAYSAFECARD
         + SIGHTLINE
         + SKRILL
+        + SKRILL 1-TAP
         + PAYPAL
         + VIPPREFERRED
         + GIROPAY
@@ -9956,6 +10108,7 @@ Use this API to remove an account in the VIP preferred payment method.
         + CARD
         + INTERCHECKS
         + RAPID TRANSFER
+
 + `status` (enum) - This is the status of the transaction request.
     _Read Only_
     + Members
