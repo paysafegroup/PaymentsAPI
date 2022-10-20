@@ -1729,6 +1729,56 @@ Example for Subsequent transaction
     }
 }
 ```
+
+<a name="transactionIntent" title="transactionIntent"></a>
+## transactionIntent
+
+The transactionIntent property is used to identify the intent of the authorization requests.  The value of the transactionIntent shows if the transaction is crypto or quasi-cash related one. 
++ It is an optional enum field applicable for every MCC. 
++ It is required only if the use cases explained below are applicable for the merchants or the default behavior is not acceptable for them.
++ The merchant needs to add in the request transactionIntent property value as shown in the example below.
+
+**Use cases and applicable valid enum transactionIntent options:**
+
+|Use case                                                                                                                                              |MCC                               | Valid transactionIntent value|
+|---                                                                                                                                                   |---                                |---            |
+| The consumer is acquiring cryptocurrency in a transaction.                                                                                           |6012, 6051                              | CRYPTO_ON_RAMP| 
+| The consumer is loading a cryptocurrency wallet or exchange account with fiat. *Applicable only in combination with  valid fundingTransaction object. |6012, 6051           |WALLET_CRYPTO_ON_RAMP|
+| The consumer is acquiring quasi-cash in a transaction. *Quasi cash transactions represent the purchase of foreign currencies or items (including, but not limited to, casino chips, money orders, lottery tickets and travelers cheques) which may be convertible to cash.                 |4829, 6012, 6051                              | QUASI_CASH| 
+| For purchases of goods or services that leverage a live conversion of fiat into non - fiat currency.                                                 |ANY            | BUY_WITH_CRYPTO |
+
+**Default transactionIntent definition by Paysafe**
+
++ All authorizations processed by MCC 6051 will be classified as crypto related with transactionIntent "CRYPTO_ON_RAMP" or "WALLET_CRYPTO_ON_RAMP" (when funding a wallet), except their account is not configured by Paysafe for quasi-cash transactions.
++ All authorizations processed by MCC 6051 or 4829 with quasi-cash configuration turned on  will be classified as quasi-cash related with transactionIntent "QUASI_CASH" .
+
+**Expected errors related to invalid  transactioIntent values:**
+
++ If you send transactionIntent type in the authorization request with value not applicable for your MCC, the transaction will be declined with error  3072 - "Your request has been declined because the requested transactionIntent value is not applicable for your merchant category code (MCC)".
++ If you send transactionIntent type WALLET_CRYPTO_ON_RAMP in the authorization request, but you didn't classify the transaction as "funding" one with the respective valid fundingTransaction object, the transaction will be declined with error 3071 - Your request has been declined because of mismatch between the requested transactionIntent and fundingTransaction type.
+
+**Note:** More about the usage of transactionIntent in standalone credit request can be found here DRAFT - Transaction intent field in standalone credits - Technical documentation for merchant's comms (dev center address to be added).
+
+```apib
+Example for transactionIntent in Authorization Request
+
+{
+  // all other objects and fields in request
+  
+  "transactionIntent": "CRYPTO_ON_RAMP"
+}
+
+```
+```apib
+Example for transactionIntent in Authorization Response
+
+{
+  // all other objects and fields in response
+  
+  "transactionIntent": "CRYPTO_ON_RAMP"
+}
+```
+
 <a name="tripLegsobject" title= "tripLegs Object"></a>
 ## tripLegs
 
@@ -2402,10 +2452,12 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
 * A Payment Handle for a Paysafecash payment
 * A Payment Handle for a Play+ payment
 * A Payment Handle for a Skrill payment
+* A Payment Handle for a Skrill 1-Tap payment
 * A Payment Handle for a PayPal payment
 * A Payment Handle for an ACH payment
 * A Payment Handle for an EFT payment
 * A Payment Handle for a VIP Preferred payment
+* A Payment Handle for a transactionIntent
 * A Payment Handle for an Interac Online payment
 * A Payment Handle for a credit card Standalone Credit
 * A Payment Handle for a credit card Verification
@@ -3525,8 +3577,117 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
             ]
         }
 
++ Request Create Payment Handle for transactionIntent (application/json)
 
-+ Request Create Payment Handle for Interac Online (application/json)
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+            
+    + Body
+
+        {
+              "merchantRefNum": "merchantRefNum-101",
+              "transactionType": "PAYMENT",
+              "card": {
+                "cardNum": "5191330000004415",
+                "cardExpiry": {
+                  "month": 10,
+                  "year": 2020
+                },
+                "cvv": "111",
+                "holderName": "poorna"
+              },
+              "paymentType": "CARD",
+              "amount": 190,
+              "currencyCode": "GBP",
+              "customerIp": "172.0.0.1",
+              "billingDetails": {
+                "nickName": "Home",
+                "street": "100 Queen",
+                "street2": "Unit 201",
+                "city": "Toronto",
+                "zip": "M5H 2N2",
+                "country": "CA"
+              },
+              "transactionIntent":"CRYPTO_ON_RAMP",
+              "returnLinks": [
+                {
+                  "rel": "on_completed",
+                  "href": "https://US_commerce_site/payment/return/success",
+                  "method": "GET"
+                },
+                {
+                  "rel": "on_failed",
+                  "href": "https://US_commerce_site/payment/return/failed",
+                  "method": "GET"
+                }
+            ]
+        }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+               {
+               "id":"5bac96ad-9196-4a41-ac3b-013e69d989d9",
+               "paymentType":"CARD",
+               "paymentHandleToken":"PHxdMj0zO1kvdQhK",
+               "merchantRefNum":"a6d4aa73-71ef-4832-9fbd-cee704fe2b41",
+               "currencyCode":"CAD",
+               "txnTime":"2020-06-26T09:33:48Z",
+               "billingDetails":{
+                  "nickName": "Home",
+                  "street": "100 Queen",
+                  "street2": "Unit 201",
+                  "city": "Toronto",
+                  "zip": "M5H 2N2",
+                  "country": "CA"
+               },
+               "customerIp":"172.0.0.1",
+               "status":"INITIATED",
+               "links":[
+                  {
+                     "rel":"redirect_payment",
+                     "href":"https://api.qa.paysafe.com/alternatepayments/v1/redirect?accountId=88940812&paymentHandleId=5bac96ad-9196-4a41-ac3b-013e69d989d9&token=eyJhbGciOiJIUzI1NiJ9.eyJhY2QiOiI4ODk0MDgxMiIsInB5ZCI6IjViYWM5NmFkLTkxOTYtNGE0MS1hYzNiLTAxM2U2OWQ5ODlkOSIsImV4cCI6MTU5MzE2NTgyOH0.TE2PR9YxcvYyKitKAj8YUTUGpPIW2gBD41jx5vGqYvM"
+                  }
+               ],
+               "liveMode":false,
+               "usage":"SINGLE_USE",
+               "action":"REDIRECT",
+               "executionMode":"SYNCHRONOUS",
+               "amount":100,
+               "merchantDescriptor":{
+                  "dynamicDescriptor":"OnlineStore",
+                  "phone":"12345678"
+               },
+               "timeToLiveSeconds":899,
+               "gatewayResponse":{
+                  "iDebitInvoice":"AIAAAAAAAAAAAAABGD4A",
+                  "processor":"TRANSACTIONINTENT"
+               },
+               "transactionIntent":"CRYPTO_ON_RAMP",
+              "returnLinks": [
+                {
+                  "rel": "on_completed",
+                  "href": "https://US_commerce_site/payment/return/success",
+                  "method": "GET"
+                },
+                {
+                  "rel": "on_failed",
+                  "href": "https://US_commerce_site/payment/return/failed",
+                  "method": "GET"
+                }
+              ]
+               "transactionType":"PAYMENT",
+               "updatedTime":"2020-06-26T09:33:48Z",
+               "statusTime":"2020-06-26T09:33:48Z"
+            }
+            }
+            
+            
++ Request to Create Payment Handle for Interac Online (application/json)
 
     + Headers
 
@@ -4241,7 +4402,7 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
 
     + Body
 
-{
+        {
         "id": "68ab494f-86eb-4cdd-89d5-06f3ba8c0f6c",
         "paymentType": "INTERAC_ETRANSFER",
         "paymentHandleToken": "PH0wCV0D2qsjxGQn",
@@ -4302,8 +4463,8 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
         "firstName": "Madhu",
         "lastName": "Baddam",
         "email": "madhu@paysafe.com"
-}
-}
+        }
+    }
 
 
 
@@ -9305,6 +9466,13 @@ Use this API to remove an account in the VIP preferred payment method.
 + Include Gateway Response
 + `updatedTime`: `2016-01-01T04:5:55Z` (string) - Indicates the last updated time for the resource.
     _Read Only_
++ `transactionIntent`: `CRYPTO_ON_RAMP` (enum) - The transactionIntent property is used to identify the intent of the authorization requests. The value of the transactionIntent shows if the transaction is crypto or quasi-cash related one.  It is required only if the use cases explained in "Common Objects" are applicable for the merchants.
+    _Optional_
+    + Members
+        + CRYPTO_ON_RAMP - The consumer is acquiring cryptocurrency in a transaction. Applicable to MCCs: 6012, 6051.
+        + WALLET_CRYPTO_ON_RAMP - The consumer is loading a cryptocurrency wallet or exchange account with fiat. *Applicable only in combination with valid fundingTransaction object. Applicable to MCCs: 6012, 6051.
+        + QUASI_CASH - The consumer is acquiring quasi-cash in a transaction. *Quasi cash transactions represent the purchase of foreign currencies or items (including, but not limited to, casino chips, money orders, lottery tickets and travelers cheques) which may be convertible to cash. Applicable to MCCs: 4829, 6012, 6051.
+        + BUY_WITH_CRYPTO - For purchases of goods or services that leverage a live conversion of fiat into non - fiat currency. Applicable to MCCs: Any.
 +`statusTime`: `2016-01-01T04:55:55Z` (string) - Indicates when the status was last updated.
     _Read Only_
 
