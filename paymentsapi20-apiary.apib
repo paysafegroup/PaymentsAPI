@@ -3630,36 +3630,36 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
     + Body
 
             {
-              "id": "26359efd-7cfb-4014-a13d-1724e3ff17fa",
-              "amount": 190,
-              "merchantRefNum": "merchantRefNum-101",
-              "action": "NONE",
-              "currencyCode": "GBP",
-              "usage": "SINGLE_USE",
-              "status": "PAYABLE",
-              "paymentType": "CARD",
-              "executionMode": "SYNCHRONOUS",
-              "customerIp": "172.0.0.1",
-              "paymentHandleToken": "SCO3wKcIyLoQbQvw",
-              "billingDetails": {
-                "nickName": "Home",
-                "street": "100 Queen",
-                "street2": "Unit 201",
-                "city": "Toronto",
-                "country": "CA",
-                "zip": "M5H 2N2"
-              },
-              "card": {
-                "cardExpiry": {
-                  "month": "10",
-                  "year": "2020"
-                },
+                "id": "26359efd-7cfb-4014-a13d-1724e3ff17fa",
+                "amount": 190,
+                "merchantRefNum": "merchantRefNum-101",
+                "action": "NONE",
+                "currencyCode": "GBP",
+                "usage": "SINGLE_USE",
+                "status": "PAYABLE",
+                "paymentType": "CARD",
+                "executionMode": "SYNCHRONOUS",
+                "customerIp": "172.0.0.1",
+                "paymentHandleToken": "SCO3wKcIyLoQbQvw",
+                "billingDetails": {
+                                    "nickName": "Home",
+                                    "street": "100 Queen",
+                                    "street2": "Unit 201",
+                                    "city": "Toronto",
+                                    "country": "CA",
+                                    "zip": "M5H 2N2"
+                                },
+                "card": {
+                    "cardExpiry": {
+                                    "month": "10",
+                                    "year": "2020"
+                        },
                 "holderName": "poorna",
                 "cardType": "MC",
                 "cardBin": "519133",
                 "lastDigits": "4415"
-              },
-              "returnLinks": [
+                },
+                "returnLinks": [
                 {
                   "rel": "on_completed",
                   "href": https://US_commerce_site/payment/return/success,
@@ -3670,7 +3670,7 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
                   "href": https://US_commerce_site/payment/return/failed,
                   "method": "GET"
                 }
-              ],
+                ],
               "timeToLiveSeconds": 899,
               "transactionType": "PAYMENT",
               "transactionIntent":"CRYPTO_ON_RAMP"
