@@ -3630,60 +3630,50 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
     + Body
 
             {
-               {
-               "id":"5bac96ad-9196-4a41-ac3b-013e69d989d9",
-               "paymentType":"CARD",
-               "paymentHandleToken":"PHxdMj0zO1kvdQhK",
-               "merchantRefNum":"a6d4aa73-71ef-4832-9fbd-cee704fe2b41",
-               "currencyCode":"CAD",
-               "txnTime":"2020-06-26T09:33:48Z",
-               "billingDetails":{
-                  "nickName": "Home",
-                  "street": "100 Queen",
-                  "street2": "Unit 201",
-                  "city": "Toronto",
-                  "zip": "M5H 2N2",
-                  "country": "CA"
-               },
-               "customerIp":"172.0.0.1",
-               "status":"INITIATED",
-               "links":[
-                  {
-                     "rel":"redirect_payment",
-                     "href":"https://api.qa.paysafe.com/alternatepayments/v1/redirect?accountId=88940812&paymentHandleId=5bac96ad-9196-4a41-ac3b-013e69d989d9&token=eyJhbGciOiJIUzI1NiJ9.eyJhY2QiOiI4ODk0MDgxMiIsInB5ZCI6IjViYWM5NmFkLTkxOTYtNGE0MS1hYzNiLTAxM2U2OWQ5ODlkOSIsImV4cCI6MTU5MzE2NTgyOH0.TE2PR9YxcvYyKitKAj8YUTUGpPIW2gBD41jx5vGqYvM"
-                  }
-               ],
-               "liveMode":false,
-               "usage":"SINGLE_USE",
-               "action":"REDIRECT",
-               "executionMode":"SYNCHRONOUS",
-               "amount":100,
-               "merchantDescriptor":{
-                  "dynamicDescriptor":"OnlineStore",
-                  "phone":"12345678"
-               },
-               "timeToLiveSeconds":899,
-               "gatewayResponse":{
-                  "iDebitInvoice":"AIAAAAAAAAAAAAABGD4A",
-                  "processor":"TRANSACTIONINTENT"
-               },
-               "transactionIntent":"CRYPTO_ON_RAMP",
+              "id": "26359efd-7cfb-4014-a13d-1724e3ff17fa",
+              "amount": 190,
+              "merchantRefNum": "merchantRefNum-101",
+              "action": "NONE",
+              "currencyCode": "GBP",
+              "usage": "SINGLE_USE",
+              "status": "PAYABLE",
+              "paymentType": "CARD",
+              "executionMode": "SYNCHRONOUS",
+              "customerIp": "172.0.0.1",
+              "paymentHandleToken": "SCO3wKcIyLoQbQvw",
+              "billingDetails": {
+                "nickName": "Home",
+                "street": "100 Queen",
+                "street2": "Unit 201",
+                "city": "Toronto",
+                "country": "CA",
+                "zip": "M5H 2N2"
+              },
+              "card": {
+                "cardExpiry": {
+                  "month": "10",
+                  "year": "2020"
+                },
+                "holderName": "poorna",
+                "cardType": "MC",
+                "cardBin": "519133",
+                "lastDigits": "4415"
+              },
               "returnLinks": [
                 {
                   "rel": "on_completed",
-                  "href": "https://US_commerce_site/payment/return/success",
+                  "href": https://US_commerce_site/payment/return/success,
                   "method": "GET"
                 },
                 {
                   "rel": "on_failed",
-                  "href": "https://US_commerce_site/payment/return/failed",
+                  "href": https://US_commerce_site/payment/return/failed,
                   "method": "GET"
                 }
-              ]
-               "transactionType":"PAYMENT",
-               "updatedTime":"2020-06-26T09:33:48Z",
-               "statusTime":"2020-06-26T09:33:48Z"
-            }
+              ],
+              "timeToLiveSeconds": 899,
+              "transactionType": "PAYMENT",
+              "transactionIntent":"CRYPTO_ON_RAMP"
             }
             
             
@@ -9473,8 +9463,6 @@ Use this API to remove an account in the VIP preferred payment method.
         + WALLET_CRYPTO_ON_RAMP - The consumer is loading a cryptocurrency wallet or exchange account with fiat. *Applicable only in combination with valid fundingTransaction object. Applicable to MCCs: 6012, 6051.
         + QUASI_CASH - The consumer is acquiring quasi-cash in a transaction. *Quasi cash transactions represent the purchase of foreign currencies or items (including, but not limited to, casino chips, money orders, lottery tickets and travelers cheques) which may be convertible to cash. Applicable to MCCs: 4829, 6012, 6051.
         + BUY_WITH_CRYPTO - For purchases of goods or services that leverage a live conversion of fiat into non - fiat currency. Applicable to MCCs: Any.
-+`statusTime`: `2016-01-01T04:55:55Z` (string) - Indicates when the status was last updated.
-    _Read Only_
 
 
 ## PaymentHandleRequest Customer
