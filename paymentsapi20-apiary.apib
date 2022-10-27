@@ -6375,8 +6375,8 @@ Click **Get Standalone Credit Using Merchant Reference Number** above to look up
                 }]
             }
             
-### Patch Standalone Credit Using Interac Fraud API [PATCH /v1/standalonecredits/{{standalonecreditid}}]
-<a name="patchstandalonecreditusinginteracfraud" title="Patch Standalone Credit Using Interac Fraud"></a>
+### Patch Standalone Credit Using Interac e-Transfer Fraud API [PATCH /v1/standalonecredits/{{standalonecreditid}}]
+<a name="patchstandalonecreditusinginteracetransferfraud" title="Patch Standalone Credit Using Interac e-Transfer Fraud"></a>
 
 We might receive fraud_result as BLOCK as part of PeopleTrust/Standalone Interac's Credit call response.  By such response Peopletrust suspects the transaction to be fraudulent.
 
@@ -6396,7 +6396,7 @@ In order to release the HOLD on SCT:
     + fraudType : `FRAUD_BUSINESS, ACCOUNT_TAKEOVER, BAD_DEPOSIT, FIRST_PARTY_FRAUD, INTERCEPTED_PAYMENT, MERCHANT_DISPUTE, FAMILY_FRIEND_FRAUD, BUSINESS_EMAIL_COMPROMISE, VENDOR_EMAIL_COMPROMISE, MALWARE, APPLICATION_FRAUD, FRAUD_BUSINESS AND OTHER` (string) - This is the type of fraudulent transaction that was carried out with the intention of financial gain.
         _Mandatory_
 
-+ Request Look Up Standalone Credit Using Merchant Reference Number (application/json)
++ Request for Standalone Credit Using Interac e-Transfer Fraud API (application/json)
 
     + Headers
 
@@ -6446,7 +6446,7 @@ To Simulate Fraud transactions send "dynamicDescriptor" value as "BLOCK" in the 
     + dynamicDescriptor : `BLOCK` (string) - The value used to simulate a fraud transaction.
         _Mandatory_
 
-+ Request Look Up Standalone Credit Using Merchant Reference Number (application/json)
++ Request for Standalone Credit and Simulate Fraud Transaction (application/json)
 
     + Headers
 
