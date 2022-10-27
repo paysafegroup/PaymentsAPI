@@ -6378,19 +6378,22 @@ Click **Get Standalone Credit Using Merchant Reference Number** above to look up
 ### Patch Standalone Credit Using Interac Fraud API [PATCH /v1/standalonecredits/{{standalonecreditid}}]
 <a name="patchstandalonecreditusinginteracfraud" title="Patch Standalone Credit Using Interac Fraud"></a>
 
-We might receive fraud result as BLOCK as part of PeopleTrust/Standalone Interac's Credit call response.  By such response Peopletrust suspects the transaction to be fraudulent.
+We might receive fraud_result as BLOCK as part of PeopleTrust/Standalone Interac's Credit call response.  By such response Peopletrust suspects the transaction to be fraudulent.
 
-When the transaction is on HOLD, we receive the Standalonecredit response status as HELD and the gatewayresponse as ACCEPTED.
+For this transaction we get Standalonecredit response status as HELD and gatewayresponse as ACCEPTED which means transaction is on HOLD.
 
-In order to release the HOLD on SCT, Merchant has to make a fraud status update call and gateway service will call peopletrust to update and release the hold on that transaction. The HOLD will be released only if the fraud status update call is requested with fraudstatus as CONFIRM_LEGITIMATE or PRESUME_LEGITIMATE. Any other fraud status will result in payment reversal. 
+In order to release the HOLD on SCT:
++ Merchant has to make a fraud status update call and gateway service will call peopletrust to update and release the hold on that transaction. 
++ The HOLD will be released only if the fraud status update call is requested with fraudstatus as CONFIRM_LEGITIMATE or PRESUME_LEGITIMATE. 
++ Any other fraud status will result in payment reversal. 
 
 + Parameter
 
     + merchantRefNum : `merchantRefNum-101` (string) - This is the merchant reference number created by the merchant and submitted as part of the request.
         _Mandatory_
-    + fraudStatus : `CONFIRM_FRAUD` (string) - This is the status of the Standalone Interac's Credit call response.
+    + fraudStatus : `CONFIRM_FRAUD, CONFIRM_LEGITIMATE, SCAM, PRESUME_LEGITIMATE, SUSPICIOUS` (string) - This is the status of the Standalone Interac's Credit call response.
         _Mandatory_
-    + fraudType : `FRAUD_BUSINESS` (string) - This is the type of fraudulent transaction that was carried out with the intention of financial gain.
+    + fraudType : `FRAUD_BUSINESS, ACCOUNT_TAKEOVER, BAD_DEPOSIT, FIRST_PARTY_FRAUD, INTERCEPTED_PAYMENT, MERCHANT_DISPUTE, FAMILY_FRIEND_FRAUD, BUSINESS_EMAIL_COMPROMISE, VENDOR_EMAIL_COMPROMISE, MALWARE, APPLICATION_FRAUD, FRAUD_BUSINESS AND OTHER` (string) - This is the type of fraudulent transaction that was carried out with the intention of financial gain.
         _Mandatory_
 
 + Request Look Up Standalone Credit Using Merchant Reference Number (application/json)
@@ -6399,6 +6402,16 @@ In order to release the HOLD on SCT, Merchant has to make a fraud status update 
 
             Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
             Simulator: "EXTERNAL"
+    
+    + Body
+
+            {
+             "interacEtransfer": {
+                "fraudStatus": "CONFIRM_FRAUD",
+                "fraudType": "FRAUD_BUSINESS",
+                "comments": "Valid Txn"
+                }
+            }
 
 + Response 200 (application/json)
 
@@ -6422,6 +6435,59 @@ In order to release the HOLD on SCT, Merchant has to make a fraud status update 
                     "description": "Pay surplus"
                 }]
             }
+
+### Patch Standalone Credit and Simulate Fraud Transaction [PATCH /v1/standalonecredits/{{standalonecreditid}}]
+<a name="patchstandalonecreditsimulatefraudtrans" title="Patch Standalone Credit and Simulate Fraud Transaction"></a>
+
+To Simulate Fraud transactions send "dynamicDescriptor" value as "BLOCK" in the request as below.
+
++ Parameter
+
+    + dynamicDescriptor : `BLOCK` (string) - The value used to simulate a fraud transaction.
+        _Mandatory_
+
++ Request Look Up Standalone Credit Using Merchant Reference Number (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+        {
+            "merchantRefNum": "{{$guid}}",
+            "transactionType": "STANDALONE_CREDIT",
+            "paymentType": "INTERAC_ETRANSFER",
+            "amount": 121,
+            "currencyCode": "CAD",
+            "customerIp": "172.0.0.1",
+            "interacEtransfer": {
+                "consumerId": "madhuauto@paysafe.com",
+                "question": "what is your name",
+                "answer": "MadhuBaddam"
+            },
+            "merchantDescriptor": {
+                "dynamicDescriptor": "BLOCK"
+            },
+            "profile": {
+                "firstName": "Madhu",
+                "lastName": "Baddam",
+                "email": "madhu.baddam@paysafe.com",
+                "phone": "12345678"
+            },
+            "browserDetails": {
+                "userCookie": "testusercoockie"
+            },
+            "deviceDetails": {
+                "deviceId": "testdeviceid"
+            }
+        }
+
++ Response 200 (application/json)
+
+    + Body
+    
 
 # Group Original Credits 
 
