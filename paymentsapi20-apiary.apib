@@ -6379,21 +6379,19 @@ Click **Get Standalone Credit Using Merchant Reference Number** above to look up
 <a name="patchstandalonecreditusinginteracfraud" title="Patch Standalone Credit Using Interac Fraud"></a>
 
 We might receive fraud result as BLOCK as part of PeopleTrust/Standalone Interac's Credit call response.  By such response Peopletrust suspects the transaction to be fraudulent.
+
 When the transaction is on HOLD, we receive the Standalonecredit response status as HELD and the gatewayresponse as ACCEPTED.
-The gateway service will call peopletrust to update and release the hold on that transaction after the merchant calls to report fraud status.
+
+In order to release the HOLD on SCT, Merchant has to make a fraud status update call and gateway service will call peopletrust to update and release the hold on that transaction. The HOLD will be released only if the fraud status update call is requested with fraudstatus as CONFIRM_LEGITIMATE or PRESUME_LEGITIMATE. Any other fraud status will result in payment reversal. 
 
 + Parameter
 
-   + merchantRefNum : `merchantRefNum-101` (string) - This is the merchant reference number created by the merchant and submitted as part of the request.
+    + merchantRefNum : `merchantRefNum-101` (string) - This is the merchant reference number created by the merchant and submitted as part of the request.
         _Mandatory_
-    + limit : `32` (number) - This is the total number of records to return. Default = 10.
-        _Optional_ _Max=50_
-    + offset: `0` (number) - This is the starting position, where 0 is the first record. Default = 0.
-        _Optional_ 
-    + startDate : `2019-01-26` (UTC Date) - This is the start date in UTC. Default = 30 days before the *endDate*.
-        _Optional_
-    + endDate : `2019-03-26` (UTC Date) - This is the end date in UTC. Default = current date and time.
-        _Optional_
+    + fraudStatus : `CONFIRM_FRAUD` (string) - This is the status of the Standalone Interac's Credit call response.
+        _Mandatory_
+    + fraudType : `FRAUD_BUSINESS` (string) - This is the type of fraudulent transaction that was carried out with the intention of financial gain.
+        _Mandatory_
 
 + Request Look Up Standalone Credit Using Merchant Reference Number (application/json)
 
@@ -6404,9 +6402,6 @@ The gateway service will call peopletrust to update and release the hold on that
 
 + Response 200 (application/json)
 
-    + Attributes
-        + Include standalonecredits
-    
     + Body
 
             {
