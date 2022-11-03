@@ -2350,7 +2350,7 @@ However, you can use the [Paysafe Merchant Back Office](https://developer.paysaf
 ## Interchecks Error Codes
 
 |Interchecks Error Code   |Interchecks Error Message    |Paysafe HTTP Status Code|paysafe Error Code  |Paysafe Error Message| Paysafe Error Details|
-|---                      |---                          |---                                          |---                  |---                   |
+|---                      |---                          |---                     |---                  |---                   |---                 |
 |ERR_CARD_INELIGIBLE                      |Card ineligible              |500      |1001             |External gateway error|An external gateway error occurred.|
 |ERR_CREDIT_CARD_NOT_SUPPORTED      |Credit cards not supported              |500      |1001             |External gateway error|An external gateway error occurred.|
 |ERR_INVALID_EMAIL     |Invalid email              |400      |5068             |Field error(s)|Missing a mandatory field or the value of a field does not match the format expected.|
@@ -2374,15 +2374,15 @@ For Instant Deposit Error Codes refer [here](https://docs-v2.interchecks.com/doc
 |PAID       |200-5000                                    |Successful cases.|
 |FAILED       |344                                       |A transaction can fail due to various reasons including, processing errors, low available amount, and network failure.|
 
-Others can be referred from [Interchecks Portal](https://docs-v2.interchecks.com/docs/instant-deposit-failure-codes)
+For other scenarios refer to [Interchecks Portal](https://docs-v2.interchecks.com/docs/instant-deposit-failure-codes)
 
 <a name="RegistrationErrorCodes" title="Registration Error Codes"></a>
 ## Registration Error Codes
 
 |HTTP Status   |Error Code                    |Message                                 |Details|
 |---           |---                           |---                                     |---|
-|400          |5068  |Either you submitted a request that is missing a mandatory field or the value of a field does not match the format expected.    |In case there is a new registration of a user, the values of the name are not in the standard format. <br/>Sample Value - "@ad2" in first name or last name|
-|409          |5284  |Registration already exists with registration id.    |In case the same user email is being registered again, this blocks the registration as each user is uniquely identified on basis of name <br/>Sample Value - The same email if used again|
+|400          |5068  |Either you submitted a request that is missing a mandatory field or the value of a field does not match the format expected.    |In case there is a new registration of a user, the values of the name are not in the standard format. <br/>**Sample Value** - "@ad2" in first name or last name|
+|409          |5284  |Registration already exists with registration id.    |In case the same user email is being registered again, this blocks the registration as each user is uniquely identified on basis of name <br/>**Sample Value** - The same email if used again|
 |400          |5068  |This allows checking and blocking the registration of random email ids. This is only a simple sample, the actual logic is on basis of various combinations of value checks. <br/>Sample Value - email starts with 123|
 
 <a name="AddCardErrorCodes" title="Add Card Error Codes"></a>
