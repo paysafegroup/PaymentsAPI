@@ -2346,6 +2346,64 @@ However, you can use the [Paysafe Merchant Back Office](https://developer.paysaf
 | AC04         | Account closed                                                                                                                                                   | SEPA        |
 | TR           | Rejected by 824           
 
+<a name="InterchecksErrorCodes" title="Interchecks Error Codes"></a>
+## Interchecks Error Codes
+
+|Interchecks Error Code   |Interchecks Error Message    |Paysafe HTTP Status Code|paysafe Error Code  |Paysafe Error Message| Paysafe Error Details|
+|---                      |---                          |---                                          |---                  |---                   |
+|ERR_CARD_INELIGIBLE                      |Card ineligible              |500      |1001             |External gateway error|An external gateway error occurred.|
+|ERR_CREDIT_CARD_NOT_SUPPORTED      |Credit cards not supported              |500      |1001             |External gateway error|An external gateway error occurred.|
+|ERR_INVALID_EMAIL     |Invalid email              |400      |5068             |Field error(s)|Missing a mandatory field or the value of a field does not match the format expected.|
+|ERR_EMAIL_IN_USE      |The recipient email is assigned to another profile           |500      |1001             |An external gateway error occurred. |
+|ERR_INTERNAL_SERVER_ERROR   |Internal server error          |500      |1001             |External gateway error|An external gateway error occurred.|
+|ERR_INVALID_CARD_DETAILS    |Invalid card details             |400      |5068            |Field error(s)|Missing a mandatory field or the value of a field does not match the format expected.|
+|ERR_INVALID_PAYER_ID|Card ineligible              |400     |5068             |Field error(s)|Missing a mandatory field or the value of a field does not match the format expected.|
+|ERR_INVALID_RECIPIENT_EMAIL    |Invalid recipient email              |400      |5068             |Field error(s)|Missing a mandatory field or the value of a field does not match the format expected.|
+|ERR_INVALID_RECIPIENT_ID     |Invalid recipient ID              |400      |5068              |Field error(s)|Missing a mandatory field or the value of a field does not match the format expected.|
+|ERR_MISSING_RECIPIENT   |Missing recipient ID or email           |400      |5068              |Field error(s)|Missing a mandatory field or the value of a field does not match the format expected.|
+
+For Instant Deposit Error Codes refer [here](https://docs-v2.interchecks.com/docs/instant-deposit-failure-codes)
+
+<a name="StandaloneCreditsFailureCases" title="Standalone Credits Failure Cases"></a>
+## Standalone Credits Failure Cases
+
+|HTTP Status   |Amount                                   |Details|
+|---            |---                                     |---|
+|Canceled       |200                                     |A transaction can be canceled which could be due to various reasons including, a decline by the acquirer, a low amount at the merchant end, and card scheme failure.|
+|PENDING_KYC       |>5000                                |If the transaction amount is greater than the given threshold, the user must complete KYC with respective service providers.|
+|PAID       |200-5000                                    |Successful cases.|
+|FAILED       |344                                       |A transaction can fail due to various reasons including, processing errors, low available amount, and network failure.|
+
+Others can be referred from [Interchecks Portal](https://docs-v2.interchecks.com/docs/instant-deposit-failure-codes)
+
+<a name="RegistrationErrorCodes" title="Registration Error Codes"></a>
+## Registration Error Codes
+
+|HTTP Status   |Error Code                    |Message                                 |Details|
+|---           |---                           |---                                     |---|
+|400          |5068  |Either you submitted a request that is missing a mandatory field or the value of a field does not match the format expected.    |In case there is a new registration of a user, the values of the name are not in the standard format. <br/>Sample Value - "@ad2" in first name or last name|
+|409          |5284  |Registration already exists with registration id.    |In case the same user email is being registered again, this blocks the registration as each user is uniquely identified on basis of name <br/>Sample Value - The same email if used again|
+|400          |5068  |This allows checking and blocking the registration of random email ids. This is only a simple sample, the actual logic is on basis of various combinations of value checks. <br/>Sample Value - email starts with 123|
+
+<a name="AddCardErrorCodes" title="Add Card Error Codes"></a>
+## Add Card Error Codes
+
+|HTTP Status   |Error Code                    |Message                                 |Details|
+|---           |---                           |---                                     |---|
+|400          |ERR_CARD_INELIGIBLE  |The card is not allowed for transactions via Interchecks.|Sample card number - 1111222233334444|
+|400          |ERR_CARD_INELIGIBLE  |The card is not allowed for transactions via Interchecks.|Sample card number - 5555666677778888|
+|400          |ERR_CARD_INELIGIBLE  |The card is not allowed for transactions via Interchecks.|Sample card number - 1234567812345678|
+|400          |ERR_CARD_INELIGIBLE  |The card is not allowed for transactions via Interchecks.|Sample card number - 8765432187654321|
+|400          |ERR_RETRIEVING_CARD_DETAILS  |The system was not able to retrieve card details.|Sample card number - 4515300011000159|
+|400          |ERR_RETRIEVING_CARD_DETAILS  |The system was not able to retrieve card details.|Sample card number - 5515300011000159|
+|400          |ERR_RETRIEVING_CARD_DETAILS  |The system was not able to retrieve card details.|Sample card number - 6515300011000159|
+|400          |ERR_RETRIEVING_CARD_DETAILS  |The system was not able to retrieve card details.|Sample card number - 7515300011000159|
+|400          |ERR_CREDIT_CARD_NOT_SUPPORTED  |Credit Cards are not allowed via Interchecks.  |Sample card number - 4515300011000225|
+|400          |ERR_CREDIT_CARD_NOT_SUPPORTED  |Credit Cards are not allowed via Interchecks.  |Sample card number - 5515300011000225|
+|400          |ERR_CREDIT_CARD_NOT_SUPPORTED  |Credit Cards are not allowed via Interchecks.  |Sample card number - 6515300011000225|
+|400          |ERR_CREDIT_CARD_NOT_SUPPORTED |TCredit Cards are not allowed via Interchecks.  |Sample card number - 7515300011000225|
+
+
 # Using the Example API Calls (Console Window)
 
 To configure and test the API examples, first click on one of the API calls in the API Reference section and then click **Switch to Console** in the right-hand pane. 
