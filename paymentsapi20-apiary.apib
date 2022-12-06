@@ -4853,46 +4853,46 @@ Click **Store Locator** above to get Paysafecash store list.
 
 + Parameter
 
-    + lat : `2019-03-26` (number) - Latitudinal search position.
+    + lat : `48.856614` (number) - Latitudinal search position.
     _Mandatory_
-    + long : `2019-03-26` (number) - Longitudinal search position.
+    + long : `2.3522219` (number) - Longitudinal search position.
     _Mandatory_
-    + radius: `2019-03-26` (number) - Radius in kilometers around lat/long to search for stores.
+    + radius: `10 km` (number) - Radius in kilometers around lat/long to search for stores.
     _Mandatory_
-    + limit : `2019-03-26` (number) - Number of results to return. Maximum number of results allowed is 1000
+    + limit : `1000` (number) - Number of results to return. Maximum number of results allowed is 1000
     _Optional_
-    + offset : `2019-03-26` (number) - Start position in the search results, used for pagination. Maximum offset number allowed is 1000000
+    + offset : `1000000` (number) - Start position in the search results, used for pagination. Maximum offset number allowed is 1000000
     _Optional_
-    + sortOrder : `2019-03-26` (string) - Sort order. Possible values: ASC and DSC.
+    + sortOrder : `ASC` (string) - Sort order. Possible values: ASC and DSC.
     _Optional_
-    + moneyFlowDirection : `2019-03-26` (string) - Filter to be applied to the stores. Available values: IN is to be used for Paysafecash cashin and OUT for Paysafecash cashout.
+    + moneyFlowDirection : `IN` (string) - Filter to be applied to the stores. Available values: IN is to be used for Paysafecash cashin and OUT for Paysafecash cashout.
     _Mandatory_
-    + accountId : `2019-03-26` (string) - Paysafe Account Id.
+    + accountId : `71aea8ae-e801-4df3-9436-c5a61c88d3ad` (string) - Paysafe Account Id.
     _Mandatory_
     
 + Attribute
 
-    + posId : `2019-03-26` (number) - The payment point ID.
-    + name : `2019-03-26` (string) - The payment point name.
-    + address : `2019-03-26` (string) - The payment point address.
-    + latitude : `2019-03-26` (number) - The payment point latitudinal coordinates.
-    + longitude : `2019-03-26` (number) - The payment point longitudinal coordinates.
-    + postalCode : `2019-03-26` (string) - The payment point postal code.
-    + city : `2019-03-26` (string) - The payment city.
-    + cheatSheetURL : `2019-03-26` (string) - The payment cheat sheet url.
-    + distributorId : `2019-03-26` (number) - The payment point distributor id.
-    + country : `2019-03-26` (string) - The payment point country.
-    + posTypeLogo : `2019-03-26` (string) - The payment point logo.
-    + productType : `2019-03-26` (string) - The payment point accepted product.
-    + media : `2019-03-26` (string) - The payment point media type.
-    + productLogo : `2019-03-26` (string) - The payment point icon/marker to be shown on the map.
-    + specialImage : `2019-03-26` (string) - The payment point special image.
-    + specialText : `2019-03-26` (string) - The payment point special text.
-    + cheatSheetText: `2019-03-26` (string) - The payment point cheat sheet text.
-    + recommended : `2019-03-26` (boolean) - The payment point recommended status.
-    + distanceFromOrigin : `2019-03-26` (number) - The payment point distance from the origin coordinates, in meters.
-    + storeFeedbacks : `2019-03-26` (array) -The payment point customer feedback.
-    + directload : `2019-03-26` (string) - The payment point acceptance of directload.
+    + posId : `6638426` (number) - The payment point ID.
+    + name : `Tabac` (string) - The payment point name.
+    + address : `street: Place De L'Hôtel De Ville` (string) - The payment point address.
+    + latitude : `48.856614` (number) - The payment point latitudinal coordinates.
+    + longitude : `2.3522219` (number) - The payment point longitudinal coordinates.
+    + postalCode : `20137` (string) - The payment point postal code.
+    + city : `Porto-Vecchio` (string) - The payment city.
+    + cheatSheetURL : `null` (string) - The payment cheat sheet url.
+    + distributorId : `86` (number) - The payment point distributor id.
+    + country : `FRA` (string) - The payment point country.
+    + posTypeLogo : `null` (string) - The payment point logo.
+    + productType : `mdirectload` (string) - The payment point accepted product.
+    + media : `EVoucher` (string) - The payment point media type.
+    + productLogo : `https://www.paysafecash.com/fileadmin/posicon/marker/default.png` (string) - The payment point icon/marker to be shown on the map.
+    + specialImage : `null` (string) - The payment point special image.
+    + specialText : `null` (string) - The payment point special text.
+    + cheatSheetText: `null` (string) - The payment point cheat sheet text.
+    + recommended : `false` (boolean) - The payment point recommended status.
+    + distanceFromOrigin : `85.0` (number) - The payment point distance from the origin coordinates, in meters.
+    + storeFeedbacks : `null` (array) -The payment point customer feedback.
+    + directload : `false` (string) - The payment point acceptance of directload.
 
 
 + Request (application/json)
