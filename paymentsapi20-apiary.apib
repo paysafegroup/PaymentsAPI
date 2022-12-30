@@ -1300,13 +1300,15 @@ This is an authorization that is approved for an amount lower than the requested
 |ageRestriction                 |number                 |Optional|This is the minimum age restriction for the transaction.|
 |kycLevelRestriction            |string                 |Optional|This is the KYC level that will be required for the transaction. Options:<ul><li>FULL</li><li>SIMPLE</li></ul>|
 |countryRestriction             |string<br>`length=2`   |Optional|This is the ISO 3166-1 alpha-2 code of the country to which the transaction will be restricted.|
+|expirationTime                 |number<br>`Min=5, Max=20160`   |Optional|This is the barcode expiration time (in minutes) which merchant can configure via API. Account should be configured to accept this value at Paysafecash end.|
 
 ```
 "paysafecash": {
     "consumerId": "merchantclientid",
     "minAgeRestriction": 18,
     "kycLevelRestriction": "SIMPLE",
-    "countryRestriction": "DE"
+    "countryRestriction": "DE",
+    "expirationTime": "10"
 }
 ```
 
