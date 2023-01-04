@@ -4477,7 +4477,7 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
 }
 
 
-+ Request Create Payment Handle for Interac e-Transfer (application/json)
++ Request Create Payment Handle for Interac e-Transfer - Send Money (application/json)
 
     + Headers
 
@@ -4488,44 +4488,44 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
     + Body
 
             {
-            "merchantRefNum": "674ab905-78ff-4bde-a19a-25a5ac98f383",
-            "transactionType": "PAYMENT",
-            "paymentType": "INTERAC_ETRANSFER",
-            "amount": "502",
-            "currencyCode": "CAD",
-            "customerIp": "172.0.0.1",
-            "interacEtransfer": {
-            "consumerId": "madhu@paysafe.com",
-            "type": "EMAIL"
-            },
-            "billingDetails": {
-            "street1": "100 Queen",
-            "street2": "Unit 201",
-            "city": "Melbourne",
-            "state": "Victoria",
-            "zip": "3000",
-            "country": "AU"
-            },
-            "profile": {
-            "firstName": "Madhu",
-            "lastName": "Baddam",
-            "email": "madhu@paysafe.com"
-            },
-            "returnLinks": [
-            {
-            "rel": "default",
-            "href": "http://www.amazon.in"
-            },
-            {
-            "rel": "on_failed",
-            "href": "http://www.costco.ca"
-            },
-            {
-            "rel": "on_cancelled",
-            "href": "http://www.bestbuy.ca"
+                "merchantRefNum": "118a0bb7-7239-43ea-b6a8-1dd8b5b765ad",
+                "transactionType": "PAYMENT",
+                "paymentType": "INTERAC_ETRANSFER",
+                "amount": "544",
+                "currencyCode": "CAD",
+                "customerIp": "172.0.0.1",
+                "interacEtransfer": {
+                    "paymentRefExpiryMinutes": "1440",
+                    "method": "SEND_MONEY"
+                },
+                "billingDetails": {
+                    "street1": "100 Queen",
+                    "street2": "Unit 201",
+                    "city": "Melbourne",
+                    "state": "Victoria",
+                    "zip": "3000",
+                    "country": "AU"
+                },
+                "profile": {
+                    "firstName": "Madhu",
+                    "lastName": "Baddam",
+                    "email": "madhu@paysafe.com"
+                },
+                "returnLinks": [
+                    {
+                        "rel": "default",
+                        "href": "http://www.amazon.in"
+                    },
+                    {
+                        "rel": "on_failed",
+                        "href": "http://www.costco.ca"
+                    },
+                    {
+                        "rel": "on_cancelled",
+                        "href": "http://www.bestbuy.ca"
+                    }
+                ]
             }
-]
-}
 
 
 
@@ -4534,68 +4534,67 @@ Click **Create a Payment Handle** above to see the examples of how to create a P
     + Body
 
         {
-        "id": "68ab494f-86eb-4cdd-89d5-06f3ba8c0f6c",
-        "paymentType": "INTERAC_ETRANSFER",
-        "paymentHandleToken": "PH0wCV0D2qsjxGQn",
-        "merchantRefNum": "15ddd4ca-2b4d-4ab0-9940-1e38e609d146",
-        "currencyCode": "CAD",
-        "txnTime": "2022-03-03T05:59:44Z",
-        "billingDetails": {
-        "street": "100 Queen",
-        "street2": "Unit 201",
-        "city": "Melbourne",
-        "zip": "3000",
-        "state": "Victoria",
-        "country": "AU"
-        },
-        "customerIp": "172.0.0.1",
-        "status": "INITIATED",
-        "links": [
-        {
-        "rel": "redirect_payment",
-        "href": "https://api.qa.paysafe.com/alternatepayments/v1/redirect?accountId=1019829630&paymentHandleId=68ab494f-86eb-4cdd-89d5-06f3ba8c0f6c&token=eyJhbGciOiJIUzI1NiJ9.eyJhY2QiOiIxMDE5ODI5NjMwIiwicHlkIjoiNjhhYjQ5NGYtODZlYi00Y2RkLTg5ZDUtMDZmM2JhOGMwZjZjIiwiZXhwIjoxNjQ2Mjg4OTg1fQ.6fnQcKs7bpcWpxbhdzw18grIaIcKd2B1NiKuJc3xB98"
+            "id": "514b4cf1-8891-445d-9b58-e50ae02d8c3c",
+            "paymentType": "INTERAC_ETRANSFER",
+            "paymentHandleToken": "PHEkR6gInY2NM05X",
+            "merchantRefNum": "afca4603-a9d7-4010-866f-f5a7204f36fd",
+            "currencyCode": "CAD",
+            "txnTime": "2021-10-06T13:15:22Z",
+            "billingDetails": {
+                "street": "100 Queen",
+                "street2": "Unit 201",
+                "city": "Melbourne",
+                "zip": "3000",
+                "state": "Victoria",
+                "country": "AU"
+            },
+            "customerIp": "172.0.0.1",
+            "status": "PAYABLE",
+            "links": [
+                {
+                    "rel": "redirect_payment",
+                    "href": "https://api.qa.paysafe.com/alternatepayments/v1/redirect?accountId=1018169820&paymentHandleId=514b4cf1-8891-445d-9b58-e50ae02d8c3c&token=eyJhbGciOiJIUzI1NiJ9.eyJhY2QiOiIxMDE4MTY5ODIwIiwicHlkIjoiNTE0YjRjZjEtODg5MS00NDVkLTliNTgtZTUwYWUwMmQ4YzNjIiwiZXhwIjoxNjMzNTI3OTIzfQ.DvMBbCsxckQhKwsUSpHEAh9IkpGuIyaPFsa4heWUxNE"
+                }
+            ],
+            "liveMode": false,
+            "simulator": "EXTERNAL",
+            "usage": "SINGLE_USE",
+            "action": "NONE",
+            "executionMode": "ASYNCHRONOUS",
+            "amount": 544,
+            "timeToLiveSeconds": 899,
+            "gatewayResponse": {
+                "processor": "INTERAC"
+            },
+            "returnLinks": [
+                {
+                    "rel": "on_failed",
+                    "href": "http://www.costco.ca"
+                },
+                {
+                    "rel": "default",
+                    "href": "http://www.amazon.in"
+                },
+                {
+                    "rel": "on_cancelled",
+                    "href": "http://www.bestbuy.ca"
+                }
+            ],
+            "transactionType": "PAYMENT",
+            "gatewayReconciliationId": "e17a0f2f-ab84-4fe0-a405-a6ef104120dc",
+            "updatedTime": "2021-10-06T13:15:23Z",
+            "statusTime": "2021-10-06T13:15:23Z",
+            "interacEtransfer": {        
+                "paymentRefExpiryMinutes": "1440",
+                "method": "SEND_MONEY",
+                "paymentReference":"APM546729BSG"
+            },
+            "profile": {
+                "firstName": "Madhu",
+                "lastName": "Baddam",
+                "email": "madhu@paysafe.com"
+            }
         }
-        ],
-        "liveMode": false,
-        "simulator": "EXTERNAL",
-        "usage": "SINGLE_USE",
-        "action": "REDIRECT",
-        "executionMode": "SYNCHRONOUS",
-        "amount": 502,
-        "timeToLiveSeconds": 899,
-        "gatewayResponse": {
-        "id": "zX27oxf27gxZdKEf",
-        "processor": "PEOPLE_TRUST",
-        "status": "AVAILABLE"
-        },
-        "returnLinks": [
-        {
-        "rel": "on_failed",
-        "href": "http://www.costco.ca"
-        },
-        {
-        "rel": "on_cancelled",
-        "href": "http://www.bestbuy.ca"
-        },
-        {
-        "rel": "default",
-        "href": "http://www.amazon.in"
-        }
-        ],
-        "transactionType": "PAYMENT",
-        "gatewayReconciliationId": "218ccdbc-96ed-46b8-96a4-cbb304bbb8d6",
-        "updatedTime": "2022-03-03T05:59:45Z",
-        "statusTime": "2022-03-03T05:59:45Z",
-        "interacEtransfer": {
-        "consumerId": "madhu@paysafe.com",
-        "type": "EMAIL"
-        },
-        "profile": {
-        "firstName": "Madhu",
-        "lastName": "Baddam",
-        "email": "madhu@paysafe.com"
-        }
-    }
 
 
 
@@ -5644,6 +5643,77 @@ Click **Process Payment** above to create a Payment request using a Payment Hand
         }
     }
     
++ Request Create a new auto deposit payment - send money (application/json)
+
+    + Headers
+
+            Authorization: "Basic YOUR-BASE64-ENCODED-API-KEY"
+            Simulator: "EXTERNAL"
+    
+    + Body
+
+            {
+                "merchantRefNum": "b9405251-5ede-4439-b844-73ff553144a5",
+                "amount": "546",
+                "currencyCode": "CAD",
+                "settleWithAuth": true,
+                "paymentHandleToken": "PHAtEwayrsMVGJJB"
+            }
+            
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "id": "568530f0-262a-453f-b681-1088195d9439",
+                "paymentType": "INTERAC_ETRANSFER",
+                "paymentHandleToken": "PHAtEwayrsMVGJJB",
+                "merchantRefNum": "b9405251-5ede-4439-b844-73ff553144a5",
+                "currencyCode": "CAD",
+                "settleWithAuth": true,
+                "dupCheck": true,
+                "txnTime": "2021-10-06T13:18:58Z",
+                "billingDetails": {
+                    "street1": "100 Queen",
+                    "street2": "Unit 201",
+                    "city": "Melbourne",
+                    "zip": "3000",
+                    "state": "Victoria",
+                    "country": "AU"
+                },
+                "status": "PROCESSING",
+                "gatewayReconciliationId": "Io27oxf1xsqOrDIe",
+                "amount": 546,
+                "availableToRefund": 0,
+                "consumerIp": "172.0.0.1",
+                "liveMode": false,
+                "simulator": "EXTERNAL",
+                "updatedTime": "2021-10-06T13:20:18Z",
+                "statusTime": "2021-10-06T13:20:18Z",
+                "gatewayResponse": {
+                    "id": "Io27oxf1xsqOrDIe",
+                    "processor": "INTERAC",
+                    "status": "AVAILABLE"
+                },
+                "availableToSettle": 0,
+                "interacEtransfer": {
+                    "method": "SEND_MONEY",
+                    "paymentReference":"APM546729BSG"
+                },
+                "profile": {
+                    "firstName": "Madhu",
+                    "lastName": "Baddam",
+                    "email": "madhu@paysafe.com"
+                },
+                "settlements": {
+                    "amount": 546,
+                    "txnTime": "2021-10-06T13:18:58.000+0000",
+                    "availableToRefund": 0,
+                    "merchantRefNum": "b9405251-5ede-4439-b844-73ff553144a5",
+                    "id": "568530f0-262a-453f-b681-1088195d9439",
+                    "status": "PROCESSING"
+                }
+            }
 
 ### Get Payments [GET /v1/payments/{payment_id}]
 <a name="getpayment" title="Look Up a Payment"></a>
